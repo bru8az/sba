@@ -1,0 +1,346 @@
+```html
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Satyen Bose Academy | Joykrishnapur</title>
+    <meta name="description" content="Satyen Bose Academy - An English focused school rooted in culture. Admission Open for Nursery to Class 4.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;600;700&family=Nunito:wght@400;600;700;800&display=swap');
+        
+        body {
+            font-family: 'Nunito', sans-serif;
+        }
+        
+        .bengali-text {
+            font-family: 'Noto Sans Bengali', sans-serif;
+        }
+
+        .pattern-bg {
+            background-color: #fdfbf7;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23e2e8f0' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+    </style>
+</head>
+<body class="pattern-bg text-slate-800">
+
+    <!-- Top Bar -->
+    <div class="bg-orange-600 text-white py-2 text-sm">
+        <div class="container mx-auto px-4 flex flex-col md:flex-row justify-between items-center text-center md:text-left">
+            <p class="font-semibold"><i data-lucide="bell" class="inline w-4 h-4 mr-1"></i> Admissions Open for 2026 Session!</p>
+            <div class="flex items-center gap-4 mt-2 md:mt-0">
+                <a href="tel:+919434007236" class="flex items-center hover:text-orange-100 transition">
+                    <i data-lucide="phone" class="w-4 h-4 mr-1"></i> +91 9434007236
+                </a>
+                <span class="hidden md:inline">|</span>
+                <span class="flex items-center">
+                    <i data-lucide="map-pin" class="w-4 h-4 mr-1"></i> Joykrishnapur, Bankura
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="bg-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-3">
+            <div class="flex justify-between items-center">
+                <!-- Logo Area -->
+                <div class="flex items-center gap-3">
+                    <div class="w-12 h-12 bg-blue-900 rounded-full flex items-center justify-center text-white font-bold text-xl shadow-lg">
+                        SB
+                    </div>
+                    <div>
+                        <h1 class="text-xl md:text-2xl font-extrabold text-blue-900 leading-none">Satyen Bose <span class="text-orange-600">Academy</span></h1>
+                        <p class="text-xs text-slate-500 font-semibold tracking-wide uppercase">Nurturing Minds, Preserving Roots</p>
+                    </div>
+                </div>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center gap-8 font-semibold text-slate-700">
+                    <a href="#home" class="hover:text-blue-900 transition">Home</a>
+                    <a href="#about" class="hover:text-blue-900 transition">About Us</a>
+                    <a href="#classes" class="hover:text-blue-900 transition">Academics</a>
+                    <a href="#philosophy" class="hover:text-blue-900 transition">Philosophy</a>
+                    <a href="#contact" class="px-5 py-2 bg-blue-900 text-white rounded-full hover:bg-blue-800 transition shadow-md">Contact Us</a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button class="md:hidden text-slate-700" onclick="toggleMenu()">
+                    <i data-lucide="menu" class="w-8 h-8"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-100 p-4 absolute w-full shadow-lg">
+            <div class="flex flex-col gap-4 font-semibold text-slate-700">
+                <a href="#home" onclick="toggleMenu()" class="block py-2">Home</a>
+                <a href="#about" onclick="toggleMenu()" class="block py-2">About Us</a>
+                <a href="#classes" onclick="toggleMenu()" class="block py-2">Academics</a>
+                <a href="#philosophy" onclick="toggleMenu()" class="block py-2">Philosophy</a>
+                <a href="#contact" onclick="toggleMenu()" class="block py-2 text-orange-600">Contact Us</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="relative bg-blue-900 text-white py-20 lg:py-32 overflow-hidden">
+        <!-- Decorative blobs -->
+        <div class="absolute top-0 right-0 w-64 h-64 bg-orange-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 -translate-y-1/2 translate-x-1/2"></div>
+        <div class="absolute bottom-0 left-0 w-64 h-64 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 translate-y-1/2 -translate-x-1/2"></div>
+
+        <div class="container mx-auto px-4 relative z-10 text-center">
+            <span class="inline-block px-4 py-1 bg-orange-500 rounded-full text-sm font-bold tracking-wider mb-6 animate-pulse">ADMISSION OPEN 2026</span>
+            <h2 class="text-4xl md:text-6xl font-extrabold mb-6 leading-tight">
+                Rooted in Culture.<br/>
+                <span class="text-orange-400">Ready for the World.</span>
+            </h2>
+            <p class="text-lg md:text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
+                An English-focused school in Joykrishnapur where learning happens through play, not pressure. We blend modern education with Bengali heritage.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="#contact" class="px-8 py-4 bg-orange-500 text-white rounded-lg font-bold text-lg hover:bg-orange-600 transition shadow-lg transform hover:-translate-y-1">
+                    Apply Now
+                </a>
+                <a href="#about" class="px-8 py-4 bg-transparent border-2 border-white text-white rounded-lg font-bold text-lg hover:bg-white/10 transition">
+                    Learn More
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Info Cards -->
+    <section class="py-12 -mt-10 relative z-20">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-white p-6 rounded-xl shadow-lg border-b-4 border-orange-500 flex items-start gap-4">
+                    <div class="p-3 bg-orange-100 text-orange-600 rounded-lg">
+                        <i data-lucide="book-open" class="w-6 h-6"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-lg text-blue-900">English Focused</h3>
+                        <p class="text-slate-600 text-sm mt-1">Strong emphasis on English fluency while respecting Bengali roots.</p>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-lg border-b-4 border-green-500 flex items-start gap-4">
+                    <div class="p-3 bg-green-100 text-green-600 rounded-lg">
+                        <i data-lucide="smile" class="w-6 h-6"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-lg text-blue-900">Stress-Free Learning</h3>
+                        <p class="text-slate-600 text-sm mt-1">We believe in "Play-Way" learning. No heavy pressure on little minds.</p>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-lg border-b-4 border-blue-500 flex items-start gap-4">
+                    <div class="p-3 bg-blue-100 text-blue-600 rounded-lg">
+                        <i data-lucide="users" class="w-6 h-6"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-lg text-blue-900">Nursery to Class 4</h3>
+                        <p class="text-slate-600 text-sm mt-1">Accepting students from age 3+ up to Class 4.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center gap-12">
+                <div class="w-full md:w-1/2">
+                    <div class="relative rounded-2xl overflow-hidden shadow-2xl bg-orange-100 h-80 flex items-center justify-center">
+                        <!-- Placeholder for an image -->
+                        <div class="text-center p-8">
+                            <i data-lucide="graduation-cap" class="w-20 h-20 text-orange-400 mx-auto mb-4"></i>
+                            <p class="text-orange-800 font-bold">Image: Happy Kids Learning</p>
+                            <p class="text-sm text-orange-600">(You can add a real photo of the school here)</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="w-full md:w-1/2">
+                    <h2 class="text-3xl font-bold text-blue-900 mb-4">Welcome to <span class="text-orange-600">Satyen Bose Academy</span></h2>
+                    <p class="text-slate-600 mb-6 leading-relaxed">
+                        Located in the heart of Joykrishnapur, we are breaking the stereotype of private education. We don't believe in rote learning or burdening children with heavy bags. 
+                    </p>
+                    <p class="text-slate-600 mb-6 leading-relaxed">
+                        Instead, we focus on <strong class="text-blue-900">Holistic Development</strong>. Our mission is to build a strong foundation in English so our students can compete globally, while ensuring they remain deeply connected to their local culture and the Bengali language.
+                    </p>
+                    <ul class="space-y-3">
+                        <li class="flex items-center gap-2 text-slate-700">
+                            <i data-lucide="check-circle-2" class="text-green-500 w-5 h-5"></i>
+                            <span>Based in Joykrishnapur (Bishnupur, Bankura)</span>
+                        </li>
+                        <li class="flex items-center gap-2 text-slate-700">
+                            <i data-lucide="check-circle-2" class="text-green-500 w-5 h-5"></i>
+                            <span>Safe and nurturing environment</span>
+                        </li>
+                        <li class="flex items-center gap-2 text-slate-700">
+                            <i data-lucide="check-circle-2" class="text-green-500 w-5 h-5"></i>
+                            <span>Affordable quality education</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Classes/Academics -->
+    <section id="classes" class="py-16 bg-blue-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-blue-900 mb-2">Our Academic Structure</h2>
+                <p class="text-slate-600">Designed for the developmental needs of every age group.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Nursery -->
+                <div class="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition duration-300">
+                    <div class="bg-pink-100 p-6 flex justify-center">
+                        <i data-lucide="baby" class="w-12 h-12 text-pink-500"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-1">Nursery</h3>
+                        <p class="text-sm font-semibold text-pink-500 mb-3">Age: 3+ Years</p>
+                        <p class="text-slate-600 text-sm">Focus on social skills, motor skills, and learning through play and music.</p>
+                    </div>
+                </div>
+
+                <!-- LKG -->
+                <div class="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition duration-300">
+                    <div class="bg-purple-100 p-6 flex justify-center">
+                        <i data-lucide="shapes" class="w-12 h-12 text-purple-500"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-1">LKG</h3>
+                        <p class="text-sm font-semibold text-purple-500 mb-3">Age: 4+ Years</p>
+                        <p class="text-slate-600 text-sm">Introduction to alphabet, numbers, drawing, and basic phonics.</p>
+                    </div>
+                </div>
+
+                <!-- UKG -->
+                <div class="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition duration-300">
+                    <div class="bg-yellow-100 p-6 flex justify-center">
+                        <i data-lucide="pencil" class="w-12 h-12 text-yellow-600"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-1">UKG</h3>
+                        <p class="text-sm font-semibold text-yellow-600 mb-3">Age: 5+ Years</p>
+                        <p class="text-slate-600 text-sm">Sentence formation, basic logic, creative arts, and storytelling.</p>
+                    </div>
+                </div>
+
+                <!-- Classes 1-4 -->
+                <div class="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition duration-300">
+                    <div class="bg-blue-100 p-6 flex justify-center">
+                        <i data-lucide="book-open-check" class="w-12 h-12 text-blue-600"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-1">Class 1 - 4</h3>
+                        <p class="text-sm font-semibold text-blue-600 mb-3">Age: 6+ Years</p>
+                        <p class="text-slate-600 text-sm">Core subjects, English fluency, Bengali literature, and critical thinking.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Philosophy Section -->
+    <section id="philosophy" class="py-16 bg-white relative overflow-hidden">
+        <div class="container mx-auto px-4 text-center max-w-4xl">
+            <h2 class="text-3xl font-bold text-blue-900 mb-8">Why We Are Different</h2>
+            
+            <div class="grid md:grid-cols-2 gap-8 text-left">
+                <div class="p-6 bg-slate-50 rounded-lg border-l-4 border-orange-500">
+                    <h4 class="font-bold text-xl mb-2 text-slate-800">English + Bengali</h4>
+                    <p class="text-slate-600">We are an English-focused school, but we give enough emphasis on Bengali. We want our students to be global citizens who are proud of their roots.</p>
+                </div>
+                <div class="p-6 bg-slate-50 rounded-lg border-l-4 border-orange-500">
+                    <h4 class="font-bold text-xl mb-2 text-slate-800">No Pressure, Just Learning</h4>
+                    <p class="text-slate-600">Contrary to popular belief about private schools, we don't put immense pressure on kids. Childhood is precious, and learning happens best when the mind is free from fear.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Admission / Contact Section -->
+    <section id="contact" class="py-16 bg-blue-900 text-white">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row gap-12">
+                
+                <!-- Contact Info -->
+                <div class="w-full md:w-1/2">
+                    <h2 class="text-3xl font-bold mb-6">Contact Us</h2>
+                    <p class="mb-8 text-blue-200">Admissions are open! Call us or visit our campus to know more about the fee structure and curriculum.</p>
+                    
+                    <div class="space-y-6">
+                        <div class="flex items-start gap-4">
+                            <div class="bg-orange-500 p-3 rounded-full">
+                                <i data-lucide="map-pin" class="w-6 h-6"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-lg">Address</h4>
+                                <p class="text-blue-100">Joykrishnapur<br>P.S. - Bishnupur, Dist - Bankura<br>West Bengal - 722122</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-4">
+                            <div class="bg-orange-500 p-3 rounded-full">
+                                <i data-lucide="phone" class="w-6 h-6"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-lg">Phone</h4>
+                                <a href="tel:9434007236" class="text-blue-100 hover:text-white text-xl font-semibold">9434007236</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Simple Map Placeholder / CTA Form -->
+                <div class="w-full md:w-1/2 bg-white text-slate-800 rounded-xl p-8">
+                    <h3 class="text-2xl font-bold text-blue-900 mb-4">Visit Us Today</h3>
+                    <div class="bg-slate-100 w-full h-64 rounded-lg overflow-hidden mb-6 shadow-inner">
+                        <iframe 
+                            width="100%" 
+                            height="100%" 
+                            frameborder="0" 
+                            style="border:0" 
+                            src="https://maps.google.com/maps?q=Joykrishnapur%2C+Bishnupur%2C+Bankura%2C+West+Bengal+722122&t=&z=14&ie=UTF8&iwloc=&output=embed"
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                    <div class="text-center">
+                         <a href="tel:9434007236" class="inline-block w-full py-4 bg-green-600 text-white font-bold rounded-lg hover:bg-green-700 transition">
+                            <i data-lucide="phone-call" class="inline w-5 h-5 mr-2"></i> Call to Inquire
+                        </a>
+                        <p class="mt-4 text-sm text-slate-500">School Office Hours: 9:00 AM - 2:00 PM</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-400 py-8 border-t border-slate-800">
+        <div class="container mx-auto px-4 text-center">
+            <p>&copy; 2025 Satyen Bose Academy. All rights reserved.</p>
+            <p class="text-sm mt-2">Nurturing Minds in Joykrishnapur.</p>
+        </div>
+    </footer>
+
+    <!-- Initialize Icons -->
+    <script>
+        lucide.createIcons();
+
+        function toggleMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+    </script>
+</body>
+</html>
+
+```
