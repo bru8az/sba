@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Vision | Satyen Bose Academy</title>
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Playfair Display for headings, Nunito for body -->
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <!-- Custom CSS for specific overrides and animations -->
+    <style>
+        body {
+            font-family: 'Nunito', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            background-color: #fcfcfc;
+        }
+        h1, h2, h3, h4, h5, h6, .font-serif {
+            font-family: 'Playfair Display', serif;
+        }
+        
+        /* Subtle custom animations */
+        .fade-in-up {
+            animation: fadeInUp 0.8s ease-out forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .delay-100 { animation-delay: 100ms; }
+        .delay-200 { animation-delay: 200ms; }
+        .delay-300 { animation-delay: 300ms; }
+        .delay-400 { animation-delay: 400ms; }
+        .delay-500 { animation-delay: 500ms; }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Mobile Menu Transition */
+        #mobile-menu {
+            transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out;
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+        }
+        #mobile-menu.open {
+            max-height: 400px;
+            opacity: 1;
+        }
+
+        /* Ethereal glowing background for the vision hero */
+        .glow-bg {
+            background: radial-gradient(circle at 50% 50%, rgba(14, 165, 233, 0.1) 0%, rgba(12, 74, 110, 1) 100%);
+        }
+
+        /* Quotation mark styling */
+        .quote-mark {
+            font-size: 8rem;
+            line-height: 1;
+            font-family: 'Playfair Display', serif;
+            color: rgba(250, 204, 21, 0.2); /* Secondary color with low opacity */
+            position: absolute;
+            z-index: 0;
+        }
+    </style>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            500: '#0ea5e9', // Sky blue
+                            600: '#0284c7',
+                            900: '#0c4a6e',
+                        },
+                        secondary: {
+                            400: '#facc15', // Warm yellow
+                            500: '#eab308',
+                        },
+                        accent: '#f43f5e' // Soft red for highlights
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="text-gray-800">
+
+<!-- Navigation -->
+<nav class="fixed w-full z-50 bg-white/90 backdrop-blur-md shadow-sm transition-all duration-300" id="navbar">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-20">
+            <!-- Logo area -->
+            <a href="index.html" class="flex-shrink-0 flex items-center gap-3 cursor-pointer group">
+                <div class="w-10 h-10 rounded-full bg-primary-500 flex items-center justify-center text-white text-xl shadow-lg shadow-primary-500/30 group-hover:scale-105 transition-transform">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                </div>
+                <div class="flex flex-col">
+                    <span class="font-serif font-bold text-xl leading-none text-primary-900 tracking-wide">Satyen Bose Academy</span>
+                    <span class="text-xs text-gray-500 font-semibold tracking-widest uppercase mt-1">Estd. 2025 • English Medium</span>
+                </div>
+            </a>
+
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="index.html" class="text-gray-600 hover:text-primary-600 font-semibold transition-colors duration-200">Home</a>
+                <a href="about.html" class="text-gray-600 hover:text-primary-600 font-semibold transition-colors duration-200">About</a>
+                <a href="vision.html" class="text-primary-600 font-semibold transition-colors duration-200 border-b-2 border-primary-600 pb-1">Vision</a>
+                <a href="team.html" class="text-gray-600 hover:text-primary-600 font-semibold transition-colors duration-200">Team</a>
+                <a href="activities.html" class="text-gray-600 hover:text-primary-600 font-semibold transition-colors duration-200">Activities</a>
+                <a href="gallery.html" class="text-gray-600 hover:text-primary-600 font-semibold transition-colors duration-200">Gallery</a>
+                <a href="contact.html" class="text-gray-600 hover:text-primary-600 font-semibold transition-colors duration-200">Contact</a>
+                <a href="admission.html" class="bg-primary-500 hover:bg-primary-600 text-white px-6 py-2 rounded-full font-bold shadow-md shadow-primary-500/30 transition-all hover:scale-105 active:scale-95">Admission</a>
+            </div>
+
+            <!-- Mobile menu button -->
+            <div class="md:hidden flex items-center">
+                <button id="mobile-menu-btn" class="text-gray-600 hover:text-primary-600 focus:outline-none p-2">
+                    <i class="fa-solid fa-bars text-2xl"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="md:hidden bg-white border-t border-gray-100 shadow-lg absolute w-full">
+        <div class="px-4 pt-2 pb-6 space-y-2 flex flex-col">
+            <a href="index.html" class="block px-3 py-3 rounded-md text-base font-semibold text-gray-700 hover:text-primary-600 hover:bg-primary-50">Home</a>
+            <a href="about.html" class="block px-3 py-3 rounded-md text-base font-semibold text-gray-700 hover:text-primary-600 hover:bg-primary-50">About</a>
+            <a href="vision.html" class="block px-3 py-3 rounded-md text-base font-semibold text-primary-600 bg-primary-50">Vision</a>
+            <a href="team.html" class="block px-3 py-3 rounded-md text-base font-semibold text-gray-700 hover:text-primary-600 hover:bg-primary-50">Team</a>
+            <a href="activities.html" class="block px-3 py-3 rounded-md text-base font-semibold text-gray-700 hover:text-primary-600 hover:bg-primary-50">Activities</a>
+            <a href="gallery.html" class="block px-3 py-3 rounded-md text-base font-semibold text-gray-700 hover:text-primary-600 hover:bg-primary-50">Gallery</a>
+            <a href="contact.html" class="block px-3 py-3 rounded-md text-base font-semibold text-gray-700 hover:text-primary-600 hover:bg-primary-50">Contact</a>
+            <a href="admission.html" class="block px-3 py-3 mt-4 text-center rounded-full text-base font-bold text-white bg-primary-500 hover:bg-primary-600 shadow-md">Admissions Open</a>
+        </div>
+    </div>
+</nav>
+
+<!-- Page Header -->
+<header class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden bg-primary-900 glow-bg">
+    <!-- Ethereal floating shapes representing the future/ideas -->
+    <div class="absolute top-1/4 left-1/4 w-64 h-64 bg-primary-500 rounded-full mix-blend-screen filter blur-[80px] opacity-40 animate-pulse" style="animation-duration: 4s;"></div>
+    <div class="absolute bottom-1/4 right-1/4 w-80 h-80 bg-secondary-500 rounded-full mix-blend-screen filter blur-[100px] opacity-20 animate-pulse" style="animation-duration: 6s;"></div>
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-accent rounded-full mix-blend-screen filter blur-[120px] opacity-10"></div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+        <span class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/20 text-secondary-400 font-bold text-sm tracking-widest uppercase mb-6 fade-in-up backdrop-blur-sm">
+            <i class="fa-regular fa-eye"></i> Looking Ahead
+        </span>
+        <h1 class="text-4xl sm:text-5xl lg:text-7xl font-bold text-white leading-tight mb-6 fade-in-up delay-100 font-serif">
+            Our <span class="text-transparent bg-clip-text bg-gradient-to-r from-secondary-400 to-white">Vision</span>
+        </h1>
+        <p class="text-lg sm:text-xl text-primary-100 max-w-2xl mx-auto fade-in-up delay-200 font-light">
+            Shaping the architects of tomorrow through foresight, empathy, and uncompromising dedication to foundational growth.
+        </p>
+    </div>
+    
+    <!-- Elegant diagonal separator -->
+    <div class="absolute bottom-0 left-0 w-full overflow-hidden leading-none z-10">
+        <svg class="relative block w-full h-16 md:h-24" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+            <path d="M1200 120L0 16.48V0h1200v120z" fill="#fcfcfc"></path>
+        </svg>
+    </div>
+</header>
+
+<!-- Core Manifesto / The Quote -->
+<section class="pt-16 pb-20 md:pt-24 md:pb-32 bg-[#fcfcfc] relative">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+        
+        <div class="text-center relative z-10 fade-in-up">
+            <div class="quote-mark top-0 left-0 md:-ml-8 md:-mt-8 -translate-y-1/2">"</div>
+            
+            <h2 class="text-3xl md:text-5xl lg:text-6xl font-serif font-bold text-gray-900 leading-tight mb-8">
+                At Satyen Bose Academy, we look <span class="text-primary-600 relative inline-block">
+                    ahead of time
+                    <svg class="absolute w-full h-3 -bottom-1 left-0 text-secondary-400/50" viewBox="0 0 100 10" preserveAspectRatio="none"><path d="M0 5 Q 50 10 100 5" stroke="currentColor" stroke-width="4" fill="none"/></svg>
+                </span> and prepare your young learners for the future.
+            </h2>
+            
+            <div class="quote-mark bottom-0 right-0 md:-mr-8 md:-mb-16 translate-y-1/4 rotate-180">"</div>
+        </div>
+
+        <div class="mt-16 text-center max-w-3xl mx-auto fade-in-up delay-200">
+            <p class="text-xl md:text-2xl text-gray-600 font-light leading-relaxed">
+                We don't just teach students. We are here to construct the very fabric of their being.
+            </p>
+        </div>
+
+    </div>
+</section>
+
+<!-- The Three Pillars -->
+<section class="py-20 relative bg-white border-y border-gray-100 overflow-hidden">
+    <!-- Decorative background elements -->
+    <div class="absolute top-0 right-0 w-64 h-64 bg-primary-50 rounded-bl-[100px] opacity-70"></div>
+    <div class="absolute bottom-0 left-0 w-64 h-64 bg-secondary-50 rounded-tr-[100px] opacity-70"></div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="grid lg:grid-cols-3 gap-8">
+            
+            <!-- Pillar 1: Character -->
+            <div class="bg-[#fcfcfc] rounded-[32px] p-10 shadow-lg shadow-gray-200/50 border border-gray-100 hover:-translate-y-2 transition-transform duration-300 fade-in-up delay-100 group">
+                <div class="w-20 h-20 bg-primary-100 rounded-2xl flex items-center justify-center text-primary-600 text-4xl mb-8 group-hover:scale-110 group-hover:bg-primary-600 group-hover:text-white transition-all duration-300">
+                    <i class="fa-solid fa-gem"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-gray-900 mb-4 font-serif">We Build Characters</h3>
+                <p class="text-gray-600 leading-relaxed font-light">
+                    Academic excellence is only half the journey. We focus heavily on moral integrity, empathy, and ethical grounding. A strong character acts as the compass that guides our students through the complexities of the modern world.
+                </p>
+            </div>
+
+            <!-- Pillar 2: Confidence -->
+            <div class="bg-[#fcfcfc] rounded-[32px] p-10 shadow-lg shadow-gray-200/50 border border-gray-100 hover:-translate-y-2 transition-transform duration-300 fade-in-up delay-200 group relative">
+                <div class="absolute top-0 right-0 w-32 h-32 bg-secondary-100 rounded-bl-full opacity-50 -mr-2 -mt-2 z-0 group-hover:bg-secondary-200 transition-colors"></div>
+                <div class="relative z-10">
+                    <div class="w-20 h-20 bg-secondary-100 rounded-2xl flex items-center justify-center text-secondary-500 text-4xl mb-8 group-hover:scale-110 group-hover:bg-secondary-500 group-hover:text-white transition-all duration-300">
+                        <i class="fa-solid fa-person-rays"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-4 font-serif">We Build Confidence</h3>
+                    <p class="text-gray-600 leading-relaxed font-light">
+                        Fear of failure stifles innovation. Through our playful and scientific approach, we encourage risk-taking, questioning, and curiosity. We build a psychological safety net so every child feels confident to express their unique voice.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Pillar 3: Humans -->
+            <div class="bg-[#fcfcfc] rounded-[32px] p-10 shadow-lg shadow-gray-200/50 border border-gray-100 hover:-translate-y-2 transition-transform duration-300 fade-in-up delay-300 group">
+                <div class="w-20 h-20 bg-accent/10 rounded-2xl flex items-center justify-center text-accent text-4xl mb-8 group-hover:scale-110 group-hover:bg-accent group-hover:text-white transition-all duration-300">
+                    <i class="fa-solid fa-hands-holding-child"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-gray-900 mb-4 font-serif">We Build Humans</h3>
+                <p class="text-gray-600 leading-relaxed font-light">
+                    Our ultimate goal is to nurture well-rounded individuals capable of profound societal contribution. We are shaping citizens who will step up, take responsibility, and make a positive impact when it matters the most.
+                </p>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- Why Looking Ahead Matters -->
+<section class="py-20 md:py-32 bg-primary-900 relative overflow-hidden">
+    <!-- Abstract futuristic grid -->
+    <div class="absolute inset-0 opacity-[0.03]" style="background-image: linear-gradient(to right, #ffffff 1px, transparent 1px), linear-gradient(to bottom, #ffffff 1px, transparent 1px); background-size: 40px 40px;"></div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="grid lg:grid-cols-2 gap-16 items-center">
+            
+            <!-- Text Content -->
+            <div class="fade-in-up">
+                <span class="text-secondary-400 font-bold tracking-widest uppercase text-sm mb-4 block">The Future is Now</span>
+                <h2 class="text-3xl md:text-5xl font-bold text-white leading-tight mb-8 font-serif">
+                    Preparing for a world that doesn't yet <span class="italic font-light">exist</span>.
+                </h2>
+                <div class="space-y-6 text-lg text-primary-100 font-light leading-relaxed">
+                    <p>
+                        The world is evolving at an unprecedented pace. The challenges our children will face in 2040 cannot be solved with the orthodox educational models of the past.
+                    </p>
+                    <p>
+                        By focusing on the age group of 3 to 5 years (Nursery, LKG, UKG), we are working with the most critical window of human cognitive development. This is when the neural pathways for critical thinking, emotional intelligence, and resilience are formed.
+                    </p>
+                    <p>
+                        Our scientific methodology—<span class="text-white font-semibold">breaking concepts to dust</span>—ensures that instead of rote memorization, children understand the <em class="text-secondary-400 not-italic">"why"</em> and <em class="text-secondary-400 not-italic">"how."</em> This foundational adaptability is what will empower them to thrive, no matter what the future holds.
+                    </p>
+                </div>
+                
+                <div class="mt-10">
+                    <a href="about.html" class="inline-flex items-center gap-2 bg-transparent border border-white/30 text-white hover:bg-white hover:text-primary-900 px-8 py-4 rounded-full font-bold transition-colors">
+                        Read Our Methodology <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Graphic / Image -->
+            <div class="relative fade-in-up delay-200">
+                <!-- Glowing backdrop -->
+                <div class="absolute inset-0 bg-secondary-400 rounded-full mix-blend-multiply filter blur-3xl opacity-30 transform scale-110 translate-x-10 translate-y-10"></div>
+                
+                <div class="relative rounded-3xl overflow-hidden border border-white/10 shadow-2xl">
+                    <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Child looking towards the future" class="w-full h-auto object-cover aspect-square md:aspect-[4/5]">
+                    
+                    <!-- Overlay Gradient -->
+                    <div class="absolute inset-0 bg-gradient-to-t from-primary-900 via-transparent to-transparent opacity-80"></div>
+                    
+                    <!-- Floating stat -->
+                    <div class="absolute bottom-8 left-8 right-8 bg-white/10 backdrop-blur-md border border-white/20 p-6 rounded-2xl">
+                        <div class="flex items-center gap-4 text-white">
+                            <div class="w-12 h-12 rounded-full bg-secondary-400 flex items-center justify-center text-primary-900 text-xl font-black shrink-0">
+                                <i class="fa-solid fa-infinity"></i>
+                            </div>
+                            <div>
+                                <p class="font-bold text-lg leading-tight">Infinite Potential</p>
+                                <p class="text-sm text-primary-100 font-light">Every child holds the power to shape tomorrow.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="bg-white pt-16 pb-8 border-t border-gray-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid md:grid-cols-3 gap-12 mb-12">
+            
+            <!-- Brand -->
+            <div class="col-span-1">
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="w-10 h-10 rounded-full bg-primary-500 flex items-center justify-center text-white text-lg">
+                        <i class="fa-solid fa-graduation-cap"></i>
+                    </div>
+                    <span class="font-serif font-bold text-xl text-primary-900">Satyen Bose Academy</span>
+                </div>
+                <p class="text-gray-600 mb-6 font-light">Building characters, building confidence, building humans for tomorrow.</p>
+                <div class="flex space-x-4">
+                    <a href="#" class="w-10 h-10 rounded-full bg-gray-50 border border-gray-200 flex items-center justify-center text-gray-500 hover:text-primary-600 hover:border-primary-600 transition-colors shadow-sm"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#" class="w-10 h-10 rounded-full bg-gray-50 border border-gray-200 flex items-center justify-center text-gray-500 hover:text-primary-600 hover:border-primary-600 transition-colors shadow-sm"><i class="fa-brands fa-instagram"></i></a>
+                </div>
+            </div>
+
+            <!-- Quick Links -->
+            <div class="col-span-1 md:ml-auto">
+                <h4 class="font-bold text-gray-900 mb-6 uppercase tracking-wider text-sm">Explore</h4>
+                <ul class="space-y-3 font-medium">
+                    <li><a href="index.html" class="text-gray-600 hover:text-primary-600 transition-colors">Home</a></li>
+                    <li><a href="about.html" class="text-gray-600 hover:text-primary-600 transition-colors">About Us</a></li>
+                    <li><a href="vision.html" class="text-primary-600 font-semibold transition-colors">Our Vision</a></li>
+                    <li><a href="team.html" class="text-gray-600 hover:text-primary-600 transition-colors">Faculty & Team</a></li>
+                    <li><a href="activities.html" class="text-gray-600 hover:text-primary-600 transition-colors">Activities</a></li>
+                </ul>
+            </div>
+
+            <!-- Admissions Info -->
+            <div class="col-span-1">
+                <h4 class="font-bold text-gray-900 mb-6 uppercase tracking-wider text-sm">Information</h4>
+                <ul class="space-y-3 font-medium">
+                    <li class="flex items-start gap-3 text-gray-600">
+                        <i class="fa-solid fa-location-dot mt-1 text-secondary-500"></i>
+                        <span>Joykrishnapur, Bishnupur,<br>Bankura - 722122</span>
+                    </li>
+                    <li class="flex items-center gap-3 text-gray-600 mt-2">
+                        <i class="fa-solid fa-phone text-secondary-500"></i>
+                        <span>9434007236</span>
+                    </li>
+                    <li class="text-gray-600 mt-4 pt-4 border-t border-gray-100">
+                        <span class="font-bold text-gray-800">Classes:</span> Nursery, LKG, UKG
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="border-t border-gray-200 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-gray-500 font-medium">
+            <p>&copy; <script>document.write(new Date().getFullYear())</script> Satyen Bose Academy. All rights reserved.</p>
+            <p>Designed with <i class="fa-solid fa-heart text-accent mx-1"></i> for future leaders.</p>
+        </div>
+    </div>
+</footer>
+
+<script>
+    // Mobile Menu Toggle Logic
+    const btn = document.getElementById('mobile-menu-btn');
+    const menu = document.getElementById('mobile-menu');
+    const icon = btn.querySelector('i');
+
+    btn.addEventListener('click', () => {
+        menu.classList.toggle('open');
+        if (menu.classList.contains('open')) {
+            icon.classList.remove('fa-bars');
+            icon.classList.add('fa-xmark');
+        } else {
+            icon.classList.remove('fa-xmark');
+            icon.classList.add('fa-bars');
+        }
+    });
+
+    // Navbar scroll effect
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 20) {
+            navbar.classList.add('shadow-md');
+            navbar.classList.replace('bg-white/90', 'bg-white');
+        } else {
+            navbar.classList.remove('shadow-md');
+            navbar.classList.replace('bg-white', 'bg-white/90');
+        }
+    });
+</script>
+</body>
+</html>
