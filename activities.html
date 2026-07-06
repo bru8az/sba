@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Extracurricular Activities | Satyen Bose Academy</title>
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Playfair Display for headings, Nunito for body -->
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <!-- Custom CSS for specific overrides and animations -->
+    <style>
+        body {
+            font-family: 'Nunito', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            background-color: #fcfcfc;
+        }
+        h1, h2, h3, h4, h5, h6, .font-serif {
+            font-family: 'Playfair Display', serif;
+        }
+        
+        /* Subtle custom animations */
+        .fade-in-up {
+            animation: fadeInUp 0.8s ease-out forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .delay-100 { animation-delay: 100ms; }
+        .delay-200 { animation-delay: 200ms; }
+        .delay-300 { animation-delay: 300ms; }
+        .delay-400 { animation-delay: 400ms; }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Floating elements animation */
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+        .animate-float-delayed {
+            animation: float 7s ease-in-out infinite;
+            animation-delay: 2s;
+        }
+
+        /* Mobile Menu Transition */
+        #mobile-menu {
+            transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out;
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+        }
+        #mobile-menu.open {
+            max-height: 400px;
+            opacity: 1;
+        }
+
+        /* Abstract Pattern for Hero */
+        .activity-pattern {
+            background-color: #fcfcfc;
+            background-image: 
+                radial-gradient(circle at 100% 150%, #facc15 24%, transparent 24%),
+                radial-gradient(circle at 0% 50%, #0ea5e9 15%, transparent 15%);
+            background-size: 100px 100px;
+            opacity: 0.1;
+        }
+
+        /* Activity Card Styling */
+        .activity-card {
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .activity-card:hover {
+            transform: translateY(-12px) scale(1.02);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            500: '#0ea5e9', // Sky blue
+                            600: '#0284c7',
+                            900: '#0c4a6e',
+                        },
+                        secondary: {
+                            400: '#facc15', // Warm yellow
+                            500: '#eab308',
+                        },
+                        accent: '#f43f5e' // Soft red for highlights
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="text-gray-800">
+
+<!-- Navigation -->
+<nav class="fixed w-full z-50 bg-white/90 backdrop-blur-md shadow-sm transition-all duration-300" id="navbar">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-20">
+            <!-- Logo area -->
+            <a href="index.html" class="flex-shrink-0 flex items-center gap-3 cursor-pointer group">
+                <div class="w-10 h-10 rounded-full bg-primary-500 flex items-center justify-center text-white text-xl shadow-lg shadow-primary-500/30 group-hover:scale-105 transition-transform">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                </div>
+                <div class="flex flex-col">
+                    <span class="font-serif font-bold text-xl leading-none text-primary-900 tracking-wide">Satyen Bose Academy</span>
+                    <span class="text-xs text-gray-500 font-semibold tracking-widest uppercase mt-1">Estd. 2025 • English Medium</span>
+                </div>
+            </a>
+
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="index.html" class="text-gray-600 hover:text-primary-600 font-semibold transition-colors duration-200">Home</a>
+                <a href="about.html" class="text-gray-600 hover:text-primary-600 font-semibold transition-colors duration-200">About</a>
+                <a href="vision.html" class="text-gray-600 hover:text-primary-600 font-semibold transition-colors duration-200">Vision</a>
+                <a href="academics.html" class="text-gray-600 hover:text-primary-600 font-semibold transition-colors duration-200">Academics</a>
+                <a href="team.html" class="text-gray-600 hover:text-primary-600 font-semibold transition-colors duration-200">Team</a>
+                <a href="activities.html" class="text-primary-600 font-semibold transition-colors duration-200 border-b-2 border-primary-600 pb-1">Activities</a>
+                <a href="gallery.html" class="text-gray-600 hover:text-primary-600 font-semibold transition-colors duration-200">Gallery</a>
+                <a href="contact.html" class="text-gray-600 hover:text-primary-600 font-semibold transition-colors duration-200">Contact</a>
+                <a href="admission.html" class="bg-primary-500 hover:bg-primary-600 text-white px-6 py-2 rounded-full font-bold shadow-md shadow-primary-500/30 transition-all hover:scale-105 active:scale-95">Admission</a>
+            </div>
+
+            <!-- Mobile menu button -->
+            <div class="md:hidden flex items-center">
+                <button id="mobile-menu-btn" class="text-gray-600 hover:text-primary-600 focus:outline-none p-2">
+                    <i class="fa-solid fa-bars text-2xl"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="md:hidden bg-white border-t border-gray-100 shadow-lg absolute w-full">
+        <div class="px-4 pt-2 pb-6 space-y-2 flex flex-col">
+            <a href="index.html" class="block px-3 py-3 rounded-md text-base font-semibold text-gray-700 hover:text-primary-600 hover:bg-primary-50">Home</a>
+            <a href="about.html" class="block px-3 py-3 rounded-md text-base font-semibold text-gray-700 hover:text-primary-600 hover:bg-primary-50">About</a>
+            <a href="vision.html" class="block px-3 py-3 rounded-md text-base font-semibold text-gray-700 hover:text-primary-600 hover:bg-primary-50">Vision</a>
+            <a href="academics.html" class="block px-3 py-3 rounded-md text-base font-semibold text-gray-700 hover:text-primary-600 hover:bg-primary-50">Academics</a>
+            <a href="team.html" class="block px-3 py-3 rounded-md text-base font-semibold text-gray-700 hover:text-primary-600 hover:bg-primary-50">Team</a>
+            <a href="activities.html" class="block px-3 py-3 rounded-md text-base font-semibold text-primary-600 bg-primary-50">Activities</a>
+            <a href="gallery.html" class="block px-3 py-3 rounded-md text-base font-semibold text-gray-700 hover:text-primary-600 hover:bg-primary-50">Gallery</a>
+            <a href="contact.html" class="block px-3 py-3 rounded-md text-base font-semibold text-gray-700 hover:text-primary-600 hover:bg-primary-50">Contact</a>
+            <a href="admission.html" class="block px-3 py-3 mt-4 text-center rounded-full text-base font-bold text-white bg-primary-500 hover:bg-primary-600 shadow-md">Admissions Open</a>
+        </div>
+    </div>
+</nav>
+
+<!-- Page Header -->
+<header class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden bg-white border-b border-gray-100">
+    <div class="absolute inset-0 activity-pattern"></div>
+    
+    <!-- Floating abstract shapes -->
+    <div class="absolute top-20 right-[10%] w-32 h-32 bg-secondary-400/20 rounded-full blur-2xl animate-float"></div>
+    <div class="absolute bottom-10 left-[10%] w-40 h-40 bg-accent/10 rounded-full blur-2xl animate-float-delayed"></div>
+    <div class="absolute top-1/2 right-[30%] w-20 h-20 bg-primary-500/20 rounded-full blur-xl animate-float"></div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="flex flex-col items-center text-center max-w-3xl mx-auto">
+            <span class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary-50 border border-primary-100 text-primary-600 font-bold text-sm tracking-widest uppercase mb-6 fade-in-up">
+                <i class="fa-solid fa-palette text-secondary-500"></i> Beyond The Classroom
+            </span>
+            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight mb-6 fade-in-up delay-100 font-serif">
+                Joyful Learning Through <br>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary-600 to-accent">Play & Activity</span>
+            </h1>
+            <p class="text-lg sm:text-xl text-gray-600 fade-in-up delay-200 font-light leading-relaxed">
+                We believe that education must engage the mind, body, and spirit. Our vibrant extracurricular programs are carefully woven into our scientific pedagogy to build a child's complete foundation.
+            </p>
+        </div>
+    </div>
+</header>
+
+<!-- Philosophy Intro -->
+<section class="py-16 bg-gray-50/50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="bg-white rounded-[32px] p-8 md:p-12 shadow-sm border border-gray-100 flex flex-col md:flex-row items-center gap-10 fade-in-up">
+            <div class="w-full md:w-1/2">
+                <h2 class="text-2xl md:text-3xl font-serif font-bold text-gray-900 mb-4">No Boring Orthodox Methods</h2>
+                <p class="text-gray-600 leading-relaxed font-light mb-4">
+                    Traditional schooling often restricts a child's natural energy. At Satyen Bose Academy, we channel that energy into constructive, character-building activities.
+                </p>
+                <p class="text-gray-600 leading-relaxed font-light">
+                    Every activity is designed to complement our core teaching philosophy: <strong class="text-primary-600">breaking concepts down to dust</strong>. Through movement, art, and interaction, children unconsciously grasp complex developmental skills in the most natural way possible—by playing.
+                </p>
+            </div>
+            <div class="w-full md:w-1/2 grid grid-cols-2 gap-4">
+                <div class="bg-primary-50 p-6 rounded-2xl flex flex-col items-center justify-center text-center">
+                    <i class="fa-solid fa-child-reaching text-3xl text-primary-500 mb-3"></i>
+                    <h4 class="font-bold text-primary-900">Physical<br>Growth</h4>
+                </div>
+                <div class="bg-secondary-50 p-6 rounded-2xl flex flex-col items-center justify-center text-center transform translate-y-4">
+                    <i class="fa-solid fa-puzzle-piece text-3xl text-secondary-500 mb-3"></i>
+                    <h4 class="font-bold text-secondary-900">Cognitive<br>Agility</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- The Activities Deep Dive -->
+<section class="py-20 bg-[#fcfcfc] relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        
+        <div class="text-center mb-16 fade-in-up">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 font-serif mb-4">Our Curated Activities</h2>
+            <div class="w-24 h-1 bg-secondary-400 mx-auto rounded-full"></div>
+        </div>
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            
+            <!-- 1. Yoga -->
+            <div class="activity-card bg-white rounded-[32px] overflow-hidden shadow-sm border border-gray-100 fade-in-up delay-100">
+                <div class="h-48 bg-purple-100 relative overflow-hidden flex items-center justify-center">
+                    <!-- Placeholder visual since we can't use real photos seamlessly -->
+                    <div class="absolute inset-0 opacity-20" style="background-image: radial-gradient(circle at 2px 2px, rgba(168, 85, 247, 0.4) 1px, transparent 0); background-size: 20px 20px;"></div>
+                    <i class="fa-solid fa-om text-7xl text-purple-400 relative z-10 animate-pulse" style="animation-duration: 4s;"></i>
+                </div>
+                <div class="p-8 relative">
+                    <div class="absolute -top-10 right-8 w-16 h-16 bg-white rounded-2xl shadow-lg flex items-center justify-center text-2xl text-purple-500 border border-purple-50">
+                        <i class="fa-solid fa-spa"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 font-serif mb-3">Yoga & Mindfulness</h3>
+                    <p class="text-gray-600 font-light leading-relaxed mb-4">
+                        Cultivating focus, physical balance, and inner calm. Our gentle yoga sessions help young children develop body awareness and teach them early techniques for managing emotions and starting the day centered.
+                    </p>
+                    <span class="inline-flex items-center text-xs font-bold uppercase tracking-wider text-purple-600 bg-purple-50 px-3 py-1 rounded-full">Focus & Balance</span>
+                </div>
+            </div>
+
+            <!-- 2. Drawing -->
+            <div class="activity-card bg-white rounded-[32px] overflow-hidden shadow-sm border border-gray-100 fade-in-up delay-200">
+                <div class="h-48 bg-pink-100 relative overflow-hidden flex items-center justify-center">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-pink-200 rounded-bl-full opacity-50"></div>
+                    <div class="absolute bottom-0 left-0 w-24 h-24 bg-pink-300 rounded-tr-full opacity-30"></div>
+                    <i class="fa-solid fa-palette text-7xl text-pink-400 relative z-10 animate-float"></i>
+                </div>
+                <div class="p-8 relative">
+                    <div class="absolute -top-10 right-8 w-16 h-16 bg-white rounded-2xl shadow-lg flex items-center justify-center text-2xl text-pink-500 border border-pink-50">
+                        <i class="fa-solid fa-paintbrush"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 font-serif mb-3">Art & Drawing</h3>
+                    <p class="text-gray-600 font-light leading-relaxed mb-4">
+                        Encouraging boundless creativity and imagination. Before children can write words, they communicate through art. Drawing helps solidify visual expression and pre-writing wrist control.
+                    </p>
+                    <span class="inline-flex items-center text-xs font-bold uppercase tracking-wider text-pink-600 bg-pink-50 px-3 py-1 rounded-full">Creativity & Vision</span>
+                </div>
+            </div>
+
+            <!-- 3. Brain-Gym -->
+            <div class="activity-card bg-white rounded-[32px] overflow-hidden shadow-sm border border-gray-100 fade-in-up delay-300">
+                <div class="h-48 bg-blue-100 relative overflow-hidden flex items-center justify-center">
+                    <div class="absolute inset-0 flex items-center justify-center opacity-30">
+                        <svg class="w-full h-full" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                            <path fill="none" stroke="#3b82f6" stroke-width="2" d="M10,50 Q25,25 50,50 T90,50" />
+                            <path fill="none" stroke="#3b82f6" stroke-width="2" d="M10,70 Q30,100 50,70 T90,70" />
+                        </svg>
+                    </div>
+                    <i class="fa-solid fa-brain text-7xl text-blue-400 relative z-10"></i>
+                </div>
+                <div class="p-8 relative">
+                    <div class="absolute -top-10 right-8 w-16 h-16 bg-white rounded-2xl shadow-lg flex items-center justify-center text-2xl text-blue-500 border border-blue-50">
+                        <i class="fa-solid fa-lightbulb"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 font-serif mb-3">Brain-Gym</h3>
+                    <p class="text-gray-600 font-light leading-relaxed mb-4">
+                        Specific, scientifically-backed kinetic exercises designed to enhance cognitive function, memory, and bilateral coordination. It literally prepares the brain's neural pathways for academic learning.
+                    </p>
+                    <span class="inline-flex items-center text-xs font-bold uppercase tracking-wider text-blue-600 bg-blue-50 px-3 py-1 rounded-full">Cognitive Agility</span>
+                </div>
+            </div>
+
+            <!-- 4. Conversation and Fun -->
+            <div class="activity-card bg-white rounded-[32px] overflow-hidden shadow-sm border border-gray-100 fade-in-up delay-100 lg:col-span-1 md:col-span-2">
+                <div class="h-48 bg-orange-100 relative overflow-hidden flex items-center justify-center">
+                    <div class="flex gap-4">
+                        <i class="fa-solid fa-comment-dots text-6xl text-orange-400 relative z-10 animate-float"></i>
+                        <i class="fa-solid fa-face-smile-beam text-5xl text-orange-300 relative z-10 animate-float-delayed mt-6"></i>
+                    </div>
+                </div>
+                <div class="p-8 relative">
+                    <div class="absolute -top-10 right-8 w-16 h-16 bg-white rounded-2xl shadow-lg flex items-center justify-center text-2xl text-orange-500 border border-orange-50">
+                        <i class="fa-solid fa-users"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 font-serif mb-3">Conversation & Fun</h3>
+                    <p class="text-gray-600 font-light leading-relaxed mb-4">
+                        We build confidence by giving children a voice. Through guided group discussions, storytelling, and playful banter in English, students overcome stage fright and develop strong social and linguistic skills.
+                    </p>
+                    <span class="inline-flex items-center text-xs font-bold uppercase tracking-wider text-orange-600 bg-orange-50 px-3 py-1 rounded-full">Social & Linguistic Skills</span>
+                </div>
+            </div>
+
+            <!-- 5. Fine Motor Training -->
+            <div class="activity-card bg-white rounded-[32px] overflow-hidden shadow-sm border border-gray-100 fade-in-up delay-200 lg:col-span-2 md:col-span-2">
+                <div class="h-48 bg-teal-100 relative overflow-hidden flex items-center justify-center">
+                    <div class="absolute inset-0 opacity-20" style="background-image: repeating-linear-gradient(45deg, #14b8a6 25%, transparent 25%, transparent 75%, #14b8a6 75%, #14b8a6), repeating-linear-gradient(45deg, #14b8a6 25%, transparent 25%, transparent 75%, #14b8a6 75%, #14b8a6); background-position: 0 0, 10px 10px; background-size: 20px 20px;"></div>
+                    <i class="fa-solid fa-hand-holding-hand text-7xl text-teal-400 relative z-10"></i>
+                </div>
+                <div class="p-8 relative">
+                    <div class="absolute -top-10 right-8 w-16 h-16 bg-white rounded-2xl shadow-lg flex items-center justify-center text-2xl text-teal-500 border border-teal-50">
+                        <i class="fa-solid fa-cubes"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 font-serif mb-3">Fine-Motor Training</h3>
+                    <p class="text-gray-600 font-light leading-relaxed mb-4 max-w-2xl">
+                        Before a child can master handwriting, they must master their hands. Our fine-motor training utilizes blocks, bead threading, clay molding, and precise picking exercises. This crucial step strengthens the small muscles in the fingers and hands, directly supporting our foundational goal of making future academic tasks effortless.
+                    </p>
+                    <span class="inline-flex items-center text-xs font-bold uppercase tracking-wider text-teal-600 bg-teal-50 px-3 py-1 rounded-full">Dexterity & Pre-writing</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- Action Banner -->
+<section class="py-12 bg-primary-50 border-t border-primary-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 class="text-2xl font-bold text-primary-900 font-serif mb-4">Want to see our activities in action?</h2>
+        <p class="text-gray-600 mb-6">Visit our campus and witness how we combine play with serious foundational learning.</p>
+        <div class="flex flex-wrap justify-center gap-4">
+            <a href="gallery.html" class="bg-white border-2 border-primary-200 text-primary-600 hover:bg-primary-50 px-6 py-3 rounded-full font-bold transition-colors shadow-sm">
+                View Gallery
+            </a>
+            <a href="admission.html" class="bg-primary-500 hover:bg-primary-600 text-white px-6 py-3 rounded-full font-bold transition-colors shadow-md shadow-primary-500/30">
+                Admission Info
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="bg-white pt-16 pb-8 border-t border-gray-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid md:grid-cols-3 gap-12 mb-12">
+            
+            <!-- Brand -->
+            <div class="col-span-1">
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="w-10 h-10 rounded-full bg-primary-500 flex items-center justify-center text-white text-lg">
+                        <i class="fa-solid fa-graduation-cap"></i>
+                    </div>
+                    <span class="font-serif font-bold text-xl text-primary-900">Satyen Bose Academy</span>
+                </div>
+                <p class="text-gray-600 mb-6 font-light">Building characters, building confidence, building humans for tomorrow.</p>
+                <div class="flex space-x-4">
+                    <a href="#" class="w-10 h-10 rounded-full bg-gray-50 border border-gray-200 flex items-center justify-center text-gray-500 hover:text-primary-600 hover:border-primary-600 transition-colors shadow-sm"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#" class="w-10 h-10 rounded-full bg-gray-50 border border-gray-200 flex items-center justify-center text-gray-500 hover:text-primary-600 hover:border-primary-600 transition-colors shadow-sm"><i class="fa-brands fa-instagram"></i></a>
+                </div>
+            </div>
+
+            <!-- Quick Links -->
+            <div class="col-span-1 md:ml-auto">
+                <h4 class="font-bold text-gray-900 mb-6 uppercase tracking-wider text-sm">Explore</h4>
+                <ul class="space-y-3 font-medium">
+                    <li><a href="index.html" class="text-gray-600 hover:text-primary-600 transition-colors">Home</a></li>
+                    <li><a href="about.html" class="text-gray-600 hover:text-primary-600 transition-colors">About Us</a></li>
+                    <li><a href="vision.html" class="text-gray-600 hover:text-primary-600 transition-colors">Our Vision</a></li>
+                    <li><a href="academics.html" class="text-gray-600 hover:text-primary-600 transition-colors">Academics</a></li>
+                    <li><a href="activities.html" class="text-primary-600 font-semibold transition-colors">Activities</a></li>
+                </ul>
+            </div>
+
+            <!-- Admissions Info -->
+            <div class="col-span-1">
+                <h4 class="font-bold text-gray-900 mb-6 uppercase tracking-wider text-sm">Information</h4>
+                <ul class="space-y-3 font-medium">
+                    <li class="flex items-start gap-3 text-gray-600">
+                        <i class="fa-solid fa-location-dot mt-1 text-secondary-500"></i>
+                        <span>Joykrishnapur, Bishnupur,<br>Bankura - 722122</span>
+                    </li>
+                    <li class="flex items-center gap-3 text-gray-600 mt-2">
+                        <i class="fa-solid fa-phone text-secondary-500"></i>
+                        <span>9434007236</span>
+                    </li>
+                    <li class="text-gray-600 mt-4 pt-4 border-t border-gray-100">
+                        <span class="font-bold text-gray-800">Classes:</span> Nursery, LKG, UKG
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="border-t border-gray-200 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-gray-500 font-medium">
+            <p>&copy; <script>document.write(new Date().getFullYear())</script> Satyen Bose Academy. All rights reserved.</p>
+            <p>Designed with <i class="fa-solid fa-heart text-accent mx-1"></i> for future leaders.</p>
+        </div>
+    </div>
+</footer>
+
+<script>
+    // Mobile Menu Toggle Logic
+    const btn = document.getElementById('mobile-menu-btn');
+    const menu = document.getElementById('mobile-menu');
+    const icon = btn.querySelector('i');
+
+    btn.addEventListener('click', () => {
+        menu.classList.toggle('open');
+        if (menu.classList.contains('open')) {
+            icon.classList.remove('fa-bars');
+            icon.classList.add('fa-xmark');
+        } else {
+            icon.classList.remove('fa-xmark');
+            icon.classList.add('fa-bars');
+        }
+    });
+
+    // Navbar scroll effect
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 20) {
+            navbar.classList.add('shadow-md');
+            navbar.classList.replace('bg-white/90', 'bg-white');
+        } else {
+            navbar.classList.remove('shadow-md');
+            navbar.classList.replace('bg-white', 'bg-white/90');
+        }
+    });
+</script>
+</body>
+</html>
