@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us | Satyen Bose Academy</title>
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Playfair Display for headings, Nunito for body -->
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <!-- Custom CSS for specific overrides and animations -->
+    <style>
+        body {
+            font-family: 'Nunito', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            background-color: #fcfcfc;
+        }
+        h1, h2, h3, h4, h5, h6, .font-serif {
+            font-family: 'Playfair Display', serif;
+        }
+        
+        /* Subtle custom animations */
+        .fade-in-up {
+            animation: fadeInUp 0.8s ease-out forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .delay-100 { animation-delay: 100ms; }
+        .delay-200 { animation-delay: 200ms; }
+        .delay-300 { animation-delay: 300ms; }
+        .delay-400 { animation-delay: 400ms; }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Mobile Menu Transition */
+        #mobile-menu {
+            transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out;
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+        }
+        #mobile-menu.open {
+            max-height: 400px;
+            opacity: 1;
+        }
+
+        /* Abstract Pattern Background */
+        .pattern-bg {
+            background-color: #0c4a6e;
+            background-image: radial-gradient(#ffffff 0.5px, transparent 0.5px), radial-gradient(#ffffff 0.5px, #0c4a6e 0.5px);
+            background-size: 20px 20px;
+            background-position: 0 0, 10px 10px;
+            opacity: 0.05;
+        }
+    </style>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            500: '#0ea5e9', // Sky blue
+                            600: '#0284c7',
+                            900: '#0c4a6e',
+                        },
+                        secondary: {
+                            400: '#facc15', // Warm yellow
+                            500: '#eab308',
+                        },
+                        accent: '#f43f5e' // Soft red for highlights
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="text-gray-800">
+
+<!-- Navigation -->
+<nav class="fixed w-full z-50 bg-white/90 backdrop-blur-md shadow-sm transition-all duration-300" id="navbar">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-20">
+            <!-- Logo area -->
+            <a href="index.html" class="flex-shrink-0 flex items-center gap-3 cursor-pointer group">
+                <div class="w-10 h-10 rounded-full bg-primary-500 flex items-center justify-center text-white text-xl shadow-lg shadow-primary-500/30 group-hover:scale-105 transition-transform">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                </div>
+                <div class="flex flex-col">
+                    <span class="font-serif font-bold text-xl leading-none text-primary-900 tracking-wide">Satyen Bose Academy</span>
+                    <span class="text-xs text-gray-500 font-semibold tracking-widest uppercase mt-1">Estd. 2025 • English Medium</span>
+                </div>
+            </a>
+
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="index.html" class="text-gray-600 hover:text-primary-600 font-semibold transition-colors duration-200">Home</a>
+                <a href="about.html" class="text-primary-600 font-semibold transition-colors duration-200 border-b-2 border-primary-600 pb-1">About</a>
+                <a href="vision.html" class="text-gray-600 hover:text-primary-600 font-semibold transition-colors duration-200">Vision</a>
+                <a href="team.html" class="text-gray-600 hover:text-primary-600 font-semibold transition-colors duration-200">Team</a>
+                <a href="activities.html" class="text-gray-600 hover:text-primary-600 font-semibold transition-colors duration-200">Activities</a>
+                <a href="gallery.html" class="text-gray-600 hover:text-primary-600 font-semibold transition-colors duration-200">Gallery</a>
+                <a href="contact.html" class="text-gray-600 hover:text-primary-600 font-semibold transition-colors duration-200">Contact</a>
+                <a href="admission.html" class="bg-primary-500 hover:bg-primary-600 text-white px-6 py-2 rounded-full font-bold shadow-md shadow-primary-500/30 transition-all hover:scale-105 active:scale-95">Admission</a>
+            </div>
+
+            <!-- Mobile menu button -->
+            <div class="md:hidden flex items-center">
+                <button id="mobile-menu-btn" class="text-gray-600 hover:text-primary-600 focus:outline-none p-2">
+                    <i class="fa-solid fa-bars text-2xl"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="md:hidden bg-white border-t border-gray-100 shadow-lg absolute w-full">
+        <div class="px-4 pt-2 pb-6 space-y-2 flex flex-col">
+            <a href="index.html" class="block px-3 py-3 rounded-md text-base font-semibold text-gray-700 hover:text-primary-600 hover:bg-primary-50">Home</a>
+            <a href="about.html" class="block px-3 py-3 rounded-md text-base font-semibold text-primary-600 bg-primary-50">About</a>
+            <a href="vision.html" class="block px-3 py-3 rounded-md text-base font-semibold text-gray-700 hover:text-primary-600 hover:bg-primary-50">Vision</a>
+            <a href="team.html" class="block px-3 py-3 rounded-md text-base font-semibold text-gray-700 hover:text-primary-600 hover:bg-primary-50">Team</a>
+            <a href="activities.html" class="block px-3 py-3 rounded-md text-base font-semibold text-gray-700 hover:text-primary-600 hover:bg-primary-50">Activities</a>
+            <a href="gallery.html" class="block px-3 py-3 rounded-md text-base font-semibold text-gray-700 hover:text-primary-600 hover:bg-primary-50">Gallery</a>
+            <a href="contact.html" class="block px-3 py-3 rounded-md text-base font-semibold text-gray-700 hover:text-primary-600 hover:bg-primary-50">Contact</a>
+            <a href="admission.html" class="block px-3 py-3 mt-4 text-center rounded-full text-base font-bold text-white bg-primary-500 hover:bg-primary-600 shadow-md">Admissions Open</a>
+        </div>
+    </div>
+</nav>
+
+<!-- Page Header -->
+<header class="relative pt-32 pb-20 lg:pt-40 lg:pb-24 overflow-hidden bg-primary-900">
+    <div class="absolute inset-0 pattern-bg"></div>
+    <!-- Decorative blobs -->
+    <div class="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 bg-primary-600 rounded-full mix-blend-multiply filter blur-3xl opacity-50"></div>
+    <div class="absolute bottom-0 left-0 -ml-20 -mb-20 w-72 h-72 bg-secondary-500 rounded-full mix-blend-multiply filter blur-3xl opacity-30"></div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+        <span class="text-secondary-400 font-bold tracking-widest uppercase text-sm mb-4 block fade-in-up">Discover Our Roots</span>
+        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6 fade-in-up delay-100 font-serif">
+            About <span class="text-secondary-400">Satyen Bose Academy</span>
+        </h1>
+        <p class="text-lg sm:text-xl text-primary-100 max-w-2xl mx-auto fade-in-up delay-200 font-light">
+            Founded in 2025, we are an English Medium preschool nestled in Bankura, dedicated to revolutionizing early childhood education through science and play.
+        </p>
+    </div>
+    
+    <!-- Wave separator -->
+    <div class="absolute bottom-0 left-0 w-full overflow-hidden leading-none z-10">
+        <svg class="relative block w-full h-12 md:h-20" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+            <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V95.8C59.71,118.08,130.83,123.15,189.92,107.82,231.95,97.05,278.43,72.6,321.39,56.44Z" fill="#fcfcfc"></path>
+        </svg>
+    </div>
+</header>
+
+<!-- Our Story Section -->
+<section class="py-16 md:py-24 relative bg-[#fcfcfc]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid lg:grid-cols-2 gap-16 items-center">
+            
+            <!-- Image Side -->
+            <div class="relative fade-in-up">
+                <!-- Decorative background square -->
+                <div class="absolute -inset-4 bg-primary-100 rounded-[40px] transform rotate-3"></div>
+                <!-- Main Image -->
+                <div class="relative rounded-[32px] overflow-hidden shadow-2xl z-10 bg-white">
+                    <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Preschool Building Environment" class="w-full h-auto object-cover aspect-[4/3]">
+                    
+                    <!-- Floating Estd Badge -->
+                    <div class="absolute top-6 left-6 bg-white/90 backdrop-blur-sm px-6 py-4 rounded-2xl shadow-lg border border-white">
+                        <div class="text-primary-600 font-serif font-bold text-3xl">2025</div>
+                        <div class="text-xs text-gray-500 uppercase tracking-widest font-bold">Established</div>
+                    </div>
+                </div>
+                
+                <!-- Dot Pattern -->
+                <div class="absolute -bottom-10 -right-10 z-0 text-secondary-400 opacity-50">
+                    <svg width="120" height="120" viewBox="0 0 100 100" fill="currentColor">
+                        <pattern id="dots" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+                            <circle cx="2" cy="2" r="2"></circle>
+                        </pattern>
+                        <rect x="0" y="0" width="100" height="100" fill="url(#dots)"></rect>
+                    </svg>
+                </div>
+            </div>
+
+            <!-- Content Side -->
+            <div class="fade-in-up delay-200">
+                <span class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary-50 text-primary-600 font-bold text-sm tracking-wide mb-6">
+                    <i class="fa-solid fa-seedling text-secondary-500"></i> A New Beginning
+                </span>
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 font-serif mb-6 leading-tight">
+                    Rooted in Joykrishnapur,<br>Reaching for the <span class="text-primary-600">Stars</span>.
+                </h2>
+                <div class="space-y-4 text-lg text-gray-600 leading-relaxed font-light">
+                    <p>
+                        Located in the heart of Bankura (Vill + PO - Joykrishnapur), Satyen Bose Academy was established in 2025 with a clear, uncompromising vision: to redefine early childhood education.
+                    </p>
+                    <p>
+                        As an <strong class="text-gray-900 font-semibold">English Medium</strong> institution catering to Nursery (3+), LKG (4+), and UKG (5+) students, we recognized a critical gap in traditional schooling. The orthodox, rote-learning methods were failing to ignite the natural curiosity of children. 
+                    </p>
+                    <p>
+                        Inspired by scientific inquiry, we built a sanctuary where learning is not a task, but a joyful exploration.
+                    </p>
+                </div>
+                
+                <div class="mt-8 flex gap-4">
+                    <div class="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 flex-1 text-center">
+                        <i class="fa-solid fa-language text-3xl text-primary-500 mb-2"></i>
+                        <h4 class="font-bold text-gray-900">English Medium</h4>
+                        <p class="text-xs text-gray-500 mt-1">Global standard</p>
+                    </div>
+                    <div class="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 flex-1 text-center">
+                        <i class="fa-solid fa-map-location-dot text-3xl text-secondary-500 mb-2"></i>
+                        <h4 class="font-bold text-gray-900">Bankura</h4>
+                        <p class="text-xs text-gray-500 mt-1">Serene campus</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- Our Methodology (Breaking Stones to Dust) -->
+<section class="py-20 bg-white border-y border-gray-100 overflow-hidden relative">
+    <!-- Abstract Shapes -->
+    <div class="absolute top-20 left-0 w-64 h-64 bg-secondary-100 rounded-full mix-blend-multiply filter blur-3xl opacity-70 -translate-x-1/2"></div>
+    <div class="absolute bottom-20 right-0 w-80 h-80 bg-primary-50 rounded-full mix-blend-multiply filter blur-3xl opacity-70 translate-x-1/3"></div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="text-center max-w-3xl mx-auto mb-16 fade-in-up">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 font-serif mb-6">Our Unique Approach</h2>
+            <div class="w-24 h-1 bg-secondary-400 mx-auto rounded-full mb-6"></div>
+            <p class="text-lg text-gray-600 font-light">
+                We have completely discarded boring and orthodox teaching methods. Instead, we rely on scientific pedagogical methods combined with playful activities.
+            </p>
+        </div>
+
+        <div class="bg-primary-900 rounded-[40px] p-8 md:p-12 lg:p-16 shadow-2xl relative overflow-hidden">
+            <!-- Background pattern inside card -->
+            <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(#ffffff 2px, transparent 2px); background-size: 30px 30px;"></div>
+            
+            <div class="relative z-10 grid md:grid-cols-2 gap-12 items-center">
+                <div class="text-white">
+                    <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 mb-6 text-3xl text-secondary-400">
+                        <i class="fa-solid fa-hammer"></i>
+                    </div>
+                    <h3 class="text-2xl md:text-3xl font-bold font-serif mb-4 leading-tight">
+                        Breaking Stones to <span class="text-secondary-400">Dust</span>
+                    </h3>
+                    <p class="text-primary-100 text-lg leading-relaxed mb-6 font-light">
+                        This is our core educational philosophy. In our approach, every concept is viewed as a solid stone. We do not just hand the stone to the child and expect them to carry it.
+                    </p>
+                    <p class="text-primary-100 text-lg leading-relaxed font-light">
+                        Instead, <strong class="text-white font-semibold">each stone is broken down to dust</strong>. We deconstruct complex ideas into their absolute simplest, most digestible forms. By doing this, the rudimental and fundamental pillars—the absolute base of a child's understanding—are built incredibly strong, layer by layer.
+                    </p>
+                </div>
+
+                <!-- Visual Representation -->
+                <div class="flex justify-center items-center">
+                    <div class="relative w-full max-w-sm aspect-square bg-white/5 rounded-full border border-white/10 flex items-center justify-center">
+                        <!-- Central Core (Dust) -->
+                        <div class="absolute w-24 h-24 bg-secondary-400 rounded-full shadow-[0_0_50px_rgba(250,204,21,0.6)] z-20 flex items-center justify-center animate-pulse">
+                            <i class="fa-solid fa-lightbulb text-white text-3xl"></i>
+                        </div>
+                        
+                        <!-- Orbiting Elements (Concepts being broken down) -->
+                        <div class="absolute w-full h-full border border-dashed border-white/20 rounded-full animate-[spin_10s_linear_infinite]">
+                            <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-8 h-8 bg-primary-400 rounded-lg transform rotate-45"></div>
+                            <div class="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 w-6 h-6 bg-accent rounded-full"></div>
+                        </div>
+                        <div class="absolute w-3/4 h-3/4 border border-dashed border-white/20 rounded-full animate-[spin_15s_linear_infinite_reverse]">
+                            <div class="absolute top-1/2 right-0 translate-x-1/2 -translate-y-1/2 w-6 h-6 bg-white rounded-sm transform rotate-12"></div>
+                        </div>
+
+                        <!-- Particles -->
+                        <div class="absolute inset-0 z-10 flex items-center justify-center">
+                            <i class="fa-solid fa-star text-white/50 text-xs absolute top-10 left-20 animate-ping" style="animation-duration: 2s;"></i>
+                            <i class="fa-solid fa-circle text-secondary-400/50 text-[8px] absolute bottom-20 right-16 animate-ping" style="animation-duration: 3s;"></i>
+                            <i class="fa-solid fa-play text-primary-300/50 text-[10px] absolute top-1/2 left-10 transform -rotate-45 animate-ping" style="animation-duration: 2.5s;"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Our Promise / Vision Summary -->
+<section class="py-20 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16 fade-in-up">
+            <h2 class="text-3xl font-bold text-gray-900 font-serif mb-4">More Than Just Teaching</h2>
+            <p class="text-gray-600 max-w-2xl mx-auto">Our ultimate goal goes beyond the classroom walls. We are preparing young minds for life.</p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-8">
+            <!-- Value 1 -->
+            <div class="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 text-center hover:-translate-y-2 transition-transform duration-300 group">
+                <div class="w-20 h-20 mx-auto bg-blue-50 text-blue-500 rounded-full flex items-center justify-center text-3xl mb-6 group-hover:bg-blue-500 group-hover:text-white transition-colors">
+                    <i class="fa-solid fa-shield-heart"></i>
+                </div>
+                <h3 class="text-xl font-bold text-gray-900 mb-3 font-serif">Building Character</h3>
+                <p class="text-gray-600 text-sm leading-relaxed">Instilling values of empathy, integrity, and resilience. We believe a strong moral compass is as important as academic excellence.</p>
+            </div>
+
+            <!-- Value 2 -->
+            <div class="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 text-center hover:-translate-y-2 transition-transform duration-300 group">
+                <div class="w-20 h-20 mx-auto bg-yellow-50 text-yellow-500 rounded-full flex items-center justify-center text-3xl mb-6 group-hover:bg-yellow-500 group-hover:text-white transition-colors">
+                    <i class="fa-solid fa-person-arrow-up-from-line"></i>
+                </div>
+                <h3 class="text-xl font-bold text-gray-900 mb-3 font-serif">Building Confidence</h3>
+                <p class="text-gray-600 text-sm leading-relaxed">Providing a safe space where children are encouraged to speak up, ask questions, and express their unique selves without fear.</p>
+            </div>
+
+            <!-- Value 3 -->
+            <div class="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 text-center hover:-translate-y-2 transition-transform duration-300 group">
+                <div class="w-20 h-20 mx-auto bg-green-50 text-green-500 rounded-full flex items-center justify-center text-3xl mb-6 group-hover:bg-green-500 group-hover:text-white transition-colors">
+                    <i class="fa-solid fa-globe"></i>
+                </div>
+                <h3 class="text-xl font-bold text-gray-900 mb-3 font-serif">Building Humans</h3>
+                <p class="text-gray-600 text-sm leading-relaxed">Nurturing individuals who can contribute to society in a meaningful way, standing tall when it matters the absolute most.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="bg-white pt-16 pb-8 border-t border-gray-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid md:grid-cols-3 gap-12 mb-12">
+            
+            <!-- Brand -->
+            <div class="col-span-1">
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="w-10 h-10 rounded-full bg-primary-500 flex items-center justify-center text-white text-lg">
+                        <i class="fa-solid fa-graduation-cap"></i>
+                    </div>
+                    <span class="font-serif font-bold text-xl text-primary-900">Satyen Bose Academy</span>
+                </div>
+                <p class="text-gray-600 mb-6 font-light">Building characters, building confidence, building humans for tomorrow.</p>
+                <div class="flex space-x-4">
+                    <a href="#" class="w-10 h-10 rounded-full bg-gray-50 border border-gray-200 flex items-center justify-center text-gray-500 hover:text-primary-600 hover:border-primary-600 transition-colors shadow-sm"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#" class="w-10 h-10 rounded-full bg-gray-50 border border-gray-200 flex items-center justify-center text-gray-500 hover:text-primary-600 hover:border-primary-600 transition-colors shadow-sm"><i class="fa-brands fa-instagram"></i></a>
+                </div>
+            </div>
+
+            <!-- Quick Links -->
+            <div class="col-span-1 md:ml-auto">
+                <h4 class="font-bold text-gray-900 mb-6 uppercase tracking-wider text-sm">Explore</h4>
+                <ul class="space-y-3 font-medium">
+                    <li><a href="index.html" class="text-gray-600 hover:text-primary-600 transition-colors">Home</a></li>
+                    <li><a href="about.html" class="text-primary-600 font-semibold transition-colors">About Us</a></li>
+                    <li><a href="vision.html" class="text-gray-600 hover:text-primary-600 transition-colors">Our Vision</a></li>
+                    <li><a href="team.html" class="text-gray-600 hover:text-primary-600 transition-colors">Faculty & Team</a></li>
+                    <li><a href="activities.html" class="text-gray-600 hover:text-primary-600 transition-colors">Activities</a></li>
+                </ul>
+            </div>
+
+            <!-- Admissions Info -->
+            <div class="col-span-1">
+                <h4 class="font-bold text-gray-900 mb-6 uppercase tracking-wider text-sm">Information</h4>
+                <ul class="space-y-3 font-medium">
+                    <li class="flex items-start gap-3 text-gray-600">
+                        <i class="fa-solid fa-location-dot mt-1 text-secondary-500"></i>
+                        <span>Joykrishnapur, Bishnupur,<br>Bankura - 722122</span>
+                    </li>
+                    <li class="flex items-center gap-3 text-gray-600 mt-2">
+                        <i class="fa-solid fa-phone text-secondary-500"></i>
+                        <span>9434007236</span>
+                    </li>
+                    <li class="text-gray-600 mt-4 pt-4 border-t border-gray-100">
+                        <span class="font-bold text-gray-800">Classes:</span> Nursery, LKG, UKG
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="border-t border-gray-200 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-gray-500 font-medium">
+            <p>&copy; <script>document.write(new Date().getFullYear())</script> Satyen Bose Academy. All rights reserved.</p>
+            <p>Designed with <i class="fa-solid fa-heart text-accent mx-1"></i> for future leaders.</p>
+        </div>
+    </div>
+</footer>
+
+<script>
+    // Mobile Menu Toggle Logic
+    const btn = document.getElementById('mobile-menu-btn');
+    const menu = document.getElementById('mobile-menu');
+    const icon = btn.querySelector('i');
+
+    btn.addEventListener('click', () => {
+        menu.classList.toggle('open');
+        if (menu.classList.contains('open')) {
+            icon.classList.remove('fa-bars');
+            icon.classList.add('fa-xmark');
+        } else {
+            icon.classList.remove('fa-xmark');
+            icon.classList.add('fa-bars');
+        }
+    });
+
+    // Navbar scroll effect
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 20) {
+            navbar.classList.add('shadow-md');
+            navbar.classList.replace('bg-white/90', 'bg-white');
+        } else {
+            navbar.classList.remove('shadow-md');
+            navbar.classList.replace('bg-white', 'bg-white/90');
+        }
+    });
+</script>
+</body>
+</html>
