@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery | Satyen Bose Academy</title>
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Playfair Display for headings, Nunito for body -->
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <!-- Custom CSS for specific overrides and animations -->
+    <style>
+        body {
+            font-family: 'Nunito', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            background-color: #fcfcfc;
+        }
+        h1, h2, h3, h4, h5, h6, .font-serif {
+            font-family: 'Playfair Display', serif;
+        }
+        
+        /* Subtle custom animations */
+        .fade-in-up {
+            animation: fadeInUp 0.8s ease-out forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .delay-100 { animation-delay: 100ms; }
+        .delay-200 { animation-delay: 200ms; }
+        .delay-300 { animation-delay: 300ms; }
+        .delay-400 { animation-delay: 400ms; }
+        .delay-500 { animation-delay: 500ms; }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Mobile Menu Transition */
+        #mobile-menu {
+            transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out;
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+        }
+        #mobile-menu.open {
+            max-height: 400px;
+            opacity: 1;
+        }
+
+        /* Gallery Pattern */
+        .gallery-pattern {
+            background-color: #0c4a6e;
+            background-image: 
+                radial-gradient(circle at 15% 50%, rgba(14, 165, 233, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 85% 30%, rgba(250, 204, 21, 0.15) 0%, transparent 50%);
+        }
+
+        /* Gallery Hover Effects */
+        .gallery-item {
+            overflow: hidden;
+            border-radius: 1.5rem;
+            position: relative;
+            cursor: pointer;
+            isolation: isolate;
+        }
+        
+        .gallery-img {
+            transition: transform 0.7s cubic-bezier(0.165, 0.84, 0.44, 1);
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .gallery-item:hover .gallery-img {
+            transform: scale(1.08);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(12, 74, 110, 0.9) 0%, rgba(12, 74, 110, 0.2) 50%, transparent 100%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 2rem;
+            z-index: 10;
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+
+        .gallery-caption {
+            transform: translateY(20px);
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            transition-delay: 0.1s;
+        }
+
+        .gallery-item:hover .gallery-caption {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        /* Lightbox specific animations */
+        #lightbox {
+            transition: opacity 0.3s ease;
+        }
+        #lightbox-img {
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform: scale(0.95);
+        }
+        #lightbox:not(.hidden) #lightbox-img {
+            transform: scale(1);
+        }
+    </style>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            500: '#0ea5e9', // Sky blue
+                            600: '#0284c7',
+                            900: '#0c4a6e',
+                        },
+                        secondary: {
+                            400: '#facc15', // Warm yellow
+                            500: '#eab308',
+                        },
+                        accent: '#f43f5e' // Soft red for highlights
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="text-gray-800">
+
+<nav class="fixed w-full z-50 bg-white/90 backdrop-blur-md shadow-sm transition-all duration-300" id="navbar">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-20">
+            <!-- Logo area -->
+            <a href="index.html" class="flex-shrink-0 flex items-center gap-3 cursor-pointer group">
+                <div class="w-10 h-10 rounded-full bg-primary-500 flex items-center justify-center text-white text-xl shadow-lg shadow-primary-500/30 group-hover:scale-105 transition-transform">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                </div>
+                <div class="flex flex-col">
+                    <span class="font-serif font-bold text-xl leading-none text-primary-900 tracking-wide">Satyen Bose Academy</span>
+                    <span class="text-xs text-gray-500 font-semibold tracking-widest uppercase mt-1">Estd. 2025 • English Medium</span>
+                </div>
+            </a>
+
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="index.html" class="text-gray-600 hover:text-primary-600 font-semibold transition-colors duration-200">Home</a>
+                <a href="about.html" class="text-gray-600 hover:text-primary-600 font-semibold transition-colors duration-200">About</a>
+                <a href="vision.html" class="text-gray-600 hover:text-primary-600 font-semibold transition-colors duration-200">Vision</a>
+                <a href="academics.html" class="text-gray-600 hover:text-primary-600 font-semibold transition-colors duration-200">Academics</a>
+                <a href="team.html" class="text-gray-600 hover:text-primary-600 font-semibold transition-colors duration-200">Team</a>
+                <a href="activities.html" class="text-gray-600 hover:text-primary-600 font-semibold transition-colors duration-200">Activities</a>
+                <a href="gallery.html" class="text-primary-600 font-semibold transition-colors duration-200 border-b-2 border-primary-600 pb-1">Gallery</a>
+                <a href="contact.html" class="text-gray-600 hover:text-primary-600 font-semibold transition-colors duration-200">Contact</a>
+                <a href="admission.html" class="bg-primary-500 hover:bg-primary-600 text-white px-6 py-2 rounded-full font-bold shadow-md shadow-primary-500/30 transition-all hover:scale-105 active:scale-95">Admission</a>
+            </div>
+
+            <!-- Mobile menu button -->
+            <div class="md:hidden flex items-center">
+                <button id="mobile-menu-btn" class="text-gray-600 hover:text-primary-600 focus:outline-none p-2">
+                    <i class="fa-solid fa-bars text-2xl"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="md:hidden bg-white border-t border-gray-100 shadow-lg absolute w-full">
+        <div class="px-4 pt-2 pb-6 space-y-2 flex flex-col">
+            <a href="index.html" class="block px-3 py-3 rounded-md text-base font-semibold text-gray-700 hover:text-primary-600 hover:bg-primary-50">Home</a>
+            <a href="about.html" class="block px-3 py-3 rounded-md text-base font-semibold text-gray-700 hover:text-primary-600 hover:bg-primary-50">About</a>
+            <a href="vision.html" class="block px-3 py-3 rounded-md text-base font-semibold text-gray-700 hover:text-primary-600 hover:bg-primary-50">Vision</a>
+            <a href="academics.html" class="block px-3 py-3 rounded-md text-base font-semibold text-gray-700 hover:text-primary-600 hover:bg-primary-50">Academics</a>
+            <a href="team.html" class="block px-3 py-3 rounded-md text-base font-semibold text-gray-700 hover:text-primary-600 hover:bg-primary-50">Team</a>
+            <a href="activities.html" class="block px-3 py-3 rounded-md text-base font-semibold text-gray-700 hover:text-primary-600 hover:bg-primary-50">Activities</a>
+            <a href="gallery.html" class="block px-3 py-3 rounded-md text-base font-semibold text-primary-600 bg-primary-50">Gallery</a>
+            <a href="contact.html" class="block px-3 py-3 rounded-md text-base font-semibold text-gray-700 hover:text-primary-600 hover:bg-primary-50">Contact</a>
+            <a href="admission.html" class="block px-3 py-3 mt-4 text-center rounded-full text-base font-bold text-white bg-primary-500 hover:bg-primary-600 shadow-md">Admissions Open</a>
+        </div>
+    </div>
+</nav>
+
+<!-- Page Header -->
+<header class="relative pt-32 pb-20 lg:pt-40 lg:pb-28 overflow-hidden gallery-pattern border-b border-gray-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+        <span class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-secondary-400 font-bold text-sm tracking-widest uppercase mb-6 fade-in-up">
+            <i class="fa-regular fa-images"></i> Visual Journey
+        </span>
+        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6 fade-in-up delay-100 font-serif">
+            Moments of <span class="text-transparent bg-clip-text bg-gradient-to-r from-secondary-400 to-primary-400">Joy</span>
+        </h1>
+        <p class="text-lg sm:text-xl text-primary-100 max-w-2xl mx-auto fade-in-up delay-200 font-light leading-relaxed">
+            Take a glimpse into the vibrant daily life at Satyen Bose Academy. Every smile, every creation, and every milestone is a testament to our joyful learning environment.
+        </p>
+    </div>
+    
+    <!-- Wave separator -->
+    <div class="absolute bottom-0 left-0 w-full overflow-hidden leading-none z-10">
+        <svg class="relative block w-full h-12 md:h-20" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+            <path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" fill="#fcfcfc"></path>
+        </svg>
+    </div>
+</header>
+
+<!-- Gallery Section -->
+<section class="py-16 bg-[#fcfcfc]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <!-- Filter Pills (Visual only for elegance) -->
+        <div class="flex flex-wrap justify-center gap-3 mb-12 fade-in-up">
+            <span class="px-5 py-2 rounded-full bg-primary-600 text-white text-sm font-bold shadow-md cursor-default">All Moments</span>
+            <span class="px-5 py-2 rounded-full bg-white border border-gray-200 text-gray-600 text-sm font-semibold hover:border-primary-400 hover:text-primary-600 transition-colors cursor-default">Academics</span>
+            <span class="px-5 py-2 rounded-full bg-white border border-gray-200 text-gray-600 text-sm font-semibold hover:border-primary-400 hover:text-primary-600 transition-colors cursor-default">Activities</span>
+            <span class="px-5 py-2 rounded-full bg-white border border-gray-200 text-gray-600 text-sm font-semibold hover:border-primary-400 hover:text-primary-600 transition-colors cursor-default">Campus</span>
+        </div>
+
+        <!-- The Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-[250px]">
+            
+            <!-- Item 1: Large square (spans 2 rows) -->
+            <div class="gallery-item row-span-2 shadow-sm border border-gray-100 fade-in-up delay-100 group" onclick="openLightbox('https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=1200&q=80', 'Joyful Learning Environment')">
+                <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=800&q=80" alt="Joyful Learning Environment" class="gallery-img">
+                <div class="gallery-overlay">
+                    <div class="gallery-caption">
+                        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/20 backdrop-blur-md text-white text-xs font-bold uppercase tracking-wider mb-2 border border-white/30">
+                            <i class="fa-solid fa-school text-secondary-400"></i> Campus
+                        </span>
+                        <h3 class="text-xl font-bold text-white font-serif">Joyful Learning Environment</h3>
+                        <p class="text-white/80 text-sm mt-1 font-light">Safe, clean, and inspiring spaces for our young learners.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Item 2: Standard block -->
+            <div class="gallery-item shadow-sm border border-gray-100 fade-in-up delay-200 group" onclick="openLightbox('https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=1200&q=80', 'Building Confidence')">
+                <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=800&q=80" alt="Building Confidence" class="gallery-img">
+                <div class="gallery-overlay">
+                    <div class="gallery-caption">
+                        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/20 backdrop-blur-md text-white text-xs font-bold uppercase tracking-wider mb-2 border border-white/30">
+                            <i class="fa-solid fa-person-rays text-secondary-400"></i> Philosophy
+                        </span>
+                        <h3 class="text-lg font-bold text-white font-serif">Building Confidence</h3>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Item 3: Standard block -->
+            <div class="gallery-item shadow-sm border border-gray-100 fade-in-up delay-300 group" onclick="openLightbox('https://images.unsplash.com/photo-1606092195730-5d7b9af1efc5?auto=format&fit=crop&w=1200&q=80', 'Creative Arts & Drawing')">
+                <img src="https://images.unsplash.com/photo-1606092195730-5d7b9af1efc5?auto=format&fit=crop&w=800&q=80" alt="Creative Arts" class="gallery-img">
+                <div class="gallery-overlay">
+                    <div class="gallery-caption">
+                        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/20 backdrop-blur-md text-white text-xs font-bold uppercase tracking-wider mb-2 border border-white/30">
+                            <i class="fa-solid fa-palette text-pink-400"></i> Activities
+                        </span>
+                        <h3 class="text-lg font-bold text-white font-serif">Creative Arts & Drawing</h3>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Item 4: Wide block (spans 2 cols on lg) -->
+            <div class="gallery-item lg:col-span-2 shadow-sm border border-gray-100 fade-in-up delay-100 group" onclick="openLightbox('https://images.unsplash.com/photo-1587691592099-24045742c181?auto=format&fit=crop&w=1600&q=80', 'Collaborative Play & Brain Gym')">
+                <img src="https://images.unsplash.com/photo-1587691592099-24045742c181?auto=format&fit=crop&w=1200&q=80" alt="Collaborative Play" class="gallery-img">
+                <div class="gallery-overlay">
+                    <div class="gallery-caption">
+                        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/20 backdrop-blur-md text-white text-xs font-bold uppercase tracking-wider mb-2 border border-white/30">
+                            <i class="fa-solid fa-puzzle-piece text-secondary-400"></i> Academics
+                        </span>
+                        <h3 class="text-xl font-bold text-white font-serif">Collaborative Play & Brain Gym</h3>
+                        <p class="text-white/80 text-sm mt-1 font-light">Breaking concepts to dust through engaging interactive sessions.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Item 5: Standard block -->
+            <div class="gallery-item shadow-sm border border-gray-100 fade-in-up delay-200 group" onclick="openLightbox('https://images.unsplash.com/photo-1516627145497-ae6968895b74?auto=format&fit=crop&w=1200&q=80', 'Fine Motor Training')">
+                <img src="https://images.unsplash.com/photo-1516627145497-ae6968895b74?auto=format&fit=crop&w=800&q=80" alt="Fine Motor Training" class="gallery-img">
+                <div class="gallery-overlay">
+                    <div class="gallery-caption">
+                        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/20 backdrop-blur-md text-white text-xs font-bold uppercase tracking-wider mb-2 border border-white/30">
+                            <i class="fa-solid fa-hand-holding-hand text-teal-400"></i> Activities
+                        </span>
+                        <h3 class="text-lg font-bold text-white font-serif">Fine Motor Training</h3>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Item 6: Standard block -->
+            <div class="gallery-item shadow-sm border border-gray-100 fade-in-up delay-300 group" onclick="openLightbox('https://images.unsplash.com/photo-1596464716127-f2a82984de30?auto=format&fit=crop&w=1200&q=80', 'Yoga & Mindfulness')">
+                <img src="https://images.unsplash.com/photo-1596464716127-f2a82984de30?auto=format&fit=crop&w=800&q=80" alt="Yoga Session" class="gallery-img" style="object-position: top;">
+                <div class="gallery-overlay">
+                    <div class="gallery-caption">
+                        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/20 backdrop-blur-md text-white text-xs font-bold uppercase tracking-wider mb-2 border border-white/30">
+                            <i class="fa-solid fa-om text-purple-400"></i> Wellness
+                        </span>
+                        <h3 class="text-lg font-bold text-white font-serif">Yoga & Mindfulness</h3>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Item 7: Large block (spans 2 rows) -->
+            <div class="gallery-item row-span-2 shadow-sm border border-gray-100 fade-in-up delay-100 group" onclick="openLightbox('https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?auto=format&fit=crop&w=1200&q=80', 'Conversation & Fun')">
+                <img src="https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?auto=format&fit=crop&w=800&q=80" alt="Conversation and Fun" class="gallery-img">
+                <div class="gallery-overlay">
+                    <div class="gallery-caption">
+                        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/20 backdrop-blur-md text-white text-xs font-bold uppercase tracking-wider mb-2 border border-white/30">
+                            <i class="fa-solid fa-comments text-orange-400"></i> Social Skills
+                        </span>
+                        <h3 class="text-xl font-bold text-white font-serif">Conversation & Fun</h3>
+                        <p class="text-white/80 text-sm mt-1 font-light">Building expressive language and peer connections.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Item 8: Standard block -->
+            <div class="gallery-item shadow-sm border border-gray-100 fade-in-up delay-200 group" onclick="openLightbox('https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=1200&q=80', 'Foundational Learning')">
+                <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=800&q=80" alt="Foundational Learning" class="gallery-img">
+                <div class="gallery-overlay">
+                    <div class="gallery-caption">
+                        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/20 backdrop-blur-md text-white text-xs font-bold uppercase tracking-wider mb-2 border border-white/30">
+                            <i class="fa-solid fa-book-open text-blue-400"></i> Academics
+                        </span>
+                        <h3 class="text-lg font-bold text-white font-serif">Foundational Learning</h3>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Item 9: Standard block -->
+            <div class="gallery-item shadow-sm border border-gray-100 fade-in-up delay-300 group" onclick="openLightbox('https://images.unsplash.com/photo-1519340333755-56e9c1d04579?auto=format&fit=crop&w=1200&q=80', 'Preparing for the Future')">
+                <img src="https://images.unsplash.com/photo-1519340333755-56e9c1d04579?auto=format&fit=crop&w=800&q=80" alt="Preparing for the future" class="gallery-img">
+                <div class="gallery-overlay">
+                    <div class="gallery-caption">
+                        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/20 backdrop-blur-md text-white text-xs font-bold uppercase tracking-wider mb-2 border border-white/30">
+                            <i class="fa-solid fa-hands-holding-child text-primary-400"></i> Our Vision
+                        </span>
+                        <h3 class="text-lg font-bold text-white font-serif">Building Humans</h3>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- Lightbox Modal (Hidden by default) -->
+<div id="lightbox" class="fixed inset-0 z-[100] hidden bg-gray-900/95 backdrop-blur-sm flex items-center justify-center p-4 sm:p-8 opacity-0">
+    <!-- Close Button -->
+    <button onclick="closeLightbox()" class="absolute top-6 right-6 text-white/70 hover:text-white bg-white/10 hover:bg-white/20 rounded-full w-12 h-12 flex items-center justify-center transition-colors border border-white/10 z-50">
+        <i class="fa-solid fa-xmark text-xl"></i>
+    </button>
+    
+    <!-- Image Container -->
+    <div class="relative max-w-5xl w-full max-h-[85vh] flex flex-col items-center">
+        <img id="lightbox-img" src="" alt="Gallery Preview" class="max-w-full max-h-[80vh] object-contain rounded-xl shadow-2xl">
+        <h4 id="lightbox-caption" class="text-white mt-6 text-xl font-serif font-bold text-center"></h4>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer class="bg-white pt-16 pb-8 border-t border-gray-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid md:grid-cols-3 gap-12 mb-12">
+            
+            <!-- Brand -->
+            <div class="col-span-1">
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="w-10 h-10 rounded-full bg-primary-500 flex items-center justify-center text-white text-lg">
+                        <i class="fa-solid fa-graduation-cap"></i>
+                    </div>
+                    <span class="font-serif font-bold text-xl text-primary-900">Satyen Bose Academy</span>
+                </div>
+                <p class="text-gray-600 mb-6 font-light">Building characters, building confidence, building humans for tomorrow.</p>
+                <div class="flex space-x-4">
+                    <a href="#" class="w-10 h-10 rounded-full bg-gray-50 border border-gray-200 flex items-center justify-center text-gray-500 hover:text-primary-600 hover:border-primary-600 transition-colors shadow-sm"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#" class="w-10 h-10 rounded-full bg-gray-50 border border-gray-200 flex items-center justify-center text-gray-500 hover:text-primary-600 hover:border-primary-600 transition-colors shadow-sm"><i class="fa-brands fa-instagram"></i></a>
+                </div>
+            </div>
+
+            <!-- Quick Links -->
+            <div class="col-span-1 md:ml-auto">
+                <h4 class="font-bold text-gray-900 mb-6 uppercase tracking-wider text-sm">Explore</h4>
+                <ul class="space-y-3 font-medium">
+                    <li><a href="index.html" class="text-gray-600 hover:text-primary-600 transition-colors">Home</a></li>
+                    <li><a href="about.html" class="text-gray-600 hover:text-primary-600 transition-colors">About Us</a></li>
+                    <li><a href="academics.html" class="text-gray-600 hover:text-primary-600 transition-colors">Academics</a></li>
+                    <li><a href="team.html" class="text-gray-600 hover:text-primary-600 transition-colors">Faculty & Team</a></li>
+                    <li><a href="gallery.html" class="text-primary-600 font-semibold transition-colors">Gallery</a></li>
+                </ul>
+            </div>
+
+            <!-- Admissions Info -->
+            <div class="col-span-1">
+                <h4 class="font-bold text-gray-900 mb-6 uppercase tracking-wider text-sm">Information</h4>
+                <ul class="space-y-3 font-medium">
+                    <li class="flex items-start gap-3 text-gray-600">
+                        <i class="fa-solid fa-location-dot mt-1 text-secondary-500"></i>
+                        <span>Joykrishnapur, Bishnupur,<br>Bankura - 722122</span>
+                    </li>
+                    <li class="flex items-center gap-3 text-gray-600 mt-2">
+                        <i class="fa-solid fa-phone text-secondary-500"></i>
+                        <span>9434007236</span>
+                    </li>
+                    <li class="text-gray-600 mt-4 pt-4 border-t border-gray-100">
+                        <span class="font-bold text-gray-800">Classes:</span> Nursery, LKG, UKG
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="border-t border-gray-200 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-gray-500 font-medium">
+            <p>&copy; <script>document.write(new Date().getFullYear())</script> Satyen Bose Academy. All rights reserved.</p>
+            <p>Designed with <i class="fa-solid fa-heart text-accent mx-1"></i> for future leaders.</p>
+        </div>
+    </div>
+</footer>
+
+<script>
+    // Mobile Menu Toggle Logic
+    const btn = document.getElementById('mobile-menu-btn');
+    const menu = document.getElementById('mobile-menu');
+    const icon = btn.querySelector('i');
+
+    btn.addEventListener('click', () => {
+        menu.classList.toggle('open');
+        if (menu.classList.contains('open')) {
+            icon.classList.remove('fa-bars');
+            icon.classList.add('fa-xmark');
+        } else {
+            icon.classList.remove('fa-xmark');
+            icon.classList.add('fa-bars');
+        }
+    });
+
+    // Navbar scroll effect
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 20) {
+            navbar.classList.add('shadow-md');
+            navbar.classList.replace('bg-white/90', 'bg-white');
+        } else {
+            navbar.classList.remove('shadow-md');
+            navbar.classList.replace('bg-white', 'bg-white/90');
+        }
+    });
+
+    // Lightbox Logic
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+    const lightboxCaption = document.getElementById('lightbox-caption');
+
+    function openLightbox(imageSrc, captionText) {
+        lightboxImg.src = imageSrc;
+        lightboxCaption.textContent = captionText;
+        
+        // Remove hidden class first
+        lightbox.classList.remove('hidden');
+        
+        // Use a tiny timeout to allow display:block to apply before changing opacity for the transition
+        setTimeout(() => {
+            lightbox.classList.remove('opacity-0');
+            document.body.style.overflow = 'hidden'; // Prevent scrolling on background
+        }, 10);
+    }
+
+    function closeLightbox() {
+        lightbox.classList.add('opacity-0');
+        document.body.style.overflow = 'auto'; // Restore scrolling
+        
+        // Wait for transition to finish before hiding completely
+        setTimeout(() => {
+            lightbox.classList.add('hidden');
+            lightboxImg.src = ''; // Clear image source
+        }, 300);
+    }
+
+    // Close lightbox on escape key press
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape' && !lightbox.classList.contains('hidden')) {
+            closeLightbox();
+        }
+    });
+
+    // Close lightbox when clicking outside the image
+    lightbox.addEventListener('click', function(event) {
+        if (event.target === lightbox) {
+            closeLightbox();
+        }
+    });
+</script>
+</body>
+</html>
