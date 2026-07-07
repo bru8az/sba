@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admissions | Satyen Bose Academy</title>
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Playfair Display for headings, Nunito for body -->
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <!-- Custom CSS for specific overrides and animations -->
+    <style>
+        body {
+            font-family: 'Nunito', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            background-color: #fcfcfc;
+        }
+        h1, h2, h3, h4, h5, h6, .font-serif {
+            font-family: 'Playfair Display', serif;
+        }
+        
+        /* Subtle custom animations */
+        .fade-in-up {
+            animation: fadeInUp 0.8s ease-out forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .delay-100 { animation-delay: 100ms; }
+        .delay-200 { animation-delay: 200ms; }
+        .delay-300 { animation-delay: 300ms; }
+        .delay-400 { animation-delay: 400ms; }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Mobile Menu Transition */
+        #mobile-menu {
+            transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out;
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+        }
+        #mobile-menu.open {
+            max-height: 400px;
+            opacity: 1;
+        }
+
+        /* Hero Pattern */
+        .admission-pattern {
+            background-color: #f0f9ff;
+            background-image: 
+                radial-gradient(at 100% 0%, hsla(198,100%,74%,0.2) 0px, transparent 50%),
+                radial-gradient(at 0% 100%, hsla(43,100%,61%,0.2) 0px, transparent 50%);
+        }
+
+        /* Ticket/Card styling for the CTA */
+        .invitation-card {
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+            position: relative;
+            isolation: isolate;
+        }
+        .invitation-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            padding: 3px;
+            background: linear-gradient(135deg, #0ea5e9, #facc15, #f43f5e);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+        }
+    </style>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            500: '#0ea5e9', // Sky blue
+                            600: '#0284c7',
+                            900: '#0c4a6e',
+                        },
+                        secondary: {
+                            400: '#facc15', // Warm yellow
+                            500: '#eab308',
+                        },
+                        accent: '#f43f5e' // Soft red for highlights
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="text-gray-800">
+
+<nav class="fixed w-full z-50 bg-white/90 backdrop-blur-md shadow-sm transition-all duration-300" id="navbar">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-20">
+            <!-- Logo area -->
+            <a href="index.html" class="flex-shrink-0 flex items-center gap-3 cursor-pointer group">
+                <div class="w-10 h-10 rounded-full bg-primary-500 flex items-center justify-center text-white text-xl shadow-lg shadow-primary-500/30 group-hover:scale-105 transition-transform">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                </div>
+                <div class="flex flex-col">
+                    <span class="font-serif font-bold text-xl leading-none text-primary-900 tracking-wide">Satyen Bose Academy</span>
+                    <span class="text-xs text-gray-500 font-semibold tracking-widest uppercase mt-1">Estd. 2025 • English Medium</span>
+                </div>
+            </a>
+
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="index.html" class="text-gray-600 hover:text-primary-600 font-semibold transition-colors duration-200">Home</a>
+                <a href="about.html" class="text-gray-600 hover:text-primary-600 font-semibold transition-colors duration-200">About</a>
+                <a href="vision.html" class="text-gray-600 hover:text-primary-600 font-semibold transition-colors duration-200">Vision</a>
+                <a href="academics.html" class="text-gray-600 hover:text-primary-600 font-semibold transition-colors duration-200">Academics</a>
+                <a href="team.html" class="text-gray-600 hover:text-primary-600 font-semibold transition-colors duration-200">Team</a>
+                <a href="activities.html" class="text-gray-600 hover:text-primary-600 font-semibold transition-colors duration-200">Activities</a>
+                <a href="gallery.html" class="text-gray-600 hover:text-primary-600 font-semibold transition-colors duration-200">Gallery</a>
+                <a href="contact.html" class="text-gray-600 hover:text-primary-600 font-semibold transition-colors duration-200">Contact</a>
+                <a href="admission.html" class="bg-primary-500 hover:bg-primary-600 text-white px-6 py-2 rounded-full font-bold shadow-md shadow-primary-500/30 transition-all hover:scale-105 active:scale-95 border-2 border-transparent">Admission</a>
+            </div>
+
+            <!-- Mobile menu button -->
+            <div class="md:hidden flex items-center">
+                <button id="mobile-menu-btn" class="text-gray-600 hover:text-primary-600 focus:outline-none p-2">
+                    <i class="fa-solid fa-bars text-2xl"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="md:hidden bg-white border-t border-gray-100 shadow-lg absolute w-full">
+        <div class="px-4 pt-2 pb-6 space-y-2 flex flex-col">
+            <a href="index.html" class="block px-3 py-3 rounded-md text-base font-semibold text-gray-700 hover:text-primary-600 hover:bg-primary-50">Home</a>
+            <a href="about.html" class="block px-3 py-3 rounded-md text-base font-semibold text-gray-700 hover:text-primary-600 hover:bg-primary-50">About</a>
+            <a href="vision.html" class="block px-3 py-3 rounded-md text-base font-semibold text-gray-700 hover:text-primary-600 hover:bg-primary-50">Vision</a>
+            <a href="academics.html" class="block px-3 py-3 rounded-md text-base font-semibold text-gray-700 hover:text-primary-600 hover:bg-primary-50">Academics</a>
+            <a href="team.html" class="block px-3 py-3 rounded-md text-base font-semibold text-gray-700 hover:text-primary-600 hover:bg-primary-50">Team</a>
+            <a href="activities.html" class="block px-3 py-3 rounded-md text-base font-semibold text-gray-700 hover:text-primary-600 hover:bg-primary-50">Activities</a>
+            <a href="gallery.html" class="block px-3 py-3 rounded-md text-base font-semibold text-gray-700 hover:text-primary-600 hover:bg-primary-50">Gallery</a>
+            <a href="contact.html" class="block px-3 py-3 rounded-md text-base font-semibold text-gray-700 hover:text-primary-600 hover:bg-primary-50">Contact</a>
+            <a href="admission.html" class="block px-3 py-3 mt-4 text-center rounded-full text-base font-bold text-white bg-primary-600 shadow-md">Admissions Open</a>
+        </div>
+    </div>
+</nav>
+
+<!-- Page Header -->
+<header class="relative pt-32 pb-20 lg:pt-40 lg:pb-28 overflow-hidden admission-pattern border-b border-gray-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+        <span class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white shadow-sm border border-primary-100 text-primary-600 font-bold text-sm tracking-widest uppercase mb-6 fade-in-up">
+            <i class="fa-solid fa-door-open text-secondary-500"></i> Session 2026-27
+        </span>
+        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight mb-6 fade-in-up delay-100 font-serif">
+            Begin Their <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary-600 to-secondary-500">Journey</span>
+        </h1>
+        <p class="text-lg sm:text-xl text-gray-600 max-w-2xl mx-auto fade-in-up delay-200 font-light leading-relaxed">
+            Give your child the gift of joyful learning. Join Satyen Bose Academy and watch them build a foundation so strong, the future becomes effortless.
+        </p>
+    </div>
+</header>
+
+<!-- Age Criteria Section -->
+<section class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12 fade-in-up">
+            <h2 class="text-3xl font-bold text-gray-900 font-serif mb-4">Programs Offered</h2>
+            <p class="text-gray-600">We specialize in early childhood education, focusing on the most critical developmental years.</p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+            
+            <!-- Nursery -->
+            <div class="bg-[#fcfcfc] rounded-3xl p-8 border border-gray-100 shadow-sm hover:shadow-md transition-shadow text-center fade-in-up delay-100">
+                <div class="w-16 h-16 mx-auto bg-blue-50 text-blue-500 rounded-2xl flex items-center justify-center text-3xl mb-4">
+                    <i class="fa-solid fa-shapes"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-gray-900 font-serif mb-1">Nursery</h3>
+                <div class="text-primary-600 font-bold text-lg mb-3">Age 3+</div>
+                <p class="text-sm text-gray-500 font-light">Sensory exploration, motor skills, and an introduction to the joy of learning.</p>
+            </div>
+
+            <!-- LKG -->
+            <div class="bg-[#fcfcfc] rounded-3xl p-8 border border-gray-100 shadow-sm hover:shadow-md transition-shadow text-center fade-in-up delay-200">
+                <div class="w-16 h-16 mx-auto bg-yellow-50 text-yellow-500 rounded-2xl flex items-center justify-center text-3xl mb-4">
+                    <i class="fa-solid fa-puzzle-piece"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-gray-900 font-serif mb-1">LKG</h3>
+                <div class="text-primary-600 font-bold text-lg mb-3">Age 4+</div>
+                <p class="text-sm text-gray-500 font-light">Foundational phonics, numerical logic, and breaking early concepts to dust.</p>
+            </div>
+
+            <!-- UKG -->
+            <div class="bg-[#fcfcfc] rounded-3xl p-8 border border-gray-100 shadow-sm hover:shadow-md transition-shadow text-center fade-in-up delay-300">
+                <div class="w-16 h-16 mx-auto bg-emerald-50 text-emerald-500 rounded-2xl flex items-center justify-center text-3xl mb-4">
+                    <i class="fa-solid fa-book-open"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-gray-900 font-serif mb-1">UKG</h3>
+                <div class="text-primary-600 font-bold text-lg mb-3">Age 5+</div>
+                <p class="text-sm text-gray-500 font-light">Reading, basic arithmetic, and building immense confidence for primary school.</p>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- Admission Process -->
+<section class="py-20 bg-gray-50 border-y border-gray-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16 fade-in-up">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 font-serif mb-4">The Admission Process</h2>
+            <div class="w-24 h-1 bg-secondary-400 mx-auto rounded-full mb-6"></div>
+            <p class="text-gray-600 max-w-2xl mx-auto font-light">
+                We believe in keeping things simple and personal. We prefer face-to-face interactions to understand your child's needs and introduce you to our scientific methodology.
+            </p>
+        </div>
+
+        <div class="max-w-4xl mx-auto relative">
+            <!-- Connecting line for desktop -->
+            <div class="hidden md:block absolute left-[39px] top-8 bottom-8 w-0.5 bg-gradient-to-b from-primary-200 via-secondary-200 to-primary-200"></div>
+
+            <div class="space-y-12 relative z-10">
+                
+                <!-- Step 1 -->
+                <div class="flex flex-col md:flex-row gap-6 md:gap-10 fade-in-up delay-100">
+                    <div class="flex-shrink-0 flex items-center md:items-start">
+                        <div class="w-20 h-20 rounded-full bg-white shadow-md border-4 border-primary-50 flex items-center justify-center text-2xl font-bold text-primary-600 font-serif z-10 relative">
+                            01
+                        </div>
+                    </div>
+                    <div class="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 flex-grow">
+                        <h3 class="text-xl font-bold text-gray-900 mb-3 font-serif flex items-center gap-3">
+                            <i class="fa-solid fa-phone text-secondary-500"></i> Get in Touch
+                        </h3>
+                        <p class="text-gray-600 font-light leading-relaxed mb-4">
+                            Give us a call to express your interest and schedule a campus visit. We do not use online forms because we believe a conversation is the best way to start a relationship.
+                        </p>
+                        <a href="tel:+919434007236" class="inline-flex items-center gap-2 text-primary-600 font-bold hover:text-primary-700 transition-colors">
+                            Call 9434007236 <i class="fa-solid fa-arrow-right text-sm"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="flex flex-col md:flex-row gap-6 md:gap-10 fade-in-up delay-200">
+                    <div class="flex-shrink-0 flex items-center md:items-start">
+                        <div class="w-20 h-20 rounded-full bg-white shadow-md border-4 border-secondary-50 flex items-center justify-center text-2xl font-bold text-secondary-500 font-serif z-10 relative">
+                            02
+                        </div>
+                    </div>
+                    <div class="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 flex-grow">
+                        <h3 class="text-xl font-bold text-gray-900 mb-3 font-serif flex items-center gap-3">
+                            <i class="fa-solid fa-school text-primary-500"></i> Campus Visit & Counseling
+                        </h3>
+                        <p class="text-gray-600 font-light leading-relaxed">
+                            Visit our serene campus in Joykrishnapur. Meet our educators, see our playful learning environment firsthand, and understand how we break concepts to dust. We'll answer all your questions and provide the admission kit.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="flex flex-col md:flex-row gap-6 md:gap-10 fade-in-up delay-300">
+                    <div class="flex-shrink-0 flex items-center md:items-start">
+                        <div class="w-20 h-20 rounded-full bg-white shadow-md border-4 border-accent/10 flex items-center justify-center text-2xl font-bold text-accent font-serif z-10 relative">
+                            03
+                        </div>
+                    </div>
+                    <div class="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 flex-grow">
+                        <h3 class="text-xl font-bold text-gray-900 mb-3 font-serif flex items-center gap-3">
+                            <i class="fa-solid fa-file-signature text-accent"></i> Enrollment
+                        </h3>
+                        <p class="text-gray-600 font-light leading-relaxed">
+                            Submit the physical admission form along with necessary documents (Birth Certificate, Photos, etc.) at our school office. Once processed, welcome to the Satyen Bose Academy family!
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Invitation / Call to Action Section -->
+<section class="py-24 bg-white relative overflow-hidden">
+    <!-- Abstract blobs -->
+    <div class="absolute top-1/2 left-0 -translate-y-1/2 w-64 h-64 bg-primary-100 rounded-full blur-3xl opacity-60"></div>
+    <div class="absolute top-1/2 right-0 -translate-y-1/2 w-80 h-80 bg-secondary-100 rounded-full blur-3xl opacity-40"></div>
+
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        
+        <div class="invitation-card rounded-[40px] p-8 md:p-14 text-center shadow-2xl fade-in-up">
+            <div class="w-20 h-20 mx-auto bg-gradient-to-br from-primary-500 to-secondary-500 text-white rounded-full flex items-center justify-center text-3xl mb-8 shadow-lg shadow-primary-500/30">
+                <i class="fa-solid fa-envelope-open-text"></i>
+            </div>
+            
+            <h2 class="text-3xl md:text-5xl font-bold text-gray-900 font-serif mb-6 leading-tight">
+                You Are <span class="text-primary-600">Invited</span>
+            </h2>
+            
+            <p class="text-lg md:text-xl text-gray-600 font-light mb-10 max-w-2xl mx-auto">
+                We purposefully do not use impersonal online forms. We want to hear your voice, understand your hopes for your child, and welcome you to our campus. 
+            </p>
+
+            <div class="flex flex-col md:flex-row justify-center items-center gap-6 md:gap-12 mb-10">
+                <!-- Phone -->
+                <div class="flex flex-col items-center">
+                    <span class="text-sm font-bold text-gray-400 uppercase tracking-widest mb-2">Call Us Directly</span>
+                    <a href="tel:+919434007236" class="text-3xl md:text-4xl font-bold text-gray-900 hover:text-primary-600 transition-colors font-serif">
+                        <i class="fa-solid fa-phone-volume text-secondary-500 text-2xl mr-2"></i> 9434007236
+                    </a>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-200 pt-8 max-w-lg mx-auto">
+                <div class="flex items-start justify-center gap-3 text-left">
+                    <i class="fa-solid fa-location-dot mt-1 text-accent text-xl"></i>
+                    <div>
+                        <span class="text-sm font-bold text-gray-400 uppercase tracking-widest mb-1 block">Campus Address</span>
+                        <p class="text-gray-700 font-medium">Vill + PO - Joykrishnapur,<br>P.S - Bishnupur, Dist - Bankura,<br>Pin - 722122</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-12">
+                <a href="tel:+919434007236" class="inline-flex items-center justify-center gap-3 bg-primary-600 hover:bg-primary-700 text-white px-10 py-4 rounded-full font-bold text-lg transition-transform shadow-lg shadow-primary-600/30 hover:-translate-y-1 w-full sm:w-auto">
+                    Call Now to Book a Visit
+                </a>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="bg-gray-50 pt-16 pb-8 border-t border-gray-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid md:grid-cols-3 gap-12 mb-12">
+            
+            <!-- Brand -->
+            <div class="col-span-1">
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="w-10 h-10 rounded-full bg-primary-500 flex items-center justify-center text-white text-lg">
+                        <i class="fa-solid fa-graduation-cap"></i>
+                    </div>
+                    <span class="font-serif font-bold text-xl text-primary-900">Satyen Bose Academy</span>
+                </div>
+                <p class="text-gray-600 mb-6 font-light">Building characters, building confidence, building humans for tomorrow.</p>
+                <div class="flex space-x-4">
+                    <a href="#" class="w-10 h-10 rounded-full bg-white border border-gray-200 flex items-center justify-center text-gray-500 hover:text-primary-600 hover:border-primary-600 transition-colors shadow-sm"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#" class="w-10 h-10 rounded-full bg-white border border-gray-200 flex items-center justify-center text-gray-500 hover:text-primary-600 hover:border-primary-600 transition-colors shadow-sm"><i class="fa-brands fa-instagram"></i></a>
+                </div>
+            </div>
+
+            <!-- Quick Links -->
+            <div class="col-span-1 md:ml-auto">
+                <h4 class="font-bold text-gray-900 mb-6 uppercase tracking-wider text-sm">Explore</h4>
+                <ul class="space-y-3 font-medium">
+                    <li><a href="index.html" class="text-gray-600 hover:text-primary-600 transition-colors">Home</a></li>
+                    <li><a href="about.html" class="text-gray-600 hover:text-primary-600 transition-colors">About Us</a></li>
+                    <li><a href="vision.html" class="text-gray-600 hover:text-primary-600 transition-colors">Our Vision</a></li>
+                    <li><a href="academics.html" class="text-gray-600 hover:text-primary-600 transition-colors">Academics</a></li>
+                    <li><a href="gallery.html" class="text-gray-600 hover:text-primary-600 transition-colors">Gallery</a></li>
+                </ul>
+            </div>
+
+            <!-- Admissions Info -->
+            <div class="col-span-1">
+                <h4 class="font-bold text-gray-900 mb-6 uppercase tracking-wider text-sm">Information</h4>
+                <ul class="space-y-3 font-medium">
+                    <li class="flex items-start gap-3 text-gray-600">
+                        <i class="fa-solid fa-location-dot mt-1 text-secondary-500"></i>
+                        <span>Joykrishnapur, Bishnupur,<br>Bankura - 722122</span>
+                    </li>
+                    <li class="flex items-center gap-3 text-gray-600 mt-2">
+                        <i class="fa-solid fa-phone text-secondary-500"></i>
+                        <span>9434007236</span>
+                    </li>
+                    <li class="text-gray-600 mt-4 pt-4 border-t border-gray-100">
+                        <span class="font-bold text-gray-800">Classes:</span> Nursery, LKG, UKG
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="border-t border-gray-200 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-gray-500 font-medium">
+            <p>&copy; <script>document.write(new Date().getFullYear())</script> Satyen Bose Academy. All rights reserved.</p>
+            <p>Designed with <i class="fa-solid fa-heart text-accent mx-1"></i> for future leaders.</p>
+        </div>
+    </div>
+</footer>
+
+<script>
+    // Mobile Menu Toggle Logic
+    const btn = document.getElementById('mobile-menu-btn');
+    const menu = document.getElementById('mobile-menu');
+    const icon = btn.querySelector('i');
+
+    btn.addEventListener('click', () => {
+        menu.classList.toggle('open');
+        if (menu.classList.contains('open')) {
+            icon.classList.remove('fa-bars');
+            icon.classList.add('fa-xmark');
+        } else {
+            icon.classList.remove('fa-xmark');
+            icon.classList.add('fa-bars');
+        }
+    });
+
+    // Navbar scroll effect
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 20) {
+            navbar.classList.add('shadow-md');
+            navbar.classList.replace('bg-white/90', 'bg-white');
+        } else {
+            navbar.classList.remove('shadow-md');
+            navbar.classList.replace('bg-white', 'bg-white/90');
+        }
+    });
+</script>
+</body>
+</html>
