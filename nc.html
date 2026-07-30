@@ -1,0 +1,464 @@
+``html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learn Narration Change | ন্যারেশন শিখি</title>
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts for better English & Bengali typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', 'Hind Siliguri', sans-serif;
+            background-color: #f3f4f6;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .tab-active {
+            color: #3b82f6;
+            border-bottom: 2px solid #3b82f6;
+        }
+        .tab-inactive {
+            color: #6b7280;
+            border-bottom: 2px solid transparent;
+        }
+        /* Custom scrollbar for better mobile feel */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background-color: #cbd5e1;
+            border-radius: 10px;
+        }
+        .slide-in {
+            animation: slideIn 0.3s ease-out forwards;
+        }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 h-screen flex flex-col overflow-hidden">
+
+    <!-- Header -->
+    <header class="bg-blue-600 text-white shadow-md z-10 px-4 py-4 flex items-center justify-center">
+        <h1 class="text-xl font-semibold flex items-center gap-2">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+            Narration Mastery
+        </h1>
+    </header>
+
+    <!-- Top Navigation Tabs -->
+    <nav class="bg-white flex shadow-sm z-10">
+        <button id="tab-rules" class="flex-1 py-3 text-center font-medium tab-active transition-colors duration-200" onclick="switchTab('rules')">
+            <div class="text-sm">📖 Rules (নিয়ম)</div>
+        </button>
+        <button id="tab-quiz" class="flex-1 py-3 text-center font-medium tab-inactive transition-colors duration-200" onclick="switchTab('quiz')">
+            <div class="text-sm">✍️ Practice (অনুশীলন)</div>
+        </button>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main class="flex-1 overflow-y-auto p-4 pb-20">
+        
+        <!-- RULES SECTION -->
+        <section id="section-rules" class="space-y-4 max-w-2xl mx-auto pb-8 slide-in">
+            <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-100">
+                <h2 class="text-lg font-bold text-blue-700 mb-2">Introduction (ভূমিকা)</h2>
+                <p class="text-sm text-gray-600 mb-2"><strong>Direct Speech:</strong> বক্তার কথা হুবহু বলা। (Quoted exact words)</p>
+                <p class="text-sm text-gray-600"><strong>Indirect Speech:</strong> বক্তার কথা নিজের মতো করে বলা। (Reporting the meaning)</p>
+                <div class="mt-3 bg-blue-50 p-3 rounded-lg text-sm border border-blue-100">
+                    <p><strong>Direct:</strong> He said, "I am busy."</p>
+                    <p><strong>Indirect:</strong> He said that he was busy.</p>
+                </div>
+            </div>
+
+            <!-- Accordion 1: Changes in Tense -->
+            <details class="bg-white rounded-xl shadow-sm border border-gray-100 group">
+                <summary class="font-semibold p-4 cursor-pointer text-gray-700 select-none flex justify-between items-center">
+                    <span>1. Tense Change (টেন্সের পরিবর্তন)</span>
+                    <span class="text-blue-500 group-open:rotate-180 transition-transform">▼</span>
+                </summary>
+                <div class="p-4 border-t border-gray-100 text-sm">
+                    <p class="mb-3 text-gray-600">If Reporting Verb is in <strong>Past Tense</strong> (e.g. said), the tense of Reported Speech changes: <br><span class="text-xs">(Reporting Verb Past Tense এ থাকলে Reported Speech এর Tense নিচের মতো বদলায়:)</span></p>
+                    
+                    <ul class="space-y-2">
+                        <li class="flex flex-col bg-gray-50 p-2 rounded">
+                            <span class="font-medium text-gray-800">Present Indefinite ➔ Past Indefinite</span>
+                            <span class="text-xs text-gray-500">I play ➔ I played</span>
+                        </li>
+                        <li class="flex flex-col bg-gray-50 p-2 rounded">
+                            <span class="font-medium text-gray-800">Present Continuous ➔ Past Continuous</span>
+                            <span class="text-xs text-gray-500">am playing ➔ was playing</span>
+                        </li>
+                        <li class="flex flex-col bg-gray-50 p-2 rounded">
+                            <span class="font-medium text-gray-800">Present Perfect ➔ Past Perfect</span>
+                            <span class="text-xs text-gray-500">have played ➔ had played</span>
+                        </li>
+                        <li class="flex flex-col bg-gray-50 p-2 rounded">
+                            <span class="font-medium text-gray-800">Past Indefinite ➔ Past Perfect</span>
+                            <span class="text-xs text-gray-500">played ➔ had played</span>
+                        </li>
+                    </ul>
+                </div>
+            </details>
+
+            <!-- Accordion 2: Pronoun & Word Changes -->
+            <details class="bg-white rounded-xl shadow-sm border border-gray-100 group">
+                <summary class="font-semibold p-4 cursor-pointer text-gray-700 select-none flex justify-between items-center">
+                    <span>2. Time & Words (শব্দের পরিবর্তন)</span>
+                    <span class="text-blue-500 group-open:rotate-180 transition-transform">▼</span>
+                </summary>
+                <div class="p-4 border-t border-gray-100 text-sm">
+                    <p class="mb-2 text-gray-600">Some words showing nearness change to words showing distance: (কাছের জিনিস দূরের জিনিসে পরিণত হয়)</p>
+                    <div class="grid grid-cols-2 gap-2 text-center text-sm">
+                        <div class="bg-gray-100 p-2 rounded">This ➔ That</div>
+                        <div class="bg-gray-100 p-2 rounded">These ➔ Those</div>
+                        <div class="bg-gray-100 p-2 rounded">Here ➔ There</div>
+                        <div class="bg-gray-100 p-2 rounded">Now ➔ Then</div>
+                        <div class="bg-gray-100 p-2 rounded">Today ➔ That day</div>
+                        <div class="bg-gray-100 p-2 rounded">Tomorrow ➔ The next day</div>
+                    </div>
+                </div>
+            </details>
+
+            <!-- Accordion 3: Sentence Types -->
+            <details class="bg-white rounded-xl shadow-sm border border-gray-100 group">
+                <summary class="font-semibold p-4 cursor-pointer text-gray-700 select-none flex justify-between items-center">
+                    <span>3. By Sentence Type (বাক্য অনুযায়ী)</span>
+                    <span class="text-blue-500 group-open:rotate-180 transition-transform">▼</span>
+                </summary>
+                <div class="p-4 border-t border-gray-100 text-sm space-y-4">
+                    <div>
+                        <h4 class="font-bold text-gray-800">1. Assertive (বিবৃতিমূলক)</h4>
+                        <p class="text-gray-600 text-xs mb-1">Use <strong>told</strong> instead of <em>said to</em>. Link with <strong>that</strong>.</p>
+                        <p class="bg-blue-50 p-2 rounded text-xs border border-blue-100">He said to me, "I am happy."<br>➔ He told me that he was happy.</p>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-gray-800">2. Interrogative (প্রশ্নবোধক)</h4>
+                        <p class="text-gray-600 text-xs mb-1">Use <strong>asked</strong>. Link with <strong>if/whether</strong> (for Yes/No questions) or <strong>WH-word</strong>.</p>
+                        <p class="bg-blue-50 p-2 rounded text-xs border border-blue-100">He said, "Are you okay?"<br>➔ He asked if I was okay.</p>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-gray-800">3. Imperative (আদেশ/উপদেশ)</h4>
+                        <p class="text-gray-600 text-xs mb-1">Use <strong>ordered/requested/advised</strong>. Link with <strong>to</strong>.</p>
+                        <p class="bg-blue-50 p-2 rounded text-xs border border-blue-100">He said, "Open the door."<br>➔ He ordered to open the door.</p>
+                    </div>
+                </div>
+            </details>
+            
+            <div class="mt-6 text-center">
+                <button onclick="switchTab('quiz')" class="bg-blue-600 text-white px-6 py-3 rounded-full font-semibold shadow-lg hover:bg-blue-700 active:scale-95 transition-transform w-full">
+                    Start Practice (অনুশীলন শুরু করুন) ➔
+                </button>
+            </div>
+        </section>
+
+        <!-- QUIZ SECTION -->
+        <section id="section-quiz" class="max-w-2xl mx-auto hidden h-full flex-col">
+            
+            <div id="quiz-intro" class="text-center mt-10 slide-in">
+                <h2 class="text-2xl font-bold text-gray-800 mb-2">Test Your Knowledge!</h2>
+                <p class="text-gray-600 mb-8">Change the Direct Speech into Indirect Speech.<br><span class="text-sm">(Direct Speech-কে Indirect Speech-এ রূপান্তর করো)</span></p>
+                <button onclick="startQuiz()" class="bg-green-600 text-white px-8 py-3 rounded-full font-bold shadow-lg hover:bg-green-700 active:scale-95 transition-transform">
+                    Play Quiz 🚀
+                </button>
+            </div>
+
+            <div id="quiz-container" class="hidden slide-in flex-col flex-1 pb-10">
+                <div class="flex justify-between items-center mb-4 text-sm font-semibold text-gray-500">
+                    <span id="question-tracker">Question 1/10</span>
+                    <span id="score-tracker" class="text-blue-600">Score: 0</span>
+                </div>
+
+                <!-- Progress Bar -->
+                <div class="w-full bg-gray-200 rounded-full h-2 mb-6">
+                    <div id="progress-bar" class="bg-blue-600 h-2 rounded-full transition-all duration-300" style="width: 10%"></div>
+                </div>
+
+                <!-- Question -->
+                <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-200 mb-6 relative">
+                    <div class="absolute -top-3 left-4 bg-yellow-400 text-yellow-900 text-xs font-bold px-3 py-1 rounded-full shadow-sm" id="sentence-type">Assertive</div>
+                    <p class="text-lg font-medium text-gray-800 mt-2" id="question-text">He said to me, "I am reading a book."</p>
+                </div>
+
+                <!-- Options -->
+                <div id="options-container" class="space-y-3">
+                    <!-- Options injected via JS -->
+                </div>
+
+                <!-- Feedback Area -->
+                <div id="feedback-area" class="mt-6 p-4 rounded-xl hidden flex-col">
+                    <div class="flex items-start gap-3">
+                        <div id="feedback-icon" class="mt-1"></div>
+                        <div>
+                            <h3 id="feedback-title" class="font-bold text-lg mb-1"></h3>
+                            <p id="feedback-desc" class="text-sm"></p>
+                        </div>
+                    </div>
+                    <button id="next-btn" onclick="nextQuestion()" class="mt-4 bg-gray-900 text-white py-3 rounded-xl font-semibold w-full active:scale-95 transition-transform">
+                        Next Question ➔
+                    </button>
+                </div>
+            </div>
+
+            <!-- Quiz Result -->
+            <div id="quiz-result" class="hidden text-center mt-10 slide-in">
+                <div class="text-6xl mb-4">🏆</div>
+                <h2 class="text-3xl font-bold text-gray-800 mb-2">Quiz Completed!</h2>
+                <p class="text-lg text-gray-600 mb-6">You scored <span id="final-score" class="font-bold text-blue-600 text-2xl"></span> out of <span id="total-qs" class="font-bold"></span></p>
+                
+                <div class="flex flex-col gap-3">
+                    <button onclick="startQuiz()" class="bg-blue-600 text-white px-6 py-3 rounded-full font-semibold shadow-lg">
+                        🔄 Play Again (আবার খেলুন)
+                    </button>
+                    <button onclick="switchTab('rules')" class="bg-gray-200 text-gray-800 px-6 py-3 rounded-full font-semibold">
+                        📖 Read Rules Again (নিয়ম পড়ুন)
+                    </button>
+                </div>
+            </div>
+
+        </section>
+    </main>
+
+    <!-- App Logic Script -->
+    <script>
+        // --- QUIZ DATA ---
+        const quizQuestions = [
+            {
+                type: "Assertive",
+                question: 'He said to me, "I am reading a book."',
+                options: [
+                    "He told me that he was reading a book.",
+                    "He asked me that he is reading a book.",
+                    "He told me that I was reading a book.",
+                    "He said to me that he reads a book."
+                ],
+                correct: 0,
+                explanation: "<strong>'Said to'</strong> becomes <strong>'told'</strong>. Present Continuous ('am reading') becomes Past Continuous ('was reading'). 'I' changes to 'he'."
+            },
+            {
+                type: "Interrogative",
+                question: 'Ram said to her, "Do you like tea?"',
+                options: [
+                    "Ram told her that she liked tea.",
+                    "Ram asked her if she liked tea.",
+                    "Ram asked her if you like tea.",
+                    "Ram ordered her to like tea."
+                ],
+                correct: 1,
+                explanation: "For questions, use <strong>'asked'</strong>. Yes/No questions connect with <strong>'if'</strong> or <strong>'whether'</strong>. Present Indefinite ('Do like') changes to Past Indefinite ('liked'). 'You' changes to 'she'."
+            },
+            {
+                type: "Imperative",
+                question: 'The teacher said to the boy, "Stand up right now."',
+                options: [
+                    "The teacher asked the boy if he stood up right then.",
+                    "The teacher ordered the boy that he stand up right now.",
+                    "The teacher ordered the boy to stand up right then.",
+                    "The teacher told the boy to stand up right now."
+                ],
+                correct: 2,
+                explanation: "For orders, use <strong>'ordered'</strong>. Imperative sentences connect with <strong>'to'</strong>. 'Now' changes to <strong>'then'</strong>."
+            },
+            {
+                type: "Exclamatory",
+                question: 'She said, "Alas! I am ruined."',
+                options: [
+                    "She exclaimed with sorrow that she was ruined.",
+                    "She exclaimed with joy that she was ruined.",
+                    "She told that alas she was ruined.",
+                    "She asked with sorrow if she was ruined."
+                ],
+                correct: 0,
+                explanation: "'Alas!' indicates sadness, so use <strong>'exclaimed with sorrow'</strong>. Present Tense ('am') changes to Past Tense ('was')."
+            },
+            {
+                type: "Assertive",
+                question: 'My friend said, "I will come tomorrow."',
+                options: [
+                    "My friend said that he will come tomorrow.",
+                    "My friend said that he would come the next day.",
+                    "My friend asked if he would come tomorrow.",
+                    "My friend told that I would come the next day."
+                ],
+                correct: 1,
+                explanation: "'Will' changes to <strong>'would'</strong>. 'Tomorrow' changes to <strong>'the next day'</strong>."
+            },
+            {
+                type: "Optative",
+                question: 'Mother said to me, "May God bless you."',
+                options: [
+                    "Mother ordered me that God might bless me.",
+                    "Mother told me that God may bless you.",
+                    "Mother prayed that God might bless me.",
+                    "Mother asked me if God blessed me."
+                ],
+                correct: 2,
+                explanation: "For wishes/prayers, use <strong>'prayed' or 'wished'</strong>. 'May' changes to <strong>'might'</strong>. 'You' changes to 'me'."
+            }
+        ];
+
+        // --- STATE VARIABLES ---
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let isAnswered = false;
+
+        // --- TAB SWITCHING LOGIC ---
+        function switchTab(tabName) {
+            const rulesSection = document.getElementById('section-rules');
+            const quizSection = document.getElementById('section-quiz');
+            const tabRules = document.getElementById('tab-rules');
+            const tabQuiz = document.getElementById('tab-quiz');
+
+            if (tabName === 'rules') {
+                rulesSection.classList.remove('hidden');
+                quizSection.classList.add('hidden');
+                
+                tabRules.classList.replace('tab-inactive', 'tab-active');
+                tabQuiz.classList.replace('tab-active', 'tab-inactive');
+            } else {
+                rulesSection.classList.add('hidden');
+                quizSection.classList.remove('hidden');
+                
+                tabQuiz.classList.replace('tab-inactive', 'tab-active');
+                tabRules.classList.replace('tab-active', 'tab-inactive');
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // --- QUIZ LOGIC ---
+        function startQuiz() {
+            currentQuestionIndex = 0;
+            score = 0;
+            document.getElementById('quiz-intro').classList.add('hidden');
+            document.getElementById('quiz-result').classList.add('hidden');
+            document.getElementById('quiz-container').classList.remove('hidden');
+            document.getElementById('quiz-container').classList.add('flex');
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            isAnswered = false;
+            const q = quizQuestions[currentQuestionIndex];
+            
+            // Update Headers
+            document.getElementById('question-tracker').innerText = `Question ${currentQuestionIndex + 1} of ${quizQuestions.length}`;
+            document.getElementById('score-tracker').innerText = `Score: ${score}`;
+            document.getElementById('progress-bar').style.width = `${((currentQuestionIndex + 1) / quizQuestions.length) * 100}%`;
+            
+            // Update Question
+            document.getElementById('sentence-type').innerText = q.type;
+            document.getElementById('question-text').innerText = q.question;
+
+            // Update Options
+            const optionsContainer = document.getElementById('options-container');
+            optionsContainer.innerHTML = ''; // Clear previous
+            
+            q.options.forEach((opt, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'w-full text-left p-4 rounded-xl border-2 border-gray-200 bg-white hover:bg-gray-50 font-medium text-gray-700 transition-colors duration-200 active:scale-[0.98]';
+                btn.innerText = opt;
+                btn.onclick = () => selectAnswer(index, btn);
+                optionsContainer.appendChild(btn);
+            });
+
+            // Hide feedback
+            document.getElementById('feedback-area').classList.add('hidden');
+            document.getElementById('feedback-area').classList.remove('flex');
+        }
+
+        function selectAnswer(selectedIndex, btnElement) {
+            if (isAnswered) return; // Prevent multiple clicks
+            isAnswered = true;
+
+            const q = quizQuestions[currentQuestionIndex];
+            const isCorrect = selectedIndex === q.correct;
+            const options = document.getElementById('options-container').children;
+
+            // Highlight answers
+            for (let i = 0; i < options.length; i++) {
+                options[i].disabled = true; // disable all clicks
+                if (i === q.correct) {
+                    // Correct answer gets green border & background
+                    options[i].classList.replace('border-gray-200', 'border-green-500');
+                    options[i].classList.replace('bg-white', 'bg-green-50');
+                    options[i].classList.replace('text-gray-700', 'text-green-800');
+                } else if (i === selectedIndex && !isCorrect) {
+                    // Selected wrong answer gets red border & background
+                    options[i].classList.replace('border-gray-200', 'border-red-500');
+                    options[i].classList.replace('bg-white', 'bg-red-50');
+                    options[i].classList.replace('text-gray-700', 'text-red-800');
+                } else {
+                    // Dim others
+                    options[i].classList.add('opacity-50');
+                }
+            }
+
+            if (isCorrect) score++;
+
+            // Show Feedback
+            showFeedback(isCorrect, q.explanation);
+            
+            // Update score live
+            document.getElementById('score-tracker').innerText = `Score: ${score}`;
+        }
+
+        function showFeedback(isCorrect, explanation) {
+            const feedbackArea = document.getElementById('feedback-area');
+            const feedbackIcon = document.getElementById('feedback-icon');
+            const feedbackTitle = document.getElementById('feedback-title');
+            const feedbackDesc = document.getElementById('feedback-desc');
+            const nextBtn = document.getElementById('next-btn');
+
+            feedbackArea.classList.remove('hidden');
+            feedbackArea.classList.add('flex', 'slide-in');
+
+            if (isCorrect) {
+                feedbackArea.className = 'mt-6 p-4 rounded-xl flex-col bg-green-100 text-green-900 border border-green-200 slide-in';
+                feedbackIcon.innerHTML = '✅';
+                feedbackTitle.innerText = 'Correct! (সঠিক উত্তর)';
+                nextBtn.className = 'mt-4 bg-green-700 text-white py-3 rounded-xl font-semibold w-full active:scale-95 transition-transform';
+            } else {
+                feedbackArea.className = 'mt-6 p-4 rounded-xl flex-col bg-red-100 text-red-900 border border-red-200 slide-in';
+                feedbackIcon.innerHTML = '❌';
+                feedbackTitle.innerText = 'Incorrect (ভুল উত্তর)';
+                nextBtn.className = 'mt-4 bg-red-700 text-white py-3 rounded-xl font-semibold w-full active:scale-95 transition-transform';
+            }
+
+            feedbackDesc.innerHTML = explanation;
+            
+            if (currentQuestionIndex === quizQuestions.length - 1) {
+                nextBtn.innerText = 'Show Result (ফলাফল দেখুন) 🏆';
+            } else {
+                nextBtn.innerText = 'Next Question ➔';
+            }
+        }
+
+        function nextQuestion() {
+            if (currentQuestionIndex < quizQuestions.length - 1) {
+                currentQuestionIndex++;
+                loadQuestion();
+            } else {
+                showResult();
+            }
+        }
+
+        function showResult() {
+            document.getElementById('quiz-container').classList.add('hidden');
+            document.getElementById('quiz-container').classList.remove('flex');
+            
+            const resultArea = document.getElementById('quiz-result');
+            resultArea.classList.remove('hidden');
+            
+            document.getElementById('final-score').innerText = score;
+            document.getElementById('total-qs').innerText = quizQuestions.length;
+        }
+
+    </script>
+</body>
+</html>
+
+```
