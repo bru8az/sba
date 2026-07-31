@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Satyen Bose Academy - Staff Workspace</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-color: #f4ecd8; /* Old paper */
+            --text-color: #2c2921; /* Faded ink */
+            --accent-color: #8b3a3a; /* Oxblood red */
+            --secondary-bg: #e3d5b8; /* Darker paper */
+            --border-color: #a39b85;
+            --tool-bg: #1e1e1e; /* Garage tool dark */
+            --tool-text: #e0e0e0;
+            --tool-accent: #d4af37; /* Brass */
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Courier Prime', monospace;
+            background-image: 
+                linear-gradient(90deg, transparent 79px, #abced4 79px, #abced4 81px, transparent 81px),
+                linear-gradient(#eee .1em, transparent .1em);
+            background-size: 100% 1.2em;
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Typewriter font for headers */
+        h1, h2, h3, .brand-text {
+            font-family: 'Playfair Display', serif;
+            color: var(--accent-color);
+            text-shadow: 1px 1px 0px rgba(255,255,255,0.5);
+        }
+
+        .workspace-container {
+            flex: 1;
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        /* Header styling - Book spine look */
+        header {
+            background-color: var(--accent-color);
+            color: var(--bg-color);
+            padding: 1rem 2rem;
+            border-bottom: 4px solid #5a2525;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        header h1 {
+            color: var(--bg-color);
+            text-shadow: none;
+            margin: 0;
+            font-size: 1.8rem;
+            letter-spacing: 2px;
+        }
+
+        /* Tool Grid */
+        .tool-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        /* Individual Tool Card - Garage/Retro feel */
+        .tool-card {
+            background-color: var(--tool-bg);
+            color: var(--tool-text);
+            border: 2px solid #333;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 
+                inset 0 0 10px rgba(0,0,0,0.5),
+                4px 4px 0px var(--border-color);
+            transition: all 0.2s ease-in-out;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .tool-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: repeating-linear-gradient(
+                45deg,
+                #d4af37,
+                #d4af37 10px,
+                #222 10px,
+                #222 20px
+            );
+        }
+
+        .tool-card:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 
+                inset 0 0 10px rgba(0,0,0,0.5),
+                6px 6px 0px var(--border-color);
+            border-color: var(--tool-accent);
+        }
+
+        .tool-icon {
+            font-size: 2.5rem;
+            color: var(--tool-accent);
+            margin-bottom: 1rem;
+            text-shadow: 0 0 5px rgba(212, 175, 55, 0.3);
+        }
+
+        .tool-title {
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+            color: #fff;
+            border-bottom: 1px dashed #555;
+            padding-bottom: 0.5rem;
+        }
+
+        .tool-desc {
+            font-size: 0.9rem;
+            line-height: 1.4;
+            color: #aaa;
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+        }
+
+        .tool-link {
+            display: inline-block;
+            background-color: transparent;
+            color: var(--tool-accent);
+            border: 1px solid var(--tool-accent);
+            padding: 0.5rem 1rem;
+            text-decoration: none;
+            text-transform: uppercase;
+            font-weight: bold;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            border-radius: 4px;
+            transition: all 0.2s;
+            text-align: center;
+        }
+
+        .tool-link:hover {
+            background-color: var(--tool-accent);
+            color: var(--tool-bg);
+        }
+
+        /* Tags for categorization */
+        .tag-container {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            font-size: 0.7rem;
+            padding: 0.2rem 0.5rem;
+            border-radius: 12px;
+            background-color: #333;
+            color: #ddd;
+            border: 1px solid #555;
+        }
+
+        /* Analogue Clock Styling */
+        .clock-container {
+            position: relative;
+            width: 40px;
+            height: 40px;
+            border: 2px solid #e3d5b8;
+            border-radius: 50%;
+            background-color: var(--bg-color);
+            box-shadow: inset 0 0 5px rgba(0,0,0,0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .clock-face {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .clock-face::after {
+            content: '';
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background-color: var(--accent-color);
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+        }
+
+        .hand {
+            position: absolute;
+            bottom: 50%;
+            left: 50%;
+            transform-origin: bottom;
+            background-color: var(--text-color);
+            border-radius: 2px;
+            transform: translateX(-50%) rotate(0deg);
+        }
+
+        .hour-hand {
+            width: 3px;
+            height: 25%;
+            z-index: 7;
+        }
+
+        .minute-hand {
+            width: 2px;
+            height: 35%;
+            z-index: 8;
+        }
+
+        .second-hand {
+            width: 1px;
+            height: 40%;
+            background-color: var(--accent-color);
+            z-index: 9;
+        }
+
+        /* Drawer section for quick notes */
+        .notes-drawer {
+            background-color: var(--secondary-bg);
+            border: 1px solid var(--border-color);
+            padding: 1rem;
+            margin-top: 3rem;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+            position: relative;
+        }
+        
+        .notes-drawer::after {
+            content: '📌';
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            font-size: 1.5rem;
+        }
+
+        textarea.scratchpad {
+            width: 100%;
+            height: 150px;
+            background: transparent;
+            border: none;
+            resize: vertical;
+            font-family: 'Courier Prime', monospace;
+            color: var(--text-color);
+            line-height: 1.5;
+            outline: none;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Header / Spine -->
+    <header class="flex justify-between items-center">
+        <div class="flex items-center gap-4">
+            <i class="fa-solid fa-book-journal-whills text-2xl text-[#f4ecd8]"></i>
+            <div>
+                <h1>SBA Workspace</h1>
+                <span class="text-xs text-[#e3d5b8] font-mono opacity-80 uppercase tracking-widest">Authorized Personnel Only</span>
+            </div>
+        </div>
+        <div class="flex items-center gap-6 text-sm font-mono text-[#e3d5b8]">
+            <div class="flex items-center gap-2">
+                <div class="clock-container">
+                    <div class="clock-face">
+                        <div class="hand hour-hand" id="hourHand"></div>
+                        <div class="hand minute-hand" id="minuteHand"></div>
+                        <div class="hand second-hand" id="secondHand"></div>
+                    </div>
+                </div>
+                <span id="current-time" class="hidden sm:inline"></span>
+            </div>
+            <button class="hover:text-white transition-colors" title="Log Out"><i class="fa-solid fa-power-off"></i></button>
+        </div>
+    </header>
+
+    <!-- Main Workspace -->
+    <main class="workspace-container">
+        
+        <div class="mb-8 flex justify-between items-end border-b-2 border-[#a39b85] pb-2">
+            <div>
+                <h2 class="text-3xl mb-1">Workbench</h2>
+                <p class="font-mono text-sm opacity-80">Select an instrument to begin operations.</p>
+            </div>
+            <div class="flex gap-2">
+                <!-- Filter buttons -->
+                <button class="px-3 py-1 bg-[#2c2921] text-[#f4ecd8] rounded font-mono text-xs hover:bg-[#8b3a3a] transition-colors filter-btn" data-filter="all">All</button>
+                <button class="px-3 py-1 bg-transparent border border-[#2c2921] text-[#2c2921] rounded font-mono text-xs hover:bg-[#e3d5b8] transition-colors filter-btn" data-filter="editor">Editors</button>
+                <button class="px-3 py-1 bg-transparent border border-[#2c2921] text-[#2c2921] rounded font-mono text-xs hover:bg-[#e3d5b8] transition-colors filter-btn" data-filter="dev">Devs</button>
+                <button class="px-3 py-1 bg-transparent border border-[#2c2921] text-[#2c2921] rounded font-mono text-xs hover:bg-[#e3d5b8] transition-colors filter-btn" data-filter="teacher">Teachers</button>
+            </div>
+        </div>
+
+        <div class="tool-grid" id="tools-container">
+            
+            <!-- Tool 1: Bengali Character Picker (Requested) -->
+            <div class="tool-card" data-category="editor teacher dev">
+                <i class="fa-solid fa-language tool-icon"></i>
+                <h3 class="tool-title">Bengali Char Picker</h3>
+                <div class="tag-container">
+                    <span class="tag">Editor</span>
+                    <span class="tag">Utility</span>
+                </div>
+                <p class="tool-desc">A precision tool for selecting and inserting complex Bengali typographic characters and ligatures seamlessly.</p>
+                <a href="bcp.html" class="tool-link">Initialize Tool <i class="fa-solid fa-arrow-right-to-bracket ml-1"></i></a>
+            </div>
+
+            <!-- Tool 2: Content Validator -->
+            <div class="tool-card" data-category="editor">
+                <i class="fa-solid fa-spell-check tool-icon"></i>
+                <h3 class="tool-title">Syntax Validator</h3>
+                <div class="tag-container">
+                    <span class="tag">Editor</span>
+                    <span class="tag">QA</span>
+                </div>
+                <p class="tool-desc">Automated grammar and style checking engine calibrated specifically for academy publication standards.</p>
+                <a href="#" class="tool-link" onclick="notifyConstruction()">Initialize Tool <i class="fa-solid fa-arrow-right-to-bracket ml-1"></i></a>
+            </div>
+
+            <!-- Tool 3: Assessment Generator -->
+            <div class="tool-card" data-category="teacher">
+                <i class="fa-solid fa-file-signature tool-icon"></i>
+                <h3 class="tool-title">Exam Forge</h3>
+                <div class="tag-container">
+                    <span class="tag">Teacher</span>
+                    <span class="tag">Assessment</span>
+                </div>
+                <p class="tool-desc">Assemble test papers from the academy question bank. Supports LaTeX output for mathematical notation.</p>
+                <a href="#" class="tool-link" onclick="notifyConstruction()">Initialize Tool <i class="fa-solid fa-arrow-right-to-bracket ml-1"></i></a>
+            </div>
+
+            <!-- Tool 4: API Console -->
+            <div class="tool-card" data-category="dev">
+                <i class="fa-solid fa-terminal tool-icon"></i>
+                <h3 class="tool-title">API Console</h3>
+                <div class="tag-container">
+                    <span class="tag">Dev</span>
+                    <span class="tag">System</span>
+                </div>
+                <p class="tool-desc">Direct access terminal for testing internal academy endpoints and database queries. Requires level 2 auth.</p>
+                <a href="#" class="tool-link" onclick="notifyConstruction()">Initialize Tool <i class="fa-solid fa-arrow-right-to-bracket ml-1"></i></a>
+            </div>
+
+             <!-- Tool 5: Resource Librarian -->
+             <div class="tool-card" data-category="teacher editor">
+                <i class="fa-solid fa-box-archive tool-icon"></i>
+                <h3 class="tool-title">Asset Vault</h3>
+                <div class="tag-container">
+                    <span class="tag">Global</span>
+                    <span class="tag">Storage</span>
+                </div>
+                <p class="tool-desc">Central repository for illustrations, diagrams, and historical documents used in course materials.</p>
+                <a href="#" class="tool-link" onclick="notifyConstruction()">Initialize Tool <i class="fa-solid fa-arrow-right-to-bracket ml-1"></i></a>
+            </div>
+
+            <!-- Tool 6: Schedule Matrix -->
+            <div class="tool-card" data-category="teacher">
+                <i class="fa-solid fa-calendar-days tool-icon"></i>
+                <h3 class="tool-title">Schedule Matrix</h3>
+                <div class="tag-container">
+                    <span class="tag">Teacher</span>
+                    <span class="tag">Planning</span>
+                </div>
+                <p class="tool-desc">Master timetable interface for conflict resolution and substitute assignments across all departments.</p>
+                <a href="#" class="tool-link" onclick="notifyConstruction()">Initialize Tool <i class="fa-solid fa-arrow-right-to-bracket ml-1"></i></a>
+            </div>
+
+        </div>
+
+        <!-- Scratchpad section -->
+        <div class="notes-drawer">
+            <h3 class="text-xl mb-2 flex items-center justify-between">
+                <span><i class="fa-solid fa-pen-nib mr-2 text-[#8b3a3a]"></i>Desk Scratchpad</span>
+                <span class="text-xs font-mono opacity-60">Autosaves locally</span>
+            </h3>
+            <textarea class="scratchpad" id="local-scratchpad" placeholder="Jot down quick notes, codes, or reminders here..."></textarea>
+        </div>
+
+    </main>
+
+    <!-- Custom Notification Toast (Instead of Alert) -->
+    <div id="toast" class="fixed bottom-4 right-4 bg-[#1e1e1e] text-[#d4af37] px-6 py-3 rounded border border-[#d4af37] shadow-lg transform translate-y-20 opacity-0 transition-all duration-300 z-50 font-mono text-sm flex items-center gap-3">
+        <i class="fa-solid fa-triangle-exclamation"></i>
+        <span id="toast-msg">Message here</span>
+    </div>
+
+    <script>
+        // Update clock
+        const hourHand = document.getElementById('hourHand');
+        const minuteHand = document.getElementById('minuteHand');
+        const secondHand = document.getElementById('secondHand');
+        const timeDisplay = document.getElementById('current-time');
+
+        function updateTime() {
+            const now = new Date();
+            
+            // Digital display
+            const timeString = now.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute:'2-digit' });
+            timeDisplay.textContent = 'SYS.TIME: ' + timeString;
+
+            // Analogue hands
+            const seconds = now.getSeconds();
+            const minutes = now.getMinutes();
+            const hours = now.getHours();
+
+            const secondsDegrees = ((seconds / 60) * 360);
+            const minutesDegrees = ((minutes / 60) * 360) + ((seconds/60)*6);
+            const hoursDegrees = ((hours / 12) * 360) + ((minutes/60)*30);
+
+            secondHand.style.transform = `translateX(-50%) rotate(${secondsDegrees}deg)`;
+            minuteHand.style.transform = `translateX(-50%) rotate(${minutesDegrees}deg)`;
+            hourHand.style.transform = `translateX(-50%) rotate(${hoursDegrees}deg)`;
+        }
+        
+        setInterval(updateTime, 1000);
+        updateTime();
+
+        // Scratchpad local storage
+        const scratchpad = document.getElementById('local-scratchpad');
+        
+        // Load saved notes
+        if(localStorage.getItem('sba_scratchpad')) {
+            scratchpad.value = localStorage.getItem('sba_scratchpad');
+        }
+
+        // Save notes on input
+        scratchpad.addEventListener('input', () => {
+            localStorage.setItem('sba_scratchpad', scratchpad.value);
+        });
+
+        // Custom Notification function (Replaces alert)
+        function notifyConstruction() {
+            const toast = document.getElementById('toast');
+            document.getElementById('toast-msg').textContent = "SYSTEM NOTICE: This module is currently undergoing maintenance.";
+            
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 3000);
+        }
+
+        // Filtering logic
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const cards = document.querySelectorAll('.tool-card');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Reset button styles
+                filterBtns.forEach(b => {
+                    b.classList.remove('bg-[#2c2921]', 'text-[#f4ecd8]');
+                    b.classList.add('bg-transparent', 'text-[#2c2921]');
+                });
+                
+                // Active button style
+                btn.classList.remove('bg-transparent', 'text-[#2c2921]');
+                btn.classList.add('bg-[#2c2921]', 'text-[#f4ecd8]');
+
+                const filterValue = btn.getAttribute('data-filter');
+
+                cards.forEach(card => {
+                    if (filterValue === 'all') {
+                        card.style.display = 'flex';
+                    } else {
+                        const categories = card.getAttribute('data-category').split(' ');
+                        if (categories.includes(filterValue)) {
+                            card.style.display = 'flex';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
