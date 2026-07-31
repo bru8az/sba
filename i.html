@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Nexus Dashboard 2026</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    animation: {
+                        'blob': 'blob 10s infinite',
+                    },
+                    keyframes: {
+                        blob: {
+                            '0%': { transform: 'translate(0px, 0px) scale(1)' },
+                            '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+                            '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+                            '100%': { transform: 'translate(0px, 0px) scale(1)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+            background-color: #020617; /* Slate 950 */
+            color: #f8fafc;
+            overflow: hidden; /* Prevent body scroll, handle internally */
+        }
+        
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .animation-delay-2000 { animation-delay: 2s; }
+        .animation-delay-4000 { animation-delay: 4s; }
+
+        .app-view {
+            will-change: transform;
+        }
+
+        /* Glassmorphism utilities */
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        
+        /* Chat bubbles */
+        .msg-user {
+            background: linear-gradient(135deg, #8b5cf6, #6d28d9);
+            color: white;
+            border-bottom-right-radius: 4px;
+        }
+        .msg-ai {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            color: #e2e8f0;
+            border-bottom-left-radius: 4px;
+        }
+    </style>
+</head>
+<body class="w-full h-screen relative selection:bg-cyan-500/30">
+
+    <div class="fixed inset-0 z-0 overflow-hidden pointer-events-none">
+        <div class="absolute top-[-10%] left-[-10%] w-[50vh] h-[50vh] rounded-full bg-indigo-600/20 blur-[100px] mix-blend-screen animate-blob"></div>
+        <div class="absolute top-[20%] right-[-10%] w-[40vh] h-[40vh] rounded-full bg-cyan-600/20 blur-[100px] mix-blend-screen animate-blob animation-delay-2000"></div>
+        <div class="absolute bottom-[-20%] left-[20%] w-[60vh] h-[60vh] rounded-full bg-purple-600/20 blur-[100px] mix-blend-screen animate-blob animation-delay-4000"></div>
+    </div>
+
+    <main id="view-dashboard" class="absolute inset-0 z-10 flex flex-col overflow-y-auto">
+        <!-- Header -->
+        <header class="pt-16 pb-8 px-6 sm:px-12 max-w-4xl mx-auto w-full">
+            <h1 id="clock-time" class="text-6xl sm:text-7xl font-bold tracking-tighter text-white drop-shadow-lg">--:--</h1>
+            <p id="clock-date" class="text-lg sm:text-xl text-slate-300 mt-2 font-medium">Loading Date...</p>
+            
+            <div class="mt-8 p-5 glass-panel rounded-2xl flex items-center justify-between">
+                <div>
+                    <p class="text-xs text-slate-400 uppercase tracking-widest font-semibold">Nexus Status 2026</p>
+                    <p class="text-xl font-medium text-cyan-400 mt-1">Systems Optimal</p>
+                </div>
+                <div class="w-12 h-12 rounded-full bg-cyan-500/20 flex items-center justify-center border border-cyan-500/30 animate-pulse">
+                    <i class="fas fa-bolt text-cyan-400"></i>
+                </div>
+            </div>
+        </header>
+
+        <section class="flex-1 px-6 sm:px-12 pb-12 max-w-4xl mx-auto w-full">
+            <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-x-4 gap-y-10">
+                
+                <!-- Tasks App Icon -->
+                <button onclick="openApp('view-tasks')" class="flex flex-col items-center group focus:outline-none">
+                    <div class="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-emerald-400 to-emerald-600 rounded-[1.25rem] shadow-lg shadow-emerald-500/30 flex items-center justify-center text-3xl text-white transform transition-transform duration-300 group-hover:scale-110 group-active:scale-95 relative">
+                        <i class="fas fa-check-double"></i>
+                        <span id="task-badge" class="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full border-2 border-slate-900 hidden"></span>
+                    </div>
+                    <span class="mt-3 text-sm font-medium text-slate-300 group-hover:text-white transition-colors">Tasks</span>
+                </button>
+
+                <!-- Focus App Icon -->
+                <button onclick="openApp('view-focus')" class="flex flex-col items-center group focus:outline-none">
+                    <div class="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-rose-400 to-red-600 rounded-[1.25rem] shadow-lg shadow-red-500/30 flex items-center justify-center text-3xl text-white transform transition-transform duration-300 group-hover:scale-110 group-active:scale-95">
+                        <i class="fas fa-stopwatch"></i>
+                    </div>
+                    <span class="mt-3 text-sm font-medium text-slate-300 group-hover:text-white transition-colors">Focus</span>
+                </button>
+
+                <!-- Notes App Icon -->
+                <button onclick="openApp('view-notes')" class="flex flex-col items-center group focus:outline-none">
+                    <div class="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-amber-400 to-orange-500 rounded-[1.25rem] shadow-lg shadow-orange-500/30 flex items-center justify-center text-3xl text-white transform transition-transform duration-300 group-hover:scale-110 group-active:scale-95">
+                        <i class="fas fa-pen-nib"></i>
+                    </div>
+                    <span class="mt-3 text-sm font-medium text-slate-300 group-hover:text-white transition-colors">Notes</span>
+                </button>
+
+                <!-- Weather App Icon -->
+                <button onclick="openApp('view-weather')" class="flex flex-col items-center group focus:outline-none">
+                    <div class="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-sky-400 to-blue-600 rounded-[1.25rem] shadow-lg shadow-blue-500/30 flex items-center justify-center text-3xl text-white transform transition-transform duration-300 group-hover:scale-110 group-active:scale-95">
+                        <i class="fas fa-cloud-sun"></i>
+                    </div>
+                    <span class="mt-3 text-sm font-medium text-slate-300 group-hover:text-white transition-colors">Weather</span>
+                </button>
+
+                <!-- AI Assistant Icon -->
+                <button onclick="openApp('view-ai')" class="flex flex-col items-center group focus:outline-none">
+                    <div class="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-violet-500 to-purple-700 rounded-[1.25rem] shadow-lg shadow-purple-500/30 flex items-center justify-center text-3xl text-white transform transition-transform duration-300 group-hover:scale-110 group-active:scale-95 relative">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <span class="mt-3 text-sm font-medium text-slate-300 group-hover:text-white transition-colors">Nexus AI</span>
+                </button>
+
+                <!-- Habits App Icon -->
+                <button onclick="openApp('view-habits')" class="flex flex-col items-center group focus:outline-none">
+                    <div class="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-pink-400 to-rose-500 rounded-[1.25rem] shadow-lg shadow-pink-500/30 flex items-center justify-center text-3xl text-white transform transition-transform duration-300 group-hover:scale-110 group-active:scale-95">
+                        <i class="fas fa-fire"></i>
+                    </div>
+                    <span class="mt-3 text-sm font-medium text-slate-300 group-hover:text-white transition-colors">Habits</span>
+                </button>
+
+            </div>
+        </section>
+    </main>
+
+    
+    <!-- 1. Tasks App -->
+    <div id="view-tasks" class="app-view fixed inset-0 z-50 transform translate-x-full transition-transform duration-300 ease-in-out flex flex-col bg-slate-950/95 backdrop-blur-xl">
+        <div class="flex items-center justify-between p-4 pt-8 border-b border-white/10 z-10 bg-slate-900/50">
+            <button onclick="closeApp()" class="text-emerald-400 text-lg p-2 hover:bg-white/5 rounded-lg transition-colors focus:outline-none">
+                <i class="fas fa-chevron-left mr-1"></i> Back
+            </button>
+            <h2 class="text-xl font-semibold text-white tracking-wide">Tasks</h2>
+            <div class="w-16"></div>
+        </div>
+        <div class="flex-1 overflow-y-auto p-4 sm:p-6 relative">
+            <div class="absolute inset-0 bg-emerald-500/5 pointer-events-none"></div>
+            <div class="relative z-10 max-w-2xl mx-auto w-full h-full flex flex-col">
+                <form id="task-form" class="flex gap-2 mb-6">
+                    <input type="text" id="task-input" placeholder="Add a new objective..." class="flex-1 bg-slate-800/80 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-emerald-500 transition-colors shadow-inner placeholder-slate-500" autocomplete="off">
+                    <button type="submit" class="bg-emerald-500 text-white px-5 rounded-xl hover:bg-emerald-600 transition-colors font-medium shadow-lg shadow-emerald-500/20 focus:outline-none"><i class="fas fa-plus"></i></button>
+                </form>
+                <div class="flex justify-between items-center mb-4 px-1">
+                    <span class="text-sm font-medium text-slate-400">Active Objectives</span>
+                    <button onclick="clearCompletedTasks()" class="text-xs text-emerald-400 hover:text-emerald-300 transition-colors">Clear Completed</button>
+                </div>
+                <ul id="tasks-list" class="flex-1 overflow-y-auto space-y-3 pb-8">
+                    <!-- Tasks injected here -->
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div id="view-focus" class="app-view fixed inset-0 z-50 transform translate-x-full transition-transform duration-300 ease-in-out flex flex-col bg-slate-950/95 backdrop-blur-xl">
+        <div class="flex items-center justify-between p-4 pt-8 border-b border-white/10 z-10 bg-slate-900/50">
+            <button onclick="closeApp()" class="text-rose-400 text-lg p-2 hover:bg-white/5 rounded-lg transition-colors focus:outline-none">
+                <i class="fas fa-chevron-left mr-1"></i> Back
+            </button>
+            <h2 class="text-xl font-semibold text-white tracking-wide">Focus</h2>
+            <div class="w-16"></div>
+        </div>
+        <div class="flex-1 overflow-y-auto p-4 relative">
+            <div class="absolute inset-0 bg-rose-500/5 pointer-events-none"></div>
+            <div class="relative z-10 max-w-lg mx-auto w-full h-full flex flex-col items-center justify-center">
+                
+                <div class="flex bg-slate-800/80 rounded-full p-1 mb-12 border border-slate-700">
+                    <button id="mode-work" onclick="setFocusMode('work')" class="px-6 py-2 rounded-full text-sm font-medium transition-colors bg-rose-500 text-white shadow-md">Deep Work</button>
+                    <button id="mode-break" onclick="setFocusMode('break')" class="px-6 py-2 rounded-full text-sm font-medium transition-colors text-slate-400 hover:text-white">Break</button>
+                </div>
+
+                <div class="relative w-72 h-72 sm:w-80 sm:h-80 flex items-center justify-center">
+                    <svg class="w-full h-full transform -rotate-90 absolute inset-0 drop-shadow-2xl">
+                        <circle cx="50%" cy="50%" r="45%" stroke="rgba(255,255,255,0.05)" stroke-width="12" fill="transparent"/>
+                        <!-- dasharray approx 2 * pi * r (where r is 45% of 288px (w-72) = ~129px -> ~815) -->
+                        <circle id="focus-progress" cx="50%" cy="50%" r="45%" stroke="currentColor" stroke-width="12" fill="transparent" class="text-rose-500 transition-all duration-1000 ease-linear" stroke-linecap="round" stroke-dasharray="1000" stroke-dashoffset="0"/>
+                    </svg>
+                    <div class="text-center z-10 flex flex-col items-center">
+                        <div id="focus-time" class="text-7xl sm:text-8xl font-bold tracking-tighter text-white tabular-nums drop-shadow-lg">25:00</div>
+                        <div id="focus-status" class="text-rose-400 font-semibold uppercase tracking-[0.3em] mt-3 text-sm">Session Ready</div>
+                    </div>
+                </div>
+
+                <div class="mt-16 flex gap-6 items-center">
+                    <button id="focus-reset-btn" onclick="resetFocus()" class="w-14 h-14 rounded-full glass-panel text-slate-300 text-xl flex items-center justify-center hover:bg-slate-700 transition-transform active:scale-95 focus:outline-none">
+                        <i class="fas fa-undo-alt"></i>
+                    </button>
+                    <button id="focus-start-btn" onclick="toggleFocus()" class="w-20 h-20 rounded-full bg-gradient-to-tr from-rose-600 to-rose-400 text-white text-3xl flex items-center justify-center hover:scale-105 transition-transform active:scale-95 shadow-xl shadow-rose-500/40 focus:outline-none pl-1">
+                        <i class="fas fa-play" id="focus-start-icon"></i>
+                    </button>
+                    <div class="w-14 h-14"></div> <!-- Spacer for symmetry -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="view-notes" class="app-view fixed inset-0 z-50 transform translate-x-full transition-transform duration-300 ease-in-out flex flex-col bg-slate-950/95 backdrop-blur-xl">
+        <div class="flex items-center justify-between p-4 pt-8 border-b border-white/10 z-10 bg-slate-900/50">
+            <button onclick="closeApp()" class="text-amber-400 text-lg p-2 hover:bg-white/5 rounded-lg transition-colors focus:outline-none">
+                <i class="fas fa-chevron-left mr-1"></i> Back
+            </button>
+            <h2 class="text-xl font-semibold text-white tracking-wide">Quick Notes</h2>
+            <div class="w-16 text-right">
+                <span id="notes-status" class="text-xs text-slate-500 opacity-0 transition-opacity"><i class="fas fa-cloud-upload-alt"></i> Saved</span>
+            </div>
+        </div>
+        <div class="flex-1 overflow-hidden p-4 sm:p-6 relative">
+            <div class="absolute inset-0 bg-amber-500/5 pointer-events-none"></div>
+            <div class="relative z-10 max-w-4xl mx-auto w-full h-full">
+                <textarea id="notes-textarea" class="w-full h-full glass-panel rounded-2xl p-6 text-slate-200 text-lg leading-relaxed resize-none focus:outline-none focus:border-amber-500/50 transition-colors custom-scrollbar" placeholder="Start typing... Everything is auto-saved locally."></textarea>
+            </div>
+        </div>
+    </div>
+
+    <div id="view-weather" class="app-view fixed inset-0 z-50 transform translate-x-full transition-transform duration-300 ease-in-out flex flex-col bg-slate-950/95 backdrop-blur-xl">
+        <div class="flex items-center justify-between p-4 pt-8 border-b border-white/10 z-10 bg-slate-900/50">
+            <button onclick="closeApp()" class="text-sky-400 text-lg p-2 hover:bg-white/5 rounded-lg transition-colors focus:outline-none">
+                <i class="fas fa-chevron-left mr-1"></i> Back
+            </button>
+            <h2 class="text-xl font-semibold text-white tracking-wide">Weather</h2>
+            <button onclick="initWeather()" class="w-16 text-right text-sky-400 hover:text-white p-2 focus:outline-none">
+                <i class="fas fa-sync-alt"></i>
+            </button>
+        </div>
+        <div class="flex-1 overflow-y-auto p-4 relative">
+            <div class="absolute inset-0 bg-sky-500/5 pointer-events-none"></div>
+            <div class="relative z-10 max-w-lg mx-auto w-full h-full flex flex-col items-center justify-center text-center">
+                
+                <div id="weather-container" class="w-full">
+                    <div id="weather-icon" class="text-9xl text-sky-400 mb-8 drop-shadow-[0_0_25px_rgba(56,189,248,0.4)] animate-pulse">
+                        <i class="fas fa-circle-notch fa-spin"></i>
+                    </div>
+                    <div id="weather-temp" class="text-8xl font-bold text-white tracking-tighter mb-2">--°</div>
+                    <div id="weather-desc" class="text-2xl text-sky-200 font-medium mb-12 capitalize tracking-wide">Syncing local metrics...</div>
+                    
+                    <div class="grid grid-cols-2 gap-4 w-full max-w-sm mx-auto">
+                        <div class="glass-panel p-5 rounded-2xl flex flex-col items-center justify-center">
+                            <i class="fas fa-wind text-slate-400 mb-2 text-xl"></i>
+                            <div class="text-slate-400 text-xs uppercase tracking-wider mb-1 font-semibold">Wind Speed</div>
+                            <div id="weather-wind" class="text-white font-semibold text-xl">-- km/h</div>
+                        </div>
+                        <div class="glass-panel p-5 rounded-2xl flex flex-col items-center justify-center">
+                            <i class="fas fa-map-marker-alt text-slate-400 mb-2 text-xl"></i>
+                            <div class="text-slate-400 text-xs uppercase tracking-wider mb-1 font-semibold">Location</div>
+                            <div id="weather-loc" class="text-white font-semibold text-xl truncate w-full px-2">Global</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div id="view-ai" class="app-view fixed inset-0 z-50 transform translate-x-full transition-transform duration-300 ease-in-out flex flex-col bg-slate-950/95 backdrop-blur-xl">
+        <div class="flex items-center justify-between p-4 pt-8 border-b border-white/10 z-10 bg-slate-900/50">
+            <button onclick="closeApp()" class="text-violet-400 text-lg p-2 hover:bg-white/5 rounded-lg transition-colors focus:outline-none">
+                <i class="fas fa-chevron-left mr-1"></i> Back
+            </button>
+            <div class="flex items-center gap-2">
+                <div class="w-2 h-2 rounded-full bg-violet-500 animate-pulse"></div>
+                <h2 class="text-xl font-semibold text-white tracking-wide">Nexus AI</h2>
+            </div>
+            <button onclick="clearChat()" class="w-16 text-right text-slate-500 hover:text-red-400 text-sm p-2 focus:outline-none">
+                Clear
+            </button>
+        </div>
+        <div class="flex-1 overflow-hidden p-4 sm:p-6 relative flex flex-col">
+            <div class="absolute inset-0 bg-violet-500/5 pointer-events-none"></div>
+            
+            <div class="relative z-10 max-w-3xl mx-auto w-full h-full flex flex-col">
+                <div id="chat-messages" class="flex-1 overflow-y-auto space-y-6 p-2 mb-6 flex flex-col custom-scrollbar">
+                    <!-- Chat bubbles injected here -->
+                </div>
+                
+                <div id="ai-typing" class="hidden mb-4 ml-2">
+                    <div class="msg-ai px-4 py-3 rounded-2xl rounded-bl-sm inline-block shadow-md">
+                        <span class="flex gap-1 items-center h-4">
+                            <span class="w-1.5 h-1.5 bg-slate-400 rounded-full animate-bounce"></span>
+                            <span class="w-1.5 h-1.5 bg-slate-400 rounded-full animate-bounce" style="animation-delay: 0.1s"></span>
+                            <span class="w-1.5 h-1.5 bg-slate-400 rounded-full animate-bounce" style="animation-delay: 0.2s"></span>
+                        </span>
+                    </div>
+                </div>
+
+                <form id="chat-form" class="flex gap-2 shrink-0">
+                    <input type="text" id="chat-input" placeholder="Query Nexus intelligence..." class="flex-1 bg-slate-800/80 border border-slate-700 rounded-full px-6 py-4 text-white focus:outline-none focus:border-violet-500 transition-colors shadow-inner" autocomplete="off">
+                    <button type="submit" class="w-14 h-14 rounded-full bg-gradient-to-br from-violet-500 to-purple-600 text-white flex items-center justify-center hover:scale-105 transition-transform shadow-lg shadow-purple-500/30 focus:outline-none">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="view-habits" class="app-view fixed inset-0 z-50 transform translate-x-full transition-transform duration-300 ease-in-out flex flex-col bg-slate-950/95 backdrop-blur-xl">
+        <div class="flex items-center justify-between p-4 pt-8 border-b border-white/10 z-10 bg-slate-900/50">
+            <button onclick="closeApp()" class="text-pink-400 text-lg p-2 hover:bg-white/5 rounded-lg transition-colors focus:outline-none">
+                <i class="fas fa-chevron-left mr-1"></i> Back
+            </button>
+            <h2 class="text-xl font-semibold text-white tracking-wide">Daily Habits</h2>
+            <div class="w-16"></div>
+        </div>
+        <div class="flex-1 overflow-y-auto p-4 sm:p-6 relative">
+            <div class="absolute inset-0 bg-pink-500/5 pointer-events-none"></div>
+            <div class="relative z-10 max-w-2xl mx-auto w-full h-full flex flex-col">
+                <form id="habit-form" class="flex gap-2 mb-8">
+                    <input type="text" id="habit-input" placeholder="Forge a new habit..." class="flex-1 bg-slate-800/80 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-pink-500 transition-colors shadow-inner" autocomplete="off">
+                    <button type="submit" class="bg-pink-500 text-white px-5 rounded-xl hover:bg-pink-600 transition-colors font-medium shadow-lg shadow-pink-500/20 focus:outline-none"><i class="fas fa-plus"></i></button>
+                </form>
+                
+                <div id="habits-list" class="space-y-4 flex-1 overflow-y-auto pb-8 custom-scrollbar">
+                    <!-- Habits injected here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- Core State & Utilities ---
+        const AppState = {
+            tasks: JSON.parse(localStorage.getItem('nexus_tasks')) || [],
+            notes: localStorage.getItem('nexus_notes') || '',
+            habits: JSON.parse(localStorage.getItem('nexus_habits')) || [],
+            chat: JSON.parse(localStorage.getItem('nexus_chat')) || [
+                { sender: 'ai', text: 'Nexus System Online. Welcome to 2026. How can I optimize your workflow today?' }
+            ],
+            focus: {
+                interval: null,
+                duration: 25 * 60, // 25 mins default
+                timeLeft: 25 * 60,
+                isRunning: false,
+                mode: 'work' // 'work' | 'break'
+            }
+        };
+
+        const saveState = (key, data) => localStorage.setItem(`nexus_${key}`, JSON.stringify(data));
+
+        // --- Navigation ---
+        function openApp(viewId) {
+            document.querySelectorAll('.app-view').forEach(v => {
+                v.classList.add('translate-x-full');
+            });
+            document.getElementById(viewId).classList.remove('translate-x-full');
+            
+            // App specific triggers on open
+            if(viewId === 'view-ai') scrollToBottomChat();
+            if(viewId === 'view-tasks') document.getElementById('task-input').focus();
+        }
+
+        function closeApp() {
+            document.querySelectorAll('.app-view').forEach(v => {
+                v.classList.add('translate-x-full');
+            });
+        }
+
+        // --- Dashboard Clock ---
+        function initClock() {
+            const timeEl = document.getElementById('clock-time');
+            const dateEl = document.getElementById('clock-date');
+            
+            const updateClock = () => {
+                const now = new Date();
+                timeEl.textContent = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                dateEl.textContent = now.toLocaleDateString([], { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
+            };
+            updateClock();
+            setInterval(updateClock, 1000);
+        }
+
+        // --- STREAMING_CHUNK: Tasks Logic ---
+        function initTasks() {
+            const form = document.getElementById('task-form');
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const input = document.getElementById('task-input');
+                const text = input.value.trim();
+                if (!text) return;
+
+                AppState.tasks.unshift({
+                    id: Date.now(),
+                    text: text,
+                    completed: false
+                });
+                
+                input.value = '';
+                saveState('tasks', AppState.tasks);
+                renderTasks();
+            });
+            renderTasks();
+        }
+
+        function toggleTask(id) {
+            const task = AppState.tasks.find(t => t.id === id);
+            if (task) {
+                task.completed = !task.completed;
+                saveState('tasks', AppState.tasks);
+                renderTasks();
+            }
+        }
+
+        function deleteTask(id) {
+            AppState.tasks = AppState.tasks.filter(t => t.id !== id);
+            saveState('tasks', AppState.tasks);
+            renderTasks();
+        }
+
+        function clearCompletedTasks() {
+            AppState.tasks = AppState.tasks.filter(t => !t.completed);
+            saveState('tasks', AppState.tasks);
+            renderTasks();
+        }
+
+        function renderTasks() {
+            const list = document.getElementById('tasks-list');
+            const badge = document.getElementById('task-badge');
+            
+            const pendingCount = AppState.tasks.filter(t => !t.completed).length;
+            if (pendingCount > 0) {
+                badge.textContent = pendingCount;
+                badge.classList.remove('hidden');
+            } else {
+                badge.classList.add('hidden');
+            }
+
+            if(AppState.tasks.length === 0) {
+                list.innerHTML = `<div class="text-center py-10 text-slate-500 italic">No active objectives.</div>`;
+                return;
+            }
+
+            list.innerHTML = AppState.tasks.map(t => `
+                <li class="flex items-center gap-3 p-4 glass-panel rounded-xl group transition-all hover:border-emerald-500/30">
+                    <button onclick="toggleTask(${t.id})" class="shrink-0 w-6 h-6 rounded-md border-2 flex items-center justify-center transition-colors focus:outline-none ${t.completed ? 'bg-emerald-500 border-emerald-500' : 'border-slate-500 hover:border-emerald-400'}">
+                        ${t.completed ? '<i class="fas fa-check text-xs text-white"></i>' : ''}
+                    </button>
+                    <span class="flex-1 truncate ${t.completed ? 'line-through text-slate-500' : 'text-slate-200'} transition-all">${t.text}</span>
+                    <button onclick="deleteTask(${t.id})" class="text-slate-600 hover:text-red-400 p-2 opacity-0 group-hover:opacity-100 transition-opacity focus:outline-none">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </li>
+            `).join('');
+        }
+
+        // --- STREAMING_CHUNK: Focus (Pomodoro) Logic ---
+        function initFocus() {
+            updateFocusDisplay();
+        }
+
+        function setFocusMode(mode) {
+            if(AppState.focus.isRunning) return; // Prevent changing mode while running
+            
+            AppState.focus.mode = mode;
+            AppState.focus.duration = mode === 'work' ? 25 * 60 : 5 * 60;
+            AppState.focus.timeLeft = AppState.focus.duration;
+            
+            document.getElementById('mode-work').className = `px-6 py-2 rounded-full text-sm font-medium transition-colors ${mode === 'work' ? 'bg-rose-500 text-white shadow-md' : 'text-slate-400 hover:text-white'}`;
+            document.getElementById('mode-break').className = `px-6 py-2 rounded-full text-sm font-medium transition-colors ${mode === 'break' ? 'bg-rose-500 text-white shadow-md' : 'text-slate-400 hover:text-white'}`;
+            
+            updateFocusDisplay();
+        }
+
+        function toggleFocus() {
+            const btnIcon = document.getElementById('focus-start-icon');
+            const btn = document.getElementById('focus-start-btn');
+            
+            if (AppState.focus.isRunning) {
+                // Pause
+                clearInterval(AppState.focus.interval);
+                AppState.focus.isRunning = false;
+                btnIcon.classList.replace('fa-pause', 'fa-play');
+                btn.classList.remove('animate-pulse');
+                document.getElementById('focus-status').textContent = 'Paused';
+            } else {
+                // Start
+                AppState.focus.isRunning = true;
+                btnIcon.classList.replace('fa-play', 'fa-pause');
+                btn.classList.add('animate-pulse');
+                document.getElementById('focus-status').textContent = AppState.focus.mode === 'work' ? 'Deep Work Active' : 'Resting';
+                
+                AppState.focus.interval = setInterval(() => {
+                    AppState.focus.timeLeft--;
+                    updateFocusDisplay();
+                    
+                    if (AppState.focus.timeLeft <= 0) {
+                        clearInterval(AppState.focus.interval);
+                        AppState.focus.isRunning = false;
+                        btnIcon.classList.replace('fa-pause', 'fa-play');
+                        btn.classList.remove('animate-pulse');
+                        document.getElementById('focus-status').textContent = 'Session Complete';
+                        
+                        // Play a simple beep
+                        try {
+                            const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                            const osc = ctx.createOscillator();
+                            osc.connect(ctx.destination);
+                            osc.frequency.value = 800;
+                            osc.start();
+                            setTimeout(() => osc.stop(), 500);
+                        } catch(e) {}
+                    }
+                }, 1000);
+            }
+        }
+
+        function resetFocus() {
+            clearInterval(AppState.focus.interval);
+            AppState.focus.isRunning = false;
+            AppState.focus.timeLeft = AppState.focus.duration;
+            document.getElementById('focus-start-icon').classList.replace('fa-pause', 'fa-play');
+            document.getElementById('focus-start-btn').classList.remove('animate-pulse');
+            document.getElementById('focus-status').textContent = 'Session Ready';
+            updateFocusDisplay();
+        }
+
+        function updateFocusDisplay() {
+            const m = Math.floor(AppState.focus.timeLeft / 60).toString().padStart(2, '0');
+            const s = (AppState.focus.timeLeft % 60).toString().padStart(2, '0');
+            document.getElementById('focus-time').textContent = `${m}:${s}`;
+
+            // Update SVG Circle (Circumference ~ 1000, mapped previously)
+            const circle = document.getElementById('focus-progress');
+            // Assuming 1000 is the max dasharray
+            const dashOffset = 1000 - (1000 * (AppState.focus.timeLeft / AppState.focus.duration));
+            circle.style.strokeDashoffset = dashOffset;
+            
+            if(AppState.focus.mode === 'break') {
+                circle.classList.replace('text-rose-500', 'text-sky-400');
+            } else {
+                circle.classList.replace('text-sky-400', 'text-rose-500');
+            }
+        }
+
+        // --- STREAMING_CHUNK: Notes Logic ---
+        let notesTimeout;
+        function initNotes() {
+            const textarea = document.getElementById('notes-textarea');
+            const status = document.getElementById('notes-status');
+            
+            textarea.value = AppState.notes;
+
+            textarea.addEventListener('input', (e) => {
+                status.classList.remove('opacity-100');
+                status.classList.add('opacity-0');
+                
+                clearTimeout(notesTimeout);
+                notesTimeout = setTimeout(() => {
+                    AppState.notes = e.target.value;
+                    localStorage.setItem('nexus_notes', AppState.notes);
+                    
+                    status.classList.remove('opacity-0');
+                    status.classList.add('opacity-100');
+                    setTimeout(() => {
+                        status.classList.remove('opacity-100');
+                        status.classList.add('opacity-0');
+                    }, 2000);
+                }, 800);
+            });
+        }
+
+        // --- STREAMING_CHUNK: Weather Logic ---
+        async function initWeather() {
+            const iconEl = document.getElementById('weather-icon');
+            const tempEl = document.getElementById('weather-temp');
+            const descEl = document.getElementById('weather-desc');
+            const windEl = document.getElementById('weather-wind');
+            const locEl = document.getElementById('weather-loc');
+
+            iconEl.innerHTML = '<i class="fas fa-circle-notch fa-spin text-6xl"></i>';
+            descEl.textContent = "Connecting to satellite...";
+
+            // Helper to fetch weather
+            const fetchW = async (lat, lon, locName = "Current Location") => {
+                try {
+                    const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`);
+                    const data = await res.json();
+                    
+                    const temp = Math.round(data.current_weather.temperature);
+                    const wind = data.current_weather.windspeed;
+                    const code = data.current_weather.weathercode;
+                    
+                    tempEl.textContent = `${temp}°`;
+                    windEl.textContent = `${wind} km/h`;
+                    locEl.textContent = locName;
+
+                    // WMO Weather interpretation codes
+                    let iconCls = 'fa-sun';
+                    let desc = 'Clear Sky';
+                    
+                    if(code === 0) { iconCls = 'fa-sun'; desc = 'Clear'; }
+                    else if(code >= 1 && code <= 3) { iconCls = 'fa-cloud-sun'; desc = 'Partly Cloudy'; }
+                    else if(code === 45 || code === 48) { iconCls = 'fa-smog'; desc = 'Fog'; }
+                    else if(code >= 51 && code <= 55) { iconCls = 'fa-cloud-rain'; desc = 'Drizzle'; }
+                    else if(code >= 61 && code <= 67) { iconCls = 'fa-cloud-showers-heavy'; desc = 'Rain'; }
+                    else if(code >= 71 && code <= 77) { iconCls = 'fa-snowflake'; desc = 'Snow'; }
+                    else if(code >= 95) { iconCls = 'fa-bolt'; desc = 'Thunderstorm'; }
+
+                    iconEl.innerHTML = `<i class="fas ${iconCls}"></i>`;
+                    iconEl.classList.remove('animate-pulse');
+                    descEl.textContent = desc;
+
+                } catch(e) {
+                    descEl.textContent = "Weather connection failed.";
+                    iconEl.innerHTML = '<i class="fas fa-exclamation-triangle"></i>';
+                }
+            };
+
+            // Try geolocation, fallback to a default (e.g. New York) if denied/fails
+            if ("geolocation" in navigator) {
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        fetchW(position.coords.latitude, position.coords.longitude, "Local Hub");
+                    },
+                    (error) => {
+                        // Fallback to London
+                        fetchW(51.5074, -0.1278, "London (Fallback)");
+                    }
+                );
+            } else {
+                fetchW(51.5074, -0.1278, "London (Fallback)");
+            }
+        }
+
+        // --- STREAMING_CHUNK: Nexus AI Chat Logic ---
+        function initChat() {
+            renderChat();
+            
+            document.getElementById('chat-form').addEventListener('submit', (e) => {
+                e.preventDefault();
+                const input = document.getElementById('chat-input');
+                const text = input.value.trim();
+                if(!text) return;
+
+                // Add user msg
+                AppState.chat.push({ sender: 'user', text });
+                saveState('chat', AppState.chat);
+                renderChat();
+                input.value = '';
+                
+                // Show typing indicator
+                const typingInd = document.getElementById('ai-typing');
+                typingInd.classList.remove('hidden');
+                scrollToBottomChat();
+
+                // Simulate AI processing
+                setTimeout(() => {
+                    typingInd.classList.add('hidden');
+                    const response = generateAIResponse(text);
+                    AppState.chat.push({ sender: 'ai', text: response });
+                    saveState('chat', AppState.chat);
+                    renderChat();
+                }, 1000 + Math.random() * 1500);
+            });
+        }
+
+        function renderChat() {
+            const container = document.getElementById('chat-messages');
+            container.innerHTML = AppState.chat.map(msg => {
+                if(msg.sender === 'user') {
+                    return `
+                        <div class="flex justify-end ml-12">
+                            <div class="msg-user px-4 py-3 rounded-2xl shadow-sm text-sm leading-relaxed max-w-[85%]">
+                                ${escapeHTML(msg.text)}
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    return `
+                        <div class="flex justify-start mr-12">
+                            <div class="msg-ai px-4 py-3 rounded-2xl shadow-sm text-sm leading-relaxed max-w-[85%]">
+                                ${escapeHTML(msg.text)}
+                            </div>
+                        </div>
+                    `;
+                }
+            }).join('');
+            scrollToBottomChat();
+        }
+
+        function scrollToBottomChat() {
+            const container = document.getElementById('chat-messages');
+            container.scrollTop = container.scrollHeight;
+        }
+        
+        function clearChat() {
+            AppState.chat = [{ sender: 'ai', text: 'Memory wiped. Standing by for new directives.' }];
+            saveState('chat', AppState.chat);
+            renderChat();
+        }
+
+        function generateAIResponse(input) {
+            const lower = input.toLowerCase();
+            if (lower.includes('hello') || lower.includes('hi')) return "Greetings. How can I streamline your day?";
+            if (lower.includes('time') || lower.includes('date')) return "I recommend checking the main dashboard for temporal data.";
+            if (lower.includes('joke')) return "Why do programmers prefer dark mode? Because light attracts bugs.";
+            if (lower.includes('2026')) return "Yes, it is 2026. The technological landscape has evolved beautifully, hasn't it?";
+            if (lower.includes('weather')) return "Access the Weather Module from the dashboard for real-time meteorological telemetry.";
+            
+            const generic = [
+                "I've logged that parameters. Anything else?",
+                "Fascinating. I am analyzing this data pattern.",
+                "My neural nets suggest proceeding with optimal efficiency.",
+                "Understood. I will optimize the background tasks accordingly.",
+                "I am a simulated UI entity for 2026, but I appreciate your input."
+            ];
+            return generic[Math.floor(Math.random() * generic.length)];
+        }
+
+        function escapeHTML(str) {
+            return str.replace(/[&<>'"]/g, 
+                tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag])
+            );
+        }
+
+        // --- STREAMING_CHUNK: Habits Logic ---
+        function initHabits() {
+            document.getElementById('habit-form').addEventListener('submit', (e) => {
+                e.preventDefault();
+                const input = document.getElementById('habit-input');
+                const name = input.value.trim();
+                if(!name) return;
+
+                AppState.habits.push({
+                    id: Date.now(),
+                    name: name,
+                    streak: 0,
+                    lastCheckIn: null
+                });
+                
+                input.value = '';
+                saveState('habits', AppState.habits);
+                renderHabits();
+            });
+            renderHabits();
+        }
+
+        function isCheckedInToday(habit) {
+            if(!habit.lastCheckIn) return false;
+            const today = new Date().toISOString().split('T')[0];
+            return habit.lastCheckIn === today;
+        }
+
+        function checkInHabit(id) {
+            const habit = AppState.habits.find(h => h.id === id);
+            if(!habit) return;
+            
+            const today = new Date().toISOString().split('T')[0];
+            
+            if (habit.lastCheckIn === today) return; // Already checked in
+
+            if (habit.lastCheckIn) {
+                // Calculate days difference
+                const last = new Date(habit.lastCheckIn);
+                const curr = new Date(today);
+                // Reset time portion to compare just dates safely
+                last.setHours(0,0,0,0);
+                curr.setHours(0,0,0,0);
+                
+                const diffTime = Math.abs(curr - last);
+                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+                if (diffDays === 1) {
+                    habit.streak += 1;
+                } else {
+                    // Missed a day
+                    habit.streak = 1; 
+                }
+            } else {
+                // First check in
+                habit.streak = 1;
+            }
+
+            habit.lastCheckIn = today;
+            saveState('habits', AppState.habits);
+            renderHabits();
+            
+            // Trigger a small animation
+            const btn = document.getElementById(`habit-btn-${id}`);
+            if(btn) {
+                btn.innerHTML = '<i class="fas fa-check-double text-xl"></i>';
+                btn.classList.add('scale-110');
+                setTimeout(() => btn.classList.remove('scale-110'), 200);
+            }
+        }
+
+        function deleteHabit(id) {
+            AppState.habits = AppState.habits.filter(h => h.id !== id);
+            saveState('habits', AppState.habits);
+            renderHabits();
+        }
+
+        function renderHabits() {
+            const list = document.getElementById('habits-list');
+            
+            if(AppState.habits.length === 0) {
+                list.innerHTML = `<div class="text-center py-10 text-slate-500 italic">Initiate a new habit sequence above.</div>`;
+                return;
+            }
+
+            list.innerHTML = AppState.habits.map(h => {
+                const checkedIn = isCheckedInToday(h);
+                return `
+                    <div class="flex items-center justify-between p-4 glass-panel rounded-2xl group relative overflow-hidden">
+                        <div class="absolute left-0 top-0 bottom-0 w-1 bg-pink-500 ${checkedIn ? 'opacity-100' : 'opacity-0'} transition-opacity"></div>
+                        <div class="z-10 pl-2">
+                            <h3 class="text-white font-medium text-lg">${escapeHTML(h.name)}</h3>
+                            <p class="text-pink-400 text-xs font-semibold mt-1 uppercase tracking-wider"><i class="fas fa-fire mr-1"></i> ${h.streak} Day Streak</p>
+                        </div>
+                        <div class="flex items-center gap-2 z-10">
+                            <button onclick="deleteHabit(${h.id})" class="w-10 h-10 rounded-full text-slate-500 hover:bg-red-500/20 hover:text-red-400 opacity-0 group-hover:opacity-100 transition-all focus:outline-none">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                            <button id="habit-btn-${h.id}" onclick="checkInHabit(${h.id})" class="w-14 h-14 rounded-full flex items-center justify-center transition-all duration-300 focus:outline-none ${checkedIn ? 'bg-pink-500/20 text-pink-400 border border-pink-500/30 cursor-not-allowed shadow-inner' : 'bg-slate-700 text-slate-300 hover:bg-pink-600 hover:text-white shadow-md hover:shadow-pink-500/40 hover:scale-105 active:scale-95'}">
+                                <i class="fas ${checkedIn ? 'fa-check' : 'fa-check'} text-xl"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // --- Init All ---
+        window.onload = () => {
+            initClock();
+            initTasks();
+            initFocus();
+            initNotes();
+            initChat();
+            initHabits();
+            // Weather is fetched on demand to save API calls, but let's do a quiet init
+            initWeather();
+        };
+
+    </script>
+</body>
+</html>
