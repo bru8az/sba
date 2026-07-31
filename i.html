@@ -96,11 +96,26 @@
 
     <main id="view-dashboard" class="absolute inset-0 z-10 flex flex-col overflow-y-auto">
         <!-- Header -->
-        <header class="pt-16 pb-8 px-6 sm:px-12 max-w-4xl mx-auto w-full">
-            <h1 id="clock-time" class="text-6xl sm:text-7xl font-bold tracking-tighter text-white drop-shadow-lg">--:--</h1>
-            <p id="clock-date" class="text-lg sm:text-xl text-slate-300 mt-2 font-medium">Loading Date...</p>
+        <header class="pt-12 pb-8 px-6 sm:px-12 max-w-4xl mx-auto w-full flex flex-col items-center">
+            <!-- Analog Clock -->
+            <div class="relative w-40 h-40 sm:w-48 sm:h-48 rounded-full border-4 border-slate-800/80 glass-panel shadow-[0_0_30px_rgba(0,0,0,0.3)] flex items-center justify-center mb-6">
+                <!-- Clock markers -->
+                <div class="absolute inset-0 rounded-full" style="background: radial-gradient(circle, transparent 60%, rgba(255,255,255,0.03) 100%);"></div>
+                <div class="absolute top-2 w-1 h-3 bg-slate-500 rounded-full"></div>
+                <div class="absolute bottom-2 w-1 h-3 bg-slate-500 rounded-full"></div>
+                <div class="absolute left-2 w-3 h-1 bg-slate-500 rounded-full"></div>
+                <div class="absolute right-2 w-3 h-1 bg-slate-500 rounded-full"></div>
+                
+                <!-- Hands -->
+                <div id="hand-hour" class="absolute w-1.5 h-12 sm:h-14 bg-slate-200 rounded-full origin-bottom" style="bottom: 50%;"></div>
+                <div id="hand-minute" class="absolute w-1 h-16 sm:h-20 bg-slate-300 rounded-full origin-bottom" style="bottom: 50%;"></div>
+                <div id="hand-second" class="absolute w-0.5 h-18 sm:h-22 bg-cyan-400 rounded-full origin-bottom shadow-[0_0_8px_cyan]" style="bottom: 50%;"></div>
+                <div class="w-3 h-3 bg-cyan-500 rounded-full z-10 shadow-[0_0_10px_cyan]"></div>
+            </div>
             
-            <div class="mt-8 p-5 glass-panel rounded-2xl flex items-center justify-between">
+            <p id="clock-date" class="text-lg sm:text-xl text-slate-300 font-medium tracking-wide">Loading Date...</p>
+            
+            <div class="mt-8 p-5 glass-panel rounded-2xl flex items-center justify-between w-full max-w-sm">
                 <div>
                     <p class="text-xs text-slate-400 uppercase tracking-widest font-semibold">Nexus Status 2026</p>
                     <p class="text-xl font-medium text-cyan-400 mt-1">Systems Optimal</p>
@@ -111,63 +126,113 @@
             </div>
         </header>
 
+        <!-- Study Dashboard Widget -->
+        <section class="px-6 sm:px-12 pb-8 max-w-4xl mx-auto w-full flex-shrink-0">
+            <div class="glass-panel p-6 sm:p-8 rounded-[2rem] border border-slate-700/50 shadow-2xl flex flex-col md:flex-row gap-8 items-center justify-between">
+                <!-- Focus Timer -->
+                <div class="flex flex-col items-center">
+                    <div class="relative w-40 h-40 flex items-center justify-center z-10 mb-4">
+                        <svg class="absolute inset-0 w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+                            <circle cx="50" cy="50" r="45" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="4"></circle>
+                            <circle id="focus-progress" cx="50" cy="50" r="45" fill="none" stroke="#f43f5e" stroke-width="4" stroke-dasharray="283" stroke-dashoffset="0" class="transition-all duration-1000 linear"></circle>
+                        </svg>
+                        <div id="focus-time" class="text-3xl font-light text-white z-10 tracking-widest">25:00</div>
+                    </div>
+                    <div class="flex gap-4">
+                        <button onclick="setFocusTime(25)" class="text-xs font-medium text-slate-400 hover:text-rose-400 transition-colors focus:outline-none">25m (Work)</button>
+                        <button onclick="setFocusTime(5)" class="text-xs font-medium text-slate-400 hover:text-emerald-400 transition-colors focus:outline-none">5m (Break)</button>
+                    </div>
+                    <div class="mt-4 flex gap-4 z-10">
+                        <button onclick="toggleFocus()" id="focus-btn" class="w-12 h-12 rounded-full bg-rose-500 text-white flex items-center justify-center text-lg shadow-lg shadow-rose-500/30 hover:scale-105 active:scale-95 transition-all focus:outline-none">
+                            <i class="fas fa-play"></i>
+                        </button>
+                        <button onclick="resetFocus()" class="w-12 h-12 rounded-full bg-slate-800 border border-slate-700 text-slate-300 flex items-center justify-center hover:bg-slate-700 transition-colors focus:outline-none">
+                            <i class="fas fa-redo text-sm"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Study Tools -->
+                <div class="flex-1 w-full flex flex-col gap-3">
+                    <h3 class="text-sm text-slate-400 uppercase tracking-widest font-semibold mb-1 ml-1">Study Environment</h3>
+                    
+                    <button onclick="toggleAmbientSound()" id="noise-btn" class="flex items-center justify-between p-4 glass-panel rounded-2xl hover:bg-slate-800/80 transition-colors border border-slate-700/50 group focus:outline-none">
+                        <span class="text-slate-300 font-medium group-hover:text-white transition-colors"><i class="fas fa-cloud-rain mr-3 text-indigo-400"></i> Ambient Rain</span>
+                        <div class="relative">
+                            <div id="noise-track" class="block bg-slate-700 w-10 h-6 rounded-full transition-colors"></div>
+                            <div id="noise-dot" class="absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition-transform"></div>
+                        </div>
+                    </button>
+                    
+                    <button onclick="toggleZenMode()" class="flex items-center justify-between p-4 glass-panel rounded-2xl hover:bg-slate-800/80 transition-colors border border-slate-700/50 group focus:outline-none">
+                        <span class="text-slate-300 font-medium group-hover:text-white transition-colors"><i class="fas fa-expand mr-3 text-emerald-400"></i> Zen Mode (Fullscreen)</span>
+                        <i class="fas fa-compress text-slate-500 group-hover:text-emerald-400 transition-colors"></i>
+                    </button>
+
+                    <div class="mt-2 relative">
+                        <i class="fas fa-bullseye absolute left-4 top-1/2 transform -translate-y-1/2 text-rose-400/70"></i>
+                        <input type="text" id="quick-objective" placeholder="Current study objective..." class="w-full bg-slate-900/60 border border-slate-700/50 rounded-2xl pl-12 pr-4 py-3.5 text-sm text-white focus:outline-none focus:border-rose-500 transition-colors shadow-inner" oninput="saveObjective(this.value)">
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <section class="flex-1 px-6 sm:px-12 pb-12 max-w-4xl mx-auto w-full">
+            <h3 class="text-sm text-slate-400 uppercase tracking-widest font-semibold mb-6 ml-2">Utilities</h3>
             <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-x-4 gap-y-10">
                 
                 <!-- Tasks App Icon -->
                 <button onclick="openApp('view-tasks')" class="flex flex-col items-center group focus:outline-none">
-                    <div class="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-emerald-400 to-emerald-600 rounded-[1.25rem] shadow-lg shadow-emerald-500/30 flex items-center justify-center text-3xl text-white transform transition-transform duration-300 group-hover:scale-110 group-active:scale-95 relative">
-                        <i class="fas fa-check-double"></i>
-                        <span id="task-badge" class="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full border-2 border-slate-900 hidden"></span>
+                    <div class="w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-br from-emerald-400 to-green-600 rounded-[1.25rem] shadow-lg shadow-emerald-500/30 flex items-center justify-center text-2xl text-white transform transition-transform duration-300 group-hover:scale-110 group-active:scale-95">
+                        <i class="fas fa-tasks"></i>
                     </div>
-                    <span class="mt-3 text-sm font-medium text-slate-300 group-hover:text-white transition-colors">Tasks</span>
+                    <span class="mt-3 text-xs font-medium text-slate-300 group-hover:text-white transition-colors">Tasks</span>
                 </button>
 
-                <!-- Focus App Icon -->
-                <button onclick="openApp('view-focus')" class="flex flex-col items-center group focus:outline-none">
-                    <div class="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-rose-400 to-red-600 rounded-[1.25rem] shadow-lg shadow-red-500/30 flex items-center justify-center text-3xl text-white transform transition-transform duration-300 group-hover:scale-110 group-active:scale-95">
-                        <i class="fas fa-stopwatch"></i>
+                <!-- Dev Tools App Icon -->
+                <button onclick="openApp('view-dev')" class="flex flex-col items-center group focus:outline-none">
+                    <div class="w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-[1.25rem] shadow-lg shadow-indigo-500/30 flex items-center justify-center text-2xl text-white transform transition-transform duration-300 group-hover:scale-110 group-active:scale-95">
+                        <i class="fas fa-terminal"></i>
                     </div>
-                    <span class="mt-3 text-sm font-medium text-slate-300 group-hover:text-white transition-colors">Focus</span>
-                </button>
-
-                <!-- Notes App Icon -->
-                <button onclick="openApp('view-notes')" class="flex flex-col items-center group focus:outline-none">
-                    <div class="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-amber-400 to-orange-500 rounded-[1.25rem] shadow-lg shadow-orange-500/30 flex items-center justify-center text-3xl text-white transform transition-transform duration-300 group-hover:scale-110 group-active:scale-95">
-                        <i class="fas fa-pen-nib"></i>
-                    </div>
-                    <span class="mt-3 text-sm font-medium text-slate-300 group-hover:text-white transition-colors">Notes</span>
-                </button>
-
-                <!-- Weather App Icon -->
-                <button onclick="openApp('view-weather')" class="flex flex-col items-center group focus:outline-none">
-                    <div class="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-sky-400 to-blue-600 rounded-[1.25rem] shadow-lg shadow-blue-500/30 flex items-center justify-center text-3xl text-white transform transition-transform duration-300 group-hover:scale-110 group-active:scale-95">
-                        <i class="fas fa-cloud-sun"></i>
-                    </div>
-                    <span class="mt-3 text-sm font-medium text-slate-300 group-hover:text-white transition-colors">Weather</span>
+                    <span class="mt-3 text-xs font-medium text-slate-300 group-hover:text-white transition-colors">Dev Tools</span>
                 </button>
 
                 <!-- AI Assistant Icon -->
                 <button onclick="openApp('view-ai')" class="flex flex-col items-center group focus:outline-none">
-                    <div class="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-violet-500 to-purple-700 rounded-[1.25rem] shadow-lg shadow-purple-500/30 flex items-center justify-center text-3xl text-white transform transition-transform duration-300 group-hover:scale-110 group-active:scale-95 relative">
+                    <div class="w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-br from-violet-500 to-purple-700 rounded-[1.25rem] shadow-lg shadow-purple-500/30 flex items-center justify-center text-2xl text-white transform transition-transform duration-300 group-hover:scale-110 group-active:scale-95 relative">
                         <i class="fas fa-brain"></i>
                     </div>
-                    <span class="mt-3 text-sm font-medium text-slate-300 group-hover:text-white transition-colors">Nexus AI</span>
+                    <span class="mt-3 text-xs font-medium text-slate-300 group-hover:text-white transition-colors">Nexus AI</span>
+                </button>
+
+                <!-- PassGen App Icon -->
+                <button onclick="openApp('view-passgen')" class="flex flex-col items-center group focus:outline-none">
+                    <div class="w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-br from-sky-400 to-blue-600 rounded-[1.25rem] shadow-lg shadow-blue-500/30 flex items-center justify-center text-2xl text-white transform transition-transform duration-300 group-hover:scale-110 group-active:scale-95">
+                        <i class="fas fa-key"></i>
+                    </div>
+                    <span class="mt-3 text-xs font-medium text-slate-300 group-hover:text-white transition-colors">PassGen</span>
+                </button>
+
+                <!-- Converter App Icon -->
+                <button onclick="openApp('view-converter')" class="flex flex-col items-center group focus:outline-none">
+                    <div class="w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-br from-orange-400 to-red-500 rounded-[1.25rem] shadow-lg shadow-orange-500/30 flex items-center justify-center text-2xl text-white transform transition-transform duration-300 group-hover:scale-110 group-active:scale-95 relative">
+                        <i class="fas fa-exchange-alt"></i>
+                    </div>
+                    <span class="mt-3 text-xs font-medium text-slate-300 group-hover:text-white transition-colors">Convert</span>
                 </button>
 
                 <!-- Habits App Icon -->
                 <button onclick="openApp('view-habits')" class="flex flex-col items-center group focus:outline-none">
-                    <div class="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-pink-400 to-rose-500 rounded-[1.25rem] shadow-lg shadow-pink-500/30 flex items-center justify-center text-3xl text-white transform transition-transform duration-300 group-hover:scale-110 group-active:scale-95">
+                    <div class="w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-br from-pink-400 to-rose-500 rounded-[1.25rem] shadow-lg shadow-pink-500/30 flex items-center justify-center text-2xl text-white transform transition-transform duration-300 group-hover:scale-110 group-active:scale-95">
                         <i class="fas fa-fire"></i>
                     </div>
-                    <span class="mt-3 text-sm font-medium text-slate-300 group-hover:text-white transition-colors">Habits</span>
+                    <span class="mt-3 text-xs font-medium text-slate-300 group-hover:text-white transition-colors">Habits</span>
                 </button>
 
             </div>
         </section>
     </main>
 
-    
     <!-- 1. Tasks App -->
     <div id="view-tasks" class="app-view fixed inset-0 z-50 transform translate-x-full transition-transform duration-300 ease-in-out flex flex-col bg-slate-950/95 backdrop-blur-xl">
         <div class="flex items-center justify-between p-4 pt-8 border-b border-white/10 z-10 bg-slate-900/50">
@@ -195,97 +260,163 @@
         </div>
     </div>
 
-    <div id="view-focus" class="app-view fixed inset-0 z-50 transform translate-x-full transition-transform duration-300 ease-in-out flex flex-col bg-slate-950/95 backdrop-blur-xl">
+    <!-- Dev Tools App (Replaces old apps) -->
+    <div id="view-dev" class="app-view fixed inset-0 z-50 transform translate-x-full transition-transform duration-300 ease-in-out flex flex-col bg-slate-950/95 backdrop-blur-xl">
         <div class="flex items-center justify-between p-4 pt-8 border-b border-white/10 z-10 bg-slate-900/50">
-            <button onclick="closeApp()" class="text-rose-400 text-lg p-2 hover:bg-white/5 rounded-lg transition-colors focus:outline-none">
+            <button onclick="closeApp()" class="text-indigo-400 text-lg p-2 hover:bg-white/5 rounded-lg transition-colors focus:outline-none">
                 <i class="fas fa-chevron-left mr-1"></i> Back
             </button>
-            <h2 class="text-xl font-semibold text-white tracking-wide">Focus</h2>
+            <h2 class="text-xl font-semibold text-white tracking-wide">Developer Tools</h2>
             <div class="w-16"></div>
         </div>
-        <div class="flex-1 overflow-y-auto p-4 relative">
-            <div class="absolute inset-0 bg-rose-500/5 pointer-events-none"></div>
-            <div class="relative z-10 max-w-lg mx-auto w-full h-full flex flex-col items-center justify-center">
-                
-                <div class="flex bg-slate-800/80 rounded-full p-1 mb-12 border border-slate-700">
-                    <button id="mode-work" onclick="setFocusMode('work')" class="px-6 py-2 rounded-full text-sm font-medium transition-colors bg-rose-500 text-white shadow-md">Deep Work</button>
-                    <button id="mode-break" onclick="setFocusMode('break')" class="px-6 py-2 rounded-full text-sm font-medium transition-colors text-slate-400 hover:text-white">Break</button>
-                </div>
-
-                <div class="relative w-72 h-72 sm:w-80 sm:h-80 flex items-center justify-center">
-                    <svg class="w-full h-full transform -rotate-90 absolute inset-0 drop-shadow-2xl">
-                        <circle cx="50%" cy="50%" r="45%" stroke="rgba(255,255,255,0.05)" stroke-width="12" fill="transparent"/>
-                        <!-- dasharray approx 2 * pi * r (where r is 45% of 288px (w-72) = ~129px -> ~815) -->
-                        <circle id="focus-progress" cx="50%" cy="50%" r="45%" stroke="currentColor" stroke-width="12" fill="transparent" class="text-rose-500 transition-all duration-1000 ease-linear" stroke-linecap="round" stroke-dasharray="1000" stroke-dashoffset="0"/>
-                    </svg>
-                    <div class="text-center z-10 flex flex-col items-center">
-                        <div id="focus-time" class="text-7xl sm:text-8xl font-bold tracking-tighter text-white tabular-nums drop-shadow-lg">25:00</div>
-                        <div id="focus-status" class="text-rose-400 font-semibold uppercase tracking-[0.3em] mt-3 text-sm">Session Ready</div>
+        <div class="flex-1 overflow-y-auto p-4 sm:p-8 relative">
+            <div class="max-w-3xl mx-auto space-y-6">
+                <!-- Status Grid -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div class="glass-panel p-4 rounded-2xl border border-slate-700">
+                        <div class="text-xs text-slate-400 uppercase tracking-widest font-semibold mb-2">Network Intelligence</div>
+                        <div id="net-status" class="text-emerald-400 font-medium text-lg">Checking...</div>
+                        <div id="net-details" class="text-xs text-slate-500 mt-1">Latency: --ms</div>
+                    </div>
+                    <div class="glass-panel p-4 rounded-2xl border border-slate-700">
+                        <div class="text-xs text-slate-400 uppercase tracking-widest font-semibold mb-2">Storage Usage</div>
+                        <div id="storage-status" class="text-white font-medium text-lg">Calculating...</div>
+                        <div class="text-xs text-slate-500 mt-1">Local Browser Quota</div>
                     </div>
                 </div>
 
-                <div class="mt-16 flex gap-6 items-center">
-                    <button id="focus-reset-btn" onclick="resetFocus()" class="w-14 h-14 rounded-full glass-panel text-slate-300 text-xl flex items-center justify-center hover:bg-slate-700 transition-transform active:scale-95 focus:outline-none">
-                        <i class="fas fa-undo-alt"></i>
-                    </button>
-                    <button id="focus-start-btn" onclick="toggleFocus()" class="w-20 h-20 rounded-full bg-gradient-to-tr from-rose-600 to-rose-400 text-white text-3xl flex items-center justify-center hover:scale-105 transition-transform active:scale-95 shadow-xl shadow-rose-500/40 focus:outline-none pl-1">
-                        <i class="fas fa-play" id="focus-start-icon"></i>
-                    </button>
-                    <div class="w-14 h-14"></div> <!-- Spacer for symmetry -->
+                <!-- Performance Monitor -->
+                <div class="glass-panel p-6 rounded-2xl border border-slate-700">
+                    <h3 class="text-lg font-semibold text-white mb-4">Tab Performance Metrics</h3>
+                    <div id="perf-metrics" class="text-slate-300 space-y-3 text-sm font-mono bg-slate-900/50 p-4 rounded-xl border border-slate-800">
+                        Loading performance API data...
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div id="view-notes" class="app-view fixed inset-0 z-50 transform translate-x-full transition-transform duration-300 ease-in-out flex flex-col bg-slate-950/95 backdrop-blur-xl">
-        <div class="flex items-center justify-between p-4 pt-8 border-b border-white/10 z-10 bg-slate-900/50">
-            <button onclick="closeApp()" class="text-amber-400 text-lg p-2 hover:bg-white/5 rounded-lg transition-colors focus:outline-none">
-                <i class="fas fa-chevron-left mr-1"></i> Back
-            </button>
-            <h2 class="text-xl font-semibold text-white tracking-wide">Quick Notes</h2>
-            <div class="w-16 text-right">
-                <span id="notes-status" class="text-xs text-slate-500 opacity-0 transition-opacity"><i class="fas fa-cloud-upload-alt"></i> Saved</span>
-            </div>
-        </div>
-        <div class="flex-1 overflow-hidden p-4 sm:p-6 relative">
-            <div class="absolute inset-0 bg-amber-500/5 pointer-events-none"></div>
-            <div class="relative z-10 max-w-4xl mx-auto w-full h-full">
-                <textarea id="notes-textarea" class="w-full h-full glass-panel rounded-2xl p-6 text-slate-200 text-lg leading-relaxed resize-none focus:outline-none focus:border-amber-500/50 transition-colors custom-scrollbar" placeholder="Start typing... Everything is auto-saved locally."></textarea>
-            </div>
-        </div>
-    </div>
-
-    <div id="view-weather" class="app-view fixed inset-0 z-50 transform translate-x-full transition-transform duration-300 ease-in-out flex flex-col bg-slate-950/95 backdrop-blur-xl">
+    <!-- Password Generator App -->
+    <div id="view-passgen" class="app-view fixed inset-0 z-50 transform translate-x-full transition-transform duration-300 ease-in-out flex flex-col bg-slate-950/95 backdrop-blur-xl">
         <div class="flex items-center justify-between p-4 pt-8 border-b border-white/10 z-10 bg-slate-900/50">
             <button onclick="closeApp()" class="text-sky-400 text-lg p-2 hover:bg-white/5 rounded-lg transition-colors focus:outline-none">
                 <i class="fas fa-chevron-left mr-1"></i> Back
             </button>
-            <h2 class="text-xl font-semibold text-white tracking-wide">Weather</h2>
-            <button onclick="initWeather()" class="w-16 text-right text-sky-400 hover:text-white p-2 focus:outline-none">
-                <i class="fas fa-sync-alt"></i>
-            </button>
+            <h2 class="text-xl font-semibold text-white tracking-wide">PassGen</h2>
+            <div class="w-16"></div>
         </div>
-        <div class="flex-1 overflow-y-auto p-4 relative">
+        <div class="flex-1 overflow-y-auto p-4 sm:p-6 relative">
             <div class="absolute inset-0 bg-sky-500/5 pointer-events-none"></div>
-            <div class="relative z-10 max-w-lg mx-auto w-full h-full flex flex-col items-center justify-center text-center">
+            <div class="relative z-10 max-w-md mx-auto w-full h-full flex flex-col items-center justify-center">
                 
-                <div id="weather-container" class="w-full">
-                    <div id="weather-icon" class="text-9xl text-sky-400 mb-8 drop-shadow-[0_0_25px_rgba(56,189,248,0.4)] animate-pulse">
-                        <i class="fas fa-circle-notch fa-spin"></i>
+                <div class="w-full relative mb-8">
+                    <div id="generated-password" class="w-full bg-slate-900 border border-slate-700 rounded-2xl p-6 text-center text-2xl sm:text-3xl font-mono text-white tracking-wider break-all shadow-inner min-h-[90px] flex items-center justify-center">
+                        Select options
                     </div>
-                    <div id="weather-temp" class="text-8xl font-bold text-white tracking-tighter mb-2">--°</div>
-                    <div id="weather-desc" class="text-2xl text-sky-200 font-medium mb-12 capitalize tracking-wide">Syncing local metrics...</div>
-                    
-                    <div class="grid grid-cols-2 gap-4 w-full max-w-sm mx-auto">
-                        <div class="glass-panel p-5 rounded-2xl flex flex-col items-center justify-center">
-                            <i class="fas fa-wind text-slate-400 mb-2 text-xl"></i>
-                            <div class="text-slate-400 text-xs uppercase tracking-wider mb-1 font-semibold">Wind Speed</div>
-                            <div id="weather-wind" class="text-white font-semibold text-xl">-- km/h</div>
+                    <button onclick="copyPassword()" id="copy-btn" class="absolute right-3 top-1/2 transform -translate-y-1/2 w-12 h-12 bg-sky-500/20 text-sky-400 rounded-xl flex items-center justify-center hover:bg-sky-500 hover:text-white transition-colors focus:outline-none border border-sky-500/30">
+                        <i class="far fa-copy"></i>
+                    </button>
+                </div>
+
+                <div class="w-full glass-panel rounded-2xl p-6 space-y-6">
+                    <div>
+                        <div class="flex justify-between text-sm mb-2 text-slate-300">
+                            <span>Length</span>
+                            <span id="pass-length-val" class="font-bold text-sky-400">16</span>
                         </div>
-                        <div class="glass-panel p-5 rounded-2xl flex flex-col items-center justify-center">
-                            <i class="fas fa-map-marker-alt text-slate-400 mb-2 text-xl"></i>
-                            <div class="text-slate-400 text-xs uppercase tracking-wider mb-1 font-semibold">Location</div>
-                            <div id="weather-loc" class="text-white font-semibold text-xl truncate w-full px-2">Global</div>
+                        <input type="range" id="pass-length" min="8" max="32" value="16" class="w-full accent-sky-500 h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer" oninput="document.getElementById('pass-length-val').textContent = this.value; generatePassword();">
+                    </div>
+
+                    <div class="space-y-3">
+                        <label class="flex items-center justify-between cursor-pointer group">
+                            <span class="text-slate-300 group-hover:text-white transition-colors">Uppercase (A-Z)</span>
+                            <div class="relative">
+                                <input type="checkbox" id="pass-upper" class="sr-only" checked onchange="generatePassword()">
+                                <div class="block bg-slate-700 w-10 h-6 rounded-full transition-colors toggle-bg"></div>
+                                <div class="dot absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition-transform"></div>
+                            </div>
+                        </label>
+                        <label class="flex items-center justify-between cursor-pointer group">
+                            <span class="text-slate-300 group-hover:text-white transition-colors">Lowercase (a-z)</span>
+                            <div class="relative">
+                                <input type="checkbox" id="pass-lower" class="sr-only" checked onchange="generatePassword()">
+                                <div class="block bg-slate-700 w-10 h-6 rounded-full transition-colors toggle-bg"></div>
+                                <div class="dot absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition-transform"></div>
+                            </div>
+                        </label>
+                        <label class="flex items-center justify-between cursor-pointer group">
+                            <span class="text-slate-300 group-hover:text-white transition-colors">Numbers (0-9)</span>
+                            <div class="relative">
+                                <input type="checkbox" id="pass-numbers" class="sr-only" checked onchange="generatePassword()">
+                                <div class="block bg-slate-700 w-10 h-6 rounded-full transition-colors toggle-bg"></div>
+                                <div class="dot absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition-transform"></div>
+                            </div>
+                        </label>
+                        <label class="flex items-center justify-between cursor-pointer group">
+                            <span class="text-slate-300 group-hover:text-white transition-colors">Symbols (!@#$)</span>
+                            <div class="relative">
+                                <input type="checkbox" id="pass-symbols" class="sr-only" checked onchange="generatePassword()">
+                                <div class="block bg-slate-700 w-10 h-6 rounded-full transition-colors toggle-bg"></div>
+                                <div class="dot absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition-transform"></div>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <button onclick="generatePassword()" class="mt-8 w-full py-4 bg-gradient-to-r from-sky-500 to-blue-600 rounded-xl text-white font-bold text-lg shadow-lg shadow-blue-500/30 hover:scale-[1.02] active:scale-95 transition-all focus:outline-none">
+                    <i class="fas fa-sync-alt mr-2"></i> Generate New
+                </button>
+            </div>
+            
+            <style>
+                input:checked ~ .dot { transform: translateX(100%); }
+                input:checked ~ .toggle-bg { background-color: #0ea5e9; } /* sky-500 */
+            </style>
+        </div>
+    </div>
+
+    <!-- Unit Converter App -->
+    <div id="view-converter" class="app-view fixed inset-0 z-50 transform translate-x-full transition-transform duration-300 ease-in-out flex flex-col bg-slate-950/95 backdrop-blur-xl">
+        <div class="flex items-center justify-between p-4 pt-8 border-b border-white/10 z-10 bg-slate-900/50">
+            <button onclick="closeApp()" class="text-orange-400 text-lg p-2 hover:bg-white/5 rounded-lg transition-colors focus:outline-none">
+                <i class="fas fa-chevron-left mr-1"></i> Back
+            </button>
+            <h2 class="text-xl font-semibold text-white tracking-wide">Converter</h2>
+            <div class="w-16"></div>
+        </div>
+        <div class="flex-1 overflow-y-auto p-4 sm:p-6 relative">
+            <div class="absolute inset-0 bg-orange-500/5 pointer-events-none"></div>
+            <div class="relative z-10 max-w-md mx-auto w-full h-full flex flex-col items-center pt-6">
+                
+                <div class="w-full flex bg-slate-800/80 rounded-xl p-1 mb-8 border border-slate-700">
+                    <button onclick="setConvType('length')" id="btn-conv-length" class="flex-1 py-2 rounded-lg text-sm font-medium transition-colors bg-orange-500 text-white shadow-md">Length</button>
+                    <button onclick="setConvType('weight')" id="btn-conv-weight" class="flex-1 py-2 rounded-lg text-sm font-medium transition-colors text-slate-400 hover:text-white">Weight</button>
+                </div>
+
+                <div class="w-full space-y-4">
+                    <div class="glass-panel p-5 rounded-2xl border border-slate-700 relative">
+                        <label class="text-xs text-slate-400 uppercase tracking-widest font-semibold mb-2 block">From</label>
+                        <div class="flex gap-3">
+                            <input type="number" id="conv-input" class="w-2/3 bg-transparent text-3xl text-white focus:outline-none font-light" value="1" oninput="doConversion()">
+                            <select id="conv-from" class="w-1/3 bg-slate-800 text-slate-300 rounded-lg p-2 border border-slate-600 focus:outline-none focus:border-orange-500" onchange="doConversion()">
+                                <!-- populated by js -->
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-center -my-2 relative z-10">
+                        <button onclick="swapConv()" class="w-10 h-10 bg-slate-700 border border-slate-600 rounded-full flex items-center justify-center text-orange-400 hover:bg-slate-600 hover:text-orange-300 transition-colors shadow-lg">
+                            <i class="fas fa-exchange-alt rotate-90"></i>
+                        </button>
+                    </div>
+
+                    <div class="glass-panel p-5 rounded-2xl border border-slate-700 bg-slate-800/50 relative">
+                        <label class="text-xs text-slate-400 uppercase tracking-widest font-semibold mb-2 block">To</label>
+                        <div class="flex gap-3">
+                            <input type="text" id="conv-output" class="w-2/3 bg-transparent text-3xl text-white focus:outline-none font-light" value="0" readonly>
+                            <select id="conv-to" class="w-1/3 bg-slate-800 text-slate-300 rounded-lg p-2 border border-slate-600 focus:outline-none focus:border-orange-500" onchange="doConversion()">
+                                <!-- populated by js -->
+                            </select>
                         </div>
                     </div>
                 </div>
@@ -359,92 +490,169 @@
     </div>
 
     <script>
-        // --- Core State & Utilities ---
-        const AppState = {
-            tasks: JSON.parse(localStorage.getItem('nexus_tasks')) || [],
-            notes: localStorage.getItem('nexus_notes') || '',
-            habits: JSON.parse(localStorage.getItem('nexus_habits')) || [],
-            chat: JSON.parse(localStorage.getItem('nexus_chat')) || [
-                { sender: 'ai', text: 'Nexus System Online. Welcome to 2026. How can I optimize your workflow today?' }
-            ],
-            focus: {
-                interval: null,
-                duration: 25 * 60, // 25 mins default
-                timeLeft: 25 * 60,
-                isRunning: false,
-                mode: 'work' // 'work' | 'break'
+        // --- STREAMING_CHUNK: Dev/Study Suite Logic ---
+        function updateNetworkStatus() {
+            const status = document.getElementById('net-status');
+            const details = document.getElementById('net-details');
+            
+            if (navigator.onLine) {
+                status.textContent = "Online";
+                status.className = "text-emerald-400 font-medium";
+                const conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+                if (conn) {
+                    details.textContent = `Type: ${conn.effectiveType} | RTT: ${conn.rtt}ms`;
+                }
+            } else {
+                status.textContent = "Offline";
+                status.className = "text-red-400 font-medium";
             }
-        };
-
-        const saveState = (key, data) => localStorage.setItem(`nexus_${key}`, JSON.stringify(data));
-
-        // --- Navigation ---
-        function openApp(viewId) {
-            document.querySelectorAll('.app-view').forEach(v => {
-                v.classList.add('translate-x-full');
-            });
-            document.getElementById(viewId).classList.remove('translate-x-full');
-            
-            // App specific triggers on open
-            if(viewId === 'view-ai') scrollToBottomChat();
-            if(viewId === 'view-tasks') document.getElementById('task-input').focus();
         }
 
-        function closeApp() {
-            document.querySelectorAll('.app-view').forEach(v => {
-                v.classList.add('translate-x-full');
-            });
+        async function updateStorage() {
+            if (navigator.storage && navigator.storage.estimate) {
+                const estimate = await navigator.storage.estimate();
+                const used = (estimate.usage / 1024 / 1024).toFixed(2);
+                document.getElementById('storage-status').textContent = `${used} MB Used`;
+            }
         }
 
-        // --- Dashboard Clock ---
-        function initClock() {
-            const timeEl = document.getElementById('clock-time');
-            const dateEl = document.getElementById('clock-date');
-            
-            const updateClock = () => {
-                const now = new Date();
-                timeEl.textContent = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-                dateEl.textContent = now.toLocaleDateString([], { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
-            };
-            updateClock();
-            setInterval(updateClock, 1000);
+        function updatePerfMetrics() {
+            const perf = performance.getEntriesByType('navigation')[0];
+            const div = document.getElementById('perf-metrics');
+            if (perf) {
+                div.innerHTML = `
+                    <div><span class="text-indigo-400">DNS Lookup:</span> ${Math.round(perf.domainLookupEnd - perf.domainLookupStart)}ms</div>
+                    <div><span class="text-indigo-400">DOM Interactive:</span> ${Math.round(perf.domInteractive)}ms</div>
+                    <div><span class="text-indigo-400">Page Load:</span> ${Math.round(perf.loadEventEnd)}ms</div>
+                `;
+            }
         }
+
+        // --- STREAMING_CHUNK: Study Tools Logic ---
+        let audioCtx, ambientSource, gainNode;
+        function toggleAmbientSound() {
+            const track = document.getElementById('noise-track');
+            const dot = document.getElementById('noise-dot');
+            const btn = document.getElementById('noise-btn');
+
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+
+            if (ambientSource) {
+                // Fade out to prevent popping
+                gainNode.gain.setTargetAtTime(0, audioCtx.currentTime, 0.5);
+                setTimeout(() => {
+                    if (ambientSource) {
+                        ambientSource.stop();
+                        ambientSource.disconnect();
+                        ambientSource = null;
+                    }
+                }, 1000);
+                
+                if (track) track.classList.replace('bg-indigo-500', 'bg-slate-700');
+                if (dot) dot.style.transform = 'translateX(0)';
+                if (btn) btn.classList.remove('border-indigo-500/50');
+            } else {
+                // Generate White Noise Buffer
+                const bufferSize = 2 * audioCtx.sampleRate;
+                const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+                const data = buffer.getChannelData(0);
+                for (let i = 0; i < bufferSize; i++) data[i] = Math.random() * 2 - 1;
+                
+                ambientSource = audioCtx.createBufferSource();
+                ambientSource.buffer = buffer;
+                ambientSource.loop = true;
+
+                // Create a lowpass filter to heavily muffle the white noise into a deep "rain" sound
+                const lowpass = audioCtx.createBiquadFilter();
+                lowpass.type = 'lowpass';
+                lowpass.frequency.value = 400; // Deep sound
+                
+                // Add a subtle highpass to remove muddy low rumbling
+                const highpass = audioCtx.createBiquadFilter();
+                highpass.type = 'highpass';
+                highpass.frequency.value = 100;
+
+                // Create gain node for smooth fade in/out and volume control
+                gainNode = audioCtx.createGain();
+                gainNode.gain.value = 0; // Start silent
+                
+                // Connect nodes: Source -> Lowpass -> Highpass -> Gain -> Destination
+                ambientSource.connect(lowpass);
+                lowpass.connect(highpass);
+                highpass.connect(gainNode);
+                gainNode.connect(audioCtx.destination);
+                
+                ambientSource.start();
+                // Smooth fade in
+                gainNode.gain.setTargetAtTime(0.8, audioCtx.currentTime, 1);
+
+                if (track) track.classList.replace('bg-slate-700', 'bg-indigo-500');
+                if (dot) dot.style.transform = 'translateX(100%)';
+                if (btn) btn.classList.add('border-indigo-500/50');
+            }
+        }
+
+        function toggleZenMode() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(err => {
+                    console.log(`Error attempting to enable fullscreen: ${err.message}`);
+                });
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                }
+            }
+        }
+
+        function saveObjective(val) {
+            localStorage.setItem('nexus_study_objective', val);
+        }
+
+        // --- Initialize tools ---
+        setInterval(updateNetworkStatus, 3000);
+        updateStorage();
+        updatePerfMetrics();
+        
+        setTimeout(() => {
+            const savedObj = localStorage.getItem('nexus_study_objective');
+            if(savedObj && document.getElementById('quick-objective')) {
+                document.getElementById('quick-objective').value = savedObj;
+            }
+        }, 100);
 
         // --- STREAMING_CHUNK: Tasks Logic ---
         function initTasks() {
             const form = document.getElementById('task-form');
-            form.addEventListener('submit', (e) => {
-                e.preventDefault();
-                const input = document.getElementById('task-input');
-                const text = input.value.trim();
-                if (!text) return;
+            if (form) {
+                form.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    const input = document.getElementById('task-input');
+                    const text = input.value.trim();
+                    if(!text) return;
 
-                AppState.tasks.unshift({
-                    id: Date.now(),
-                    text: text,
-                    completed: false
+                    AppState.tasks.push({
+                        id: Date.now(),
+                        text: text,
+                        completed: false
+                    });
+                    
+                    input.value = '';
+                    saveState('tasks', AppState.tasks);
+                    renderTasks();
                 });
-                
-                input.value = '';
-                saveState('tasks', AppState.tasks);
-                renderTasks();
-            });
+            }
             renderTasks();
         }
 
         function toggleTask(id) {
             const task = AppState.tasks.find(t => t.id === id);
-            if (task) {
+            if(task) {
                 task.completed = !task.completed;
                 saveState('tasks', AppState.tasks);
                 renderTasks();
             }
-        }
-
-        function deleteTask(id) {
-            AppState.tasks = AppState.tasks.filter(t => t.id !== id);
-            saveState('tasks', AppState.tasks);
-            renderTasks();
         }
 
         function clearCompletedTasks() {
@@ -455,211 +663,305 @@
 
         function renderTasks() {
             const list = document.getElementById('tasks-list');
-            const badge = document.getElementById('task-badge');
+            if (!list) return;
             
-            const pendingCount = AppState.tasks.filter(t => !t.completed).length;
-            if (pendingCount > 0) {
-                badge.textContent = pendingCount;
-                badge.classList.remove('hidden');
-            } else {
-                badge.classList.add('hidden');
-            }
-
             if(AppState.tasks.length === 0) {
                 list.innerHTML = `<div class="text-center py-10 text-slate-500 italic">No active objectives.</div>`;
                 return;
             }
 
             list.innerHTML = AppState.tasks.map(t => `
-                <li class="flex items-center gap-3 p-4 glass-panel rounded-xl group transition-all hover:border-emerald-500/30">
-                    <button onclick="toggleTask(${t.id})" class="shrink-0 w-6 h-6 rounded-md border-2 flex items-center justify-center transition-colors focus:outline-none ${t.completed ? 'bg-emerald-500 border-emerald-500' : 'border-slate-500 hover:border-emerald-400'}">
-                        ${t.completed ? '<i class="fas fa-check text-xs text-white"></i>' : ''}
+                <li class="flex items-center gap-3 p-3 glass-panel rounded-xl group transition-all ${t.completed ? 'opacity-50' : ''}">
+                    <button onclick="toggleTask(${t.id})" class="w-6 h-6 rounded-md border ${t.completed ? 'bg-emerald-500 border-emerald-500 text-white' : 'border-slate-500 hover:border-emerald-400'} flex items-center justify-center transition-colors focus:outline-none">
+                        ${t.completed ? '<i class="fas fa-check text-xs"></i>' : ''}
                     </button>
-                    <span class="flex-1 truncate ${t.completed ? 'line-through text-slate-500' : 'text-slate-200'} transition-all">${t.text}</span>
-                    <button onclick="deleteTask(${t.id})" class="text-slate-600 hover:text-red-400 p-2 opacity-0 group-hover:opacity-100 transition-opacity focus:outline-none">
-                        <i class="fas fa-trash"></i>
-                    </button>
+                    <span class="flex-1 text-slate-200 ${t.completed ? 'line-through text-slate-400' : ''}">${escapeHTML(t.text)}</span>
                 </li>
             `).join('');
         }
 
-        // --- STREAMING_CHUNK: Focus (Pomodoro) Logic ---
+        // --- STREAMING_CHUNK: Focus Logic ---
+        let focusInterval;
+        let focusTimeLeft = 25 * 60; // 25 mins
+        let isFocusRunning = false;
+        let totalFocusTime = 25 * 60;
+
         function initFocus() {
             updateFocusDisplay();
         }
 
-        function setFocusMode(mode) {
-            if(AppState.focus.isRunning) return; // Prevent changing mode while running
-            
-            AppState.focus.mode = mode;
-            AppState.focus.duration = mode === 'work' ? 25 * 60 : 5 * 60;
-            AppState.focus.timeLeft = AppState.focus.duration;
-            
-            document.getElementById('mode-work').className = `px-6 py-2 rounded-full text-sm font-medium transition-colors ${mode === 'work' ? 'bg-rose-500 text-white shadow-md' : 'text-slate-400 hover:text-white'}`;
-            document.getElementById('mode-break').className = `px-6 py-2 rounded-full text-sm font-medium transition-colors ${mode === 'break' ? 'bg-rose-500 text-white shadow-md' : 'text-slate-400 hover:text-white'}`;
-            
+        function setFocusTime(mins) {
+            clearInterval(focusInterval);
+            isFocusRunning = false;
+            totalFocusTime = mins * 60;
+            focusTimeLeft = totalFocusTime;
+            const btn = document.getElementById('focus-btn');
+            if(btn) {
+                btn.innerHTML = '<i class="fas fa-play"></i>';
+                btn.classList.remove('bg-amber-500', 'shadow-amber-500/30');
+                btn.classList.add('bg-rose-500', 'shadow-rose-500/30');
+            }
             updateFocusDisplay();
         }
 
         function toggleFocus() {
-            const btnIcon = document.getElementById('focus-start-icon');
-            const btn = document.getElementById('focus-start-btn');
-            
-            if (AppState.focus.isRunning) {
-                // Pause
-                clearInterval(AppState.focus.interval);
-                AppState.focus.isRunning = false;
-                btnIcon.classList.replace('fa-pause', 'fa-play');
-                btn.classList.remove('animate-pulse');
-                document.getElementById('focus-status').textContent = 'Paused';
+            const btn = document.getElementById('focus-btn');
+            if (isFocusRunning) {
+                clearInterval(focusInterval);
+                isFocusRunning = false;
+                btn.innerHTML = '<i class="fas fa-play"></i>';
+                btn.classList.remove('bg-amber-500', 'shadow-amber-500/30');
+                btn.classList.add('bg-rose-500', 'shadow-rose-500/30');
             } else {
-                // Start
-                AppState.focus.isRunning = true;
-                btnIcon.classList.replace('fa-play', 'fa-pause');
-                btn.classList.add('animate-pulse');
-                document.getElementById('focus-status').textContent = AppState.focus.mode === 'work' ? 'Deep Work Active' : 'Resting';
+                isFocusRunning = true;
+                btn.innerHTML = '<i class="fas fa-pause"></i>';
+                btn.classList.remove('bg-rose-500', 'shadow-rose-500/30');
+                btn.classList.add('bg-amber-500', 'shadow-amber-500/30');
                 
-                AppState.focus.interval = setInterval(() => {
-                    AppState.focus.timeLeft--;
+                focusInterval = setInterval(() => {
+                    focusTimeLeft--;
                     updateFocusDisplay();
                     
-                    if (AppState.focus.timeLeft <= 0) {
-                        clearInterval(AppState.focus.interval);
-                        AppState.focus.isRunning = false;
-                        btnIcon.classList.replace('fa-pause', 'fa-play');
-                        btn.classList.remove('animate-pulse');
-                        document.getElementById('focus-status').textContent = 'Session Complete';
-                        
-                        // Play a simple beep
-                        try {
-                            const ctx = new (window.AudioContext || window.webkitAudioContext)();
-                            const osc = ctx.createOscillator();
-                            osc.connect(ctx.destination);
-                            osc.frequency.value = 800;
-                            osc.start();
-                            setTimeout(() => osc.stop(), 500);
-                        } catch(e) {}
+                    if (focusTimeLeft <= 0) {
+                        clearInterval(focusInterval);
+                        isFocusRunning = false;
+                        focusTimeLeft = totalFocusTime;
+                        btn.innerHTML = '<i class="fas fa-play"></i>';
+                        btn.classList.remove('bg-amber-500', 'shadow-amber-500/30');
+                        btn.classList.add('bg-rose-500', 'shadow-rose-500/30');
+                        updateFocusDisplay();
                     }
                 }, 1000);
             }
         }
 
         function resetFocus() {
-            clearInterval(AppState.focus.interval);
-            AppState.focus.isRunning = false;
-            AppState.focus.timeLeft = AppState.focus.duration;
-            document.getElementById('focus-start-icon').classList.replace('fa-pause', 'fa-play');
-            document.getElementById('focus-start-btn').classList.remove('animate-pulse');
-            document.getElementById('focus-status').textContent = 'Session Ready';
+            clearInterval(focusInterval);
+            isFocusRunning = false;
+            focusTimeLeft = totalFocusTime;
+            const btn = document.getElementById('focus-btn');
+            if(btn) {
+                btn.innerHTML = '<i class="fas fa-play"></i>';
+                btn.classList.remove('bg-amber-500', 'shadow-amber-500/30');
+                btn.classList.add('bg-rose-500', 'shadow-rose-500/30');
+            }
             updateFocusDisplay();
         }
 
         function updateFocusDisplay() {
-            const m = Math.floor(AppState.focus.timeLeft / 60).toString().padStart(2, '0');
-            const s = (AppState.focus.timeLeft % 60).toString().padStart(2, '0');
-            document.getElementById('focus-time').textContent = `${m}:${s}`;
-
-            // Update SVG Circle (Circumference ~ 1000, mapped previously)
-            const circle = document.getElementById('focus-progress');
-            // Assuming 1000 is the max dasharray
-            const dashOffset = 1000 - (1000 * (AppState.focus.timeLeft / AppState.focus.duration));
-            circle.style.strokeDashoffset = dashOffset;
+            const m = Math.floor(focusTimeLeft / 60).toString().padStart(2, '0');
+            const s = (focusTimeLeft % 60).toString().padStart(2, '0');
+            const timeEl = document.getElementById('focus-time');
+            if(timeEl) timeEl.textContent = `${m}:${s}`;
             
-            if(AppState.focus.mode === 'break') {
-                circle.classList.replace('text-rose-500', 'text-sky-400');
-            } else {
-                circle.classList.replace('text-sky-400', 'text-rose-500');
+            const circle = document.getElementById('focus-progress');
+            if (circle) {
+                const dasharray = 283; 
+                const offset = dasharray - (focusTimeLeft / totalFocusTime) * dasharray;
+                circle.style.strokeDashoffset = offset;
             }
         }
 
-        // --- STREAMING_CHUNK: Notes Logic ---
-        let notesTimeout;
-        function initNotes() {
-            const textarea = document.getElementById('notes-textarea');
-            const status = document.getElementById('notes-status');
-            
-            textarea.value = AppState.notes;
+        // --- STREAMING_CHUNK: App State & Navigation ---
+        let AppState = loadState();
+        let currentApp = null;
+        let clockInterval;
+        
+        function loadState() {
+            const defaultState = {
+                tasks: [],
+                notes: [], // Kept in memory for AI chatbot context
+                chat: [{ sender: 'ai', text: 'Nexus Intelligence initialized. How can I assist you today?' }],
+                habits: []
+            };
+            try {
+                const stored = localStorage.getItem('nexus_state_2026');
+                return stored ? JSON.parse(stored) : defaultState;
+            } catch(e) {
+                return defaultState;
+            }
+        }
+        
+        function saveState(key, data) {
+            localStorage.setItem('nexus_state_2026', JSON.stringify(AppState));
+        }
 
-            textarea.addEventListener('input', (e) => {
-                status.classList.remove('opacity-100');
-                status.classList.add('opacity-0');
+        function initClock() {
+            function update() {
+                const now = new Date();
+                const h = now.getHours();
+                const m = now.getMinutes();
+                const s = now.getSeconds();
                 
-                clearTimeout(notesTimeout);
-                notesTimeout = setTimeout(() => {
-                    AppState.notes = e.target.value;
-                    localStorage.setItem('nexus_notes', AppState.notes);
-                    
-                    status.classList.remove('opacity-0');
-                    status.classList.add('opacity-100');
-                    setTimeout(() => {
-                        status.classList.remove('opacity-100');
-                        status.classList.add('opacity-0');
-                    }, 2000);
-                }, 800);
+                // Analog calculations
+                const sDeg = s * 6;
+                const mDeg = (m * 6) + (s * 0.1);
+                const hDeg = (h % 12 * 30) + (m * 0.5);
+                
+                document.getElementById('hand-second').style.transform = `rotate(${sDeg}deg)`;
+                document.getElementById('hand-minute').style.transform = `rotate(${mDeg}deg)`;
+                document.getElementById('hand-hour').style.transform = `rotate(${hDeg}deg)`;
+                
+                const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+                document.getElementById('clock-date').textContent = now.toLocaleDateString(undefined, options);
+            }
+            update();
+            clockInterval = setInterval(update, 1000);
+        }
+
+        // --- STREAMING_CHUNK: Navigation & UI ---
+        function openApp(viewId) {
+            const el = document.getElementById(viewId);
+            if(el) {
+                el.classList.remove('translate-x-full');
+            }
+            
+            // App specific triggers on open
+            if(viewId === 'view-ai') scrollToBottomChat();
+            if(viewId === 'view-tasks') document.getElementById('task-input').focus();
+            if(viewId === 'view-passgen') generatePassword();
+        }
+
+        function closeApp() {
+            document.querySelectorAll('.app-view').forEach(v => {
+                v.classList.add('translate-x-full');
             });
         }
 
-        // --- STREAMING_CHUNK: Weather Logic ---
-        async function initWeather() {
-            const iconEl = document.getElementById('weather-icon');
-            const tempEl = document.getElementById('weather-temp');
-            const descEl = document.getElementById('weather-desc');
-            const windEl = document.getElementById('weather-wind');
-            const locEl = document.getElementById('weather-loc');
+        // --- STREAMING_CHUNK: Password Generator Logic ---
+        function generatePassword() {
+            const length = parseInt(document.getElementById('pass-length').value);
+            const useUpper = document.getElementById('pass-upper').checked;
+            const useLower = document.getElementById('pass-lower').checked;
+            const useNumbers = document.getElementById('pass-numbers').checked;
+            const useSymbols = document.getElementById('pass-symbols').checked;
 
-            iconEl.innerHTML = '<i class="fas fa-circle-notch fa-spin text-6xl"></i>';
-            descEl.textContent = "Connecting to satellite...";
-
-            // Helper to fetch weather
-            const fetchW = async (lat, lon, locName = "Current Location") => {
-                try {
-                    const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`);
-                    const data = await res.json();
-                    
-                    const temp = Math.round(data.current_weather.temperature);
-                    const wind = data.current_weather.windspeed;
-                    const code = data.current_weather.weathercode;
-                    
-                    tempEl.textContent = `${temp}°`;
-                    windEl.textContent = `${wind} km/h`;
-                    locEl.textContent = locName;
-
-                    // WMO Weather interpretation codes
-                    let iconCls = 'fa-sun';
-                    let desc = 'Clear Sky';
-                    
-                    if(code === 0) { iconCls = 'fa-sun'; desc = 'Clear'; }
-                    else if(code >= 1 && code <= 3) { iconCls = 'fa-cloud-sun'; desc = 'Partly Cloudy'; }
-                    else if(code === 45 || code === 48) { iconCls = 'fa-smog'; desc = 'Fog'; }
-                    else if(code >= 51 && code <= 55) { iconCls = 'fa-cloud-rain'; desc = 'Drizzle'; }
-                    else if(code >= 61 && code <= 67) { iconCls = 'fa-cloud-showers-heavy'; desc = 'Rain'; }
-                    else if(code >= 71 && code <= 77) { iconCls = 'fa-snowflake'; desc = 'Snow'; }
-                    else if(code >= 95) { iconCls = 'fa-bolt'; desc = 'Thunderstorm'; }
-
-                    iconEl.innerHTML = `<i class="fas ${iconCls}"></i>`;
-                    iconEl.classList.remove('animate-pulse');
-                    descEl.textContent = desc;
-
-                } catch(e) {
-                    descEl.textContent = "Weather connection failed.";
-                    iconEl.innerHTML = '<i class="fas fa-exclamation-triangle"></i>';
-                }
+            const charset = {
+                upper: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
+                lower: 'abcdefghijklmnopqrstuvwxyz',
+                numbers: '0123456789',
+                symbols: '!@#$%^&*()_+~`|}{[]:;?><,./-='
             };
 
-            // Try geolocation, fallback to a default (e.g. New York) if denied/fails
-            if ("geolocation" in navigator) {
-                navigator.geolocation.getCurrentPosition(
-                    (position) => {
-                        fetchW(position.coords.latitude, position.coords.longitude, "Local Hub");
-                    },
-                    (error) => {
-                        // Fallback to London
-                        fetchW(51.5074, -0.1278, "London (Fallback)");
-                    }
-                );
-            } else {
-                fetchW(51.5074, -0.1278, "London (Fallback)");
+            let allowedChars = '';
+            if (useUpper) allowedChars += charset.upper;
+            if (useLower) allowedChars += charset.lower;
+            if (useNumbers) allowedChars += charset.numbers;
+            if (useSymbols) allowedChars += charset.symbols;
+
+            const outputEl = document.getElementById('generated-password');
+
+            if (allowedChars === '') {
+                outputEl.textContent = 'Select options';
+                outputEl.classList.add('text-slate-500');
+                outputEl.classList.remove('text-white');
+                return;
             }
+
+            let password = '';
+            for (let i = 0; i < length; i++) {
+                const randomIndex = Math.floor(Math.random() * allowedChars.length);
+                password += allowedChars[randomIndex];
+            }
+
+            outputEl.textContent = password;
+            outputEl.classList.remove('text-slate-500');
+            outputEl.classList.add('text-white');
+            
+            // Reset copy button styling
+            const copyBtn = document.getElementById('copy-btn');
+            copyBtn.innerHTML = '<i class="far fa-copy"></i>';
+            copyBtn.classList.remove('bg-emerald-500', 'text-white', 'border-emerald-500');
+            copyBtn.classList.add('bg-sky-500/20', 'text-sky-400', 'border-sky-500/30');
+        }
+
+        function copyPassword() {
+            const pwd = document.getElementById('generated-password').textContent;
+            if (pwd === 'Select options' || !pwd) return;
+
+            // Use fallback strategy for iFrame/cross-origin constraints
+            const textarea = document.createElement('textarea');
+            textarea.value = pwd;
+            textarea.style.position = 'fixed';
+            textarea.style.opacity = '0';
+            document.body.appendChild(textarea);
+            textarea.select();
+            
+            try {
+                document.execCommand('copy');
+                const copyBtn = document.getElementById('copy-btn');
+                copyBtn.innerHTML = '<i class="fas fa-check"></i>';
+                copyBtn.classList.remove('bg-sky-500/20', 'text-sky-400', 'border-sky-500/30', 'hover:bg-sky-500');
+                copyBtn.classList.add('bg-emerald-500', 'text-white', 'border-emerald-500');
+            } catch (err) {
+                console.error('Failed to copy text: ', err);
+            } finally {
+                document.body.removeChild(textarea);
+            }
+        }
+
+        // --- STREAMING_CHUNK: Converter Logic ---
+        const convUnits = {
+            length: { meter: 1, km: 0.001, cm: 100, mile: 0.000621371, foot: 3.28084, inch: 39.3701 },
+            weight: { kg: 1, gram: 1000, lb: 2.20462, oz: 35.274 }
+        };
+        let currentConvType = 'length';
+
+        function initConverter() {
+            setConvType('length');
+        }
+
+        function setConvType(type) {
+            currentConvType = type;
+            document.getElementById('btn-conv-length').className = type === 'length' ? 'flex-1 py-2 rounded-lg text-sm font-medium transition-colors bg-orange-500 text-white shadow-md' : 'flex-1 py-2 rounded-lg text-sm font-medium transition-colors text-slate-400 hover:text-white';
+            document.getElementById('btn-conv-weight').className = type === 'weight' ? 'flex-1 py-2 rounded-lg text-sm font-medium transition-colors bg-orange-500 text-white shadow-md' : 'flex-1 py-2 rounded-lg text-sm font-medium transition-colors text-slate-400 hover:text-white';
+            
+            const fromSelect = document.getElementById('conv-from');
+            const toSelect = document.getElementById('conv-to');
+            
+            fromSelect.innerHTML = '';
+            toSelect.innerHTML = '';
+            
+            Object.keys(convUnits[type]).forEach(unit => {
+                fromSelect.innerHTML += `<option value="${unit}">${unit}</option>`;
+                toSelect.innerHTML += `<option value="${unit}">${unit}</option>`;
+            });
+            
+            // Set different defaults
+            if (type === 'length') {
+                fromSelect.value = 'meter';
+                toSelect.value = 'foot';
+            } else {
+                fromSelect.value = 'kg';
+                toSelect.value = 'lb';
+            }
+            
+            document.getElementById('conv-input').value = 1;
+            doConversion();
+        }
+
+        function swapConv() {
+            const from = document.getElementById('conv-from');
+            const to = document.getElementById('conv-to');
+            const temp = from.value;
+            from.value = to.value;
+            to.value = temp;
+            doConversion();
+        }
+
+        function doConversion() {
+            const val = parseFloat(document.getElementById('conv-input').value) || 0;
+            const from = document.getElementById('conv-from').value;
+            const to = document.getElementById('conv-to').value;
+            
+            const baseRates = convUnits[currentConvType];
+            
+            // Convert to base unit (meter or kg) first
+            const baseVal = val / baseRates[from];
+            // Convert to target
+            const targetVal = baseVal * baseRates[to];
+            
+            document.getElementById('conv-output').value = Math.round(targetVal * 100000) / 100000;
         }
 
         // --- STREAMING_CHUNK: Nexus AI Chat Logic ---
@@ -697,11 +999,13 @@
         function renderChat() {
             const container = document.getElementById('chat-messages');
             container.innerHTML = AppState.chat.map(msg => {
+                // Replacing newlines with linebreaks to properly format AI lists/notes 
+                const formattedText = escapeHTML(msg.text).replace(/\n/g, '<br>');
                 if(msg.sender === 'user') {
                     return `
                         <div class="flex justify-end ml-12">
                             <div class="msg-user px-4 py-3 rounded-2xl shadow-sm text-sm leading-relaxed max-w-[85%]">
-                                ${escapeHTML(msg.text)}
+                                ${formattedText}
                             </div>
                         </div>
                     `;
@@ -709,7 +1013,7 @@
                     return `
                         <div class="flex justify-start mr-12">
                             <div class="msg-ai px-4 py-3 rounded-2xl shadow-sm text-sm leading-relaxed max-w-[85%]">
-                                ${escapeHTML(msg.text)}
+                                ${formattedText}
                             </div>
                         </div>
                     `;
@@ -731,14 +1035,40 @@
 
         function generateAIResponse(input) {
             const lower = input.toLowerCase();
-            if (lower.includes('hello') || lower.includes('hi')) return "Greetings. How can I streamline your day?";
-            if (lower.includes('time') || lower.includes('date')) return "I recommend checking the main dashboard for temporal data.";
-            if (lower.includes('joke')) return "Why do programmers prefer dark mode? Because light attracts bugs.";
+            
+            // Notes & Memory Integration
+            if (lower.startsWith('save:') || lower.startsWith('note:')) {
+                const note = input.substring(input.indexOf(':') + 1).trim();
+                if(note) {
+                    const newNote = { id: Date.now(), text: note, date: new Date().toLocaleDateString() };
+                    AppState.notes.push(newNote);
+                    saveState('notes', AppState.notes);
+                    return `Saved to memory vault:\n"${note}"`;
+                }
+                return "Note content cannot be empty. Try 'Save: reminder to buy milk'.";
+            }
+            
+            if (lower.includes('show notes') || lower.includes('my notes') || lower === 'notes') {
+                if(AppState.notes.length === 0) return "Your memory vault is currently empty.";
+                let resp = "[ Stored Memory Logs ]\n\n";
+                resp += AppState.notes.map((n, i) => `${i+1}. ${n.text} (${n.date})`).join('\n\n');
+                return resp;
+            }
+            
+            if (lower.startsWith('clear notes')) {
+                AppState.notes = [];
+                saveState('notes', AppState.notes);
+                return "All memory logs have been successfully purged.";
+            }
+
+            // General Responses
+            if (lower.includes('hello') || lower.includes('hi')) return "Greetings. How can I streamline your day? Try saving a note with 'Save: [message]'.";
+            if (lower.includes('time') || lower.includes('date')) return "I recommend checking the analog clock on the main dashboard for temporal data.";
+            if (lower.includes('joke')) return "Why do programmers prefer dark mode?\nBecause light attracts bugs.";
             if (lower.includes('2026')) return "Yes, it is 2026. The technological landscape has evolved beautifully, hasn't it?";
-            if (lower.includes('weather')) return "Access the Weather Module from the dashboard for real-time meteorological telemetry.";
             
             const generic = [
-                "I've logged that parameters. Anything else?",
+                "I've logged those parameters. Anything else?",
                 "Fascinating. I am analyzing this data pattern.",
                 "My neural nets suggest proceeding with optimal efficiency.",
                 "Understood. I will optimize the background tasks accordingly.",
@@ -865,11 +1195,9 @@
             initClock();
             initTasks();
             initFocus();
-            initNotes();
+            initConverter();
             initChat();
             initHabits();
-            // Weather is fetched on demand to save API calls, but let's do a quiet init
-            initWeather();
         };
 
     </script>
