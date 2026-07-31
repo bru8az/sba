@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bengali Character Picker</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Font specifically for rendering Bengali characters beautifully */
+        @import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600&display=swap');
+
+        .bengali-text {
+            font-family: 'Hind Siliguri', sans-serif;
+        }
+
+        /* Toast animation */
+        #toast {
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            transform: translateY(100%);
+            opacity: 0;
+            pointer-events: none;
+        }
+        #toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 min-h-screen pb-12">
+    
+    <!-- Navbar -->
+    <nav class="bg-blue-600 text-white shadow-md sticky top-0 z-10">
+        <div class="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between">
+            <h1 class="text-xl md:text-2xl font-bold flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
+                </svg>
+                Bengali Character Picker
+            </h1>
+            <p class="text-sm text-blue-100 hidden md:block">Click any character to copy</p>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 mt-6 grid grid-cols-1 lg:grid-cols-12 gap-6 md:gap-8 items-start pb-20">
+        
+        <!-- Left/Bottom side: Characters (Scrollable natively) -->
+        <div class="lg:col-span-7 xl:col-span-8 space-y-8 order-2 lg:order-1">
+            <!-- Vowels Section -->
+            <section>
+                <h2 class="text-xl font-semibold text-gray-700 mb-4 border-b pb-2">Vowels (স্বরবর্ণ)</h2>
+                <div id="vowels-container" class="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 xl:grid-cols-11 gap-2 md:gap-3">
+                    <!-- Vowels will be injected here -->
+                </div>
+            </section>
+
+            <!-- Consonants Section -->
+            <section>
+                <h2 class="text-xl font-semibold text-gray-700 mb-4 border-b pb-2">Consonants (ব্যঞ্জনবর্ণ)</h2>
+                <div id="consonants-container" class="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 xl:grid-cols-10 gap-2 md:gap-3">
+                    <!-- Consonants will be injected here -->
+                </div>
+            </section>
+
+            <!-- Numerals Section -->
+            <section>
+                <h2 class="text-xl font-semibold text-gray-700 mb-4 border-b pb-2">Numerals (সংখ্যা)</h2>
+                <div id="numbers-container" class="grid grid-cols-5 sm:grid-cols-10 gap-2 md:gap-3">
+                    <!-- Numbers will be injected here -->
+                </div>
+            </section>
+
+            <!-- Modifiers Section -->
+            <section>
+                <h2 class="text-xl font-semibold text-gray-700 mb-4 border-b pb-2">Vowel Signs & Modifiers (কার ও অন্যান্য)</h2>
+                <div id="modifiers-container" class="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 xl:grid-cols-11 gap-2 md:gap-3">
+                    <!-- Modifiers will be injected here -->
+                </div>
+            </section>
+        </div>
+
+        <!-- Right/Top side: Sticky Typing Pad -->
+        <div class="lg:col-span-5 xl:col-span-4 sticky top-[76px] z-10 order-1 lg:order-2">
+            <section class="bg-white p-4 md:p-5 rounded-2xl shadow-lg border border-gray-200">
+                <div class="flex items-center justify-between mb-3 border-b pb-2">
+                    <h2 class="text-lg font-semibold text-gray-700">Typing Pad (খাতা)</h2>
+                    <div class="flex gap-2">
+                        <button id="clear-btn" class="px-2.5 py-1 text-sm font-medium text-red-600 bg-red-50 hover:bg-red-100 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-red-400">
+                            Clear
+                        </button>
+                        <button id="copy-all-btn" class="px-2.5 py-1 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-400 flex items-center gap-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                            </svg>
+                            Copy
+                        </button>
+                    </div>
+                </div>
+                <textarea id="typing-pad" class="bengali-text w-full h-32 lg:h-64 p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none resize-y text-xl md:text-2xl text-gray-800" placeholder="Type here... (এখানে টাইপ করুন...)"></textarea>
+            </section>
+        </div>
+
+    </main>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed bottom-6 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white px-6 py-3 rounded-full shadow-xl flex items-center gap-3 z-50">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-400" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+        </svg>
+        <span id="toast-message" class="font-medium">Copied!</span>
+    </div>
+
+    <script>
+        // Character Arrays
+        const vowels = ['অ', 'আ', 'ই', 'ঈ', 'উ', 'ঊ', 'ঋ', 'এ', 'ঐ', 'ও', 'ঔ'];
+        const consonants = [
+            'ক', 'খ', 'গ', 'ঘ', 'ঙ', 
+            'চ', 'ছ', 'জ', 'ঝ', 'ঞ', 
+            'ট', 'ঠ', 'ড', 'ঢ', 'ণ', 
+            'ত', 'থ', 'দ', 'ধ', 'ন', 
+            'প', 'ফ', 'ব', 'ভ', 'ম', 
+            'য', 'র', 'ল', 'শ', 'ষ', 
+            'স', 'হ', 'ড়', 'ঢ়', 'য়', 
+            'ৎ', 'ং', 'ঃ', 'ঁ'
+        ];
+        const numbers = ['০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'];
+        
+        // Using a dotted circle (◌) to display modifiers better in UI, but we'll only copy the modifier
+        const modifiers = [
+            { display: '◌া', value: 'া' },
+            { display: '◌ি', value: 'ি' },
+            { display: '◌ী', value: 'ী' },
+            { display: '◌ু', value: 'ু' },
+            { display: '◌ূ', value: 'ূ' },
+            { display: '◌ৃ', value: 'ৃ' },
+            { display: '◌ে', value: 'ে' },
+            { display: '◌ৈ', value: 'ৈ' },
+            { display: '◌ো', value: 'ো' },
+            { display: '◌ৌ', value: 'ৌ' },
+            { display: '◌্', value: '্' } // Hasant
+        ];
+
+        // Toast logic
+        let toastTimeout;
+        const toastEl = document.getElementById('toast');
+        const toastMsg = document.getElementById('toast-message');
+        const typingPad = document.getElementById('typing-pad');
+
+        function showToast(message, isRawHTML = false) {
+            if (isRawHTML) {
+                toastMsg.innerHTML = message;
+            } else {
+                toastMsg.textContent = message;
+            }
+            toastEl.classList.add('show');
+            
+            clearTimeout(toastTimeout);
+            toastTimeout = setTimeout(() => {
+                toastEl.classList.remove('show');
+            }, 2500);
+        }
+
+        // Copy logic (Using execCommand as requested for maximum iframe compatibility)
+        function copyToClipboard(text, isSingleChar = true) {
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            // Move it off-screen
+            textarea.style.position = 'fixed';
+            textarea.style.top = '-9999px';
+            textarea.style.left = '-9999px';
+            document.body.appendChild(textarea);
+            
+            textarea.select();
+            textarea.setSelectionRange(0, 99999); // For mobile devices
+            
+            try {
+                document.execCommand('copy');
+                if (isSingleChar) {
+                    showToast(`Copied <span class="bengali-text font-bold text-xl text-yellow-300 mx-1">${text}</span> to clipboard`, true);
+                } else {
+                    showToast("Copied all text to clipboard!");
+                }
+            } catch (err) {
+                console.error('Failed to copy text: ', err);
+                showToast("Failed to copy!");
+            }
+            
+            document.body.removeChild(textarea);
+        }
+
+        function insertAtCursor(myField, myValue) {
+            if (myField.selectionStart || myField.selectionStart == '0') {
+                var startPos = myField.selectionStart;
+                var endPos = myField.selectionEnd;
+                myField.value = myField.value.substring(0, startPos)
+                    + myValue
+                    + myField.value.substring(endPos, myField.value.length);
+                myField.selectionStart = startPos + myValue.length;
+                myField.selectionEnd = startPos + myValue.length;
+            } else {
+                myField.value += myValue;
+            }
+            myField.focus();
+        }
+
+        // Render functions
+        function createCharButton(displayChar, copyValue = null) {
+            const valToCopy = copyValue !== null ? copyValue : displayChar;
+            
+            const btn = document.createElement('button');
+            btn.className = 'bengali-text text-3xl aspect-square flex items-center justify-center bg-white border border-gray-200 rounded-xl shadow-sm hover:bg-blue-50 hover:border-blue-300 hover:text-blue-600 hover:shadow-md active:bg-blue-100 active:scale-95 transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-blue-400';
+            btn.textContent = displayChar;
+            btn.title = `Copy and Type ${valToCopy}`;
+            
+            btn.addEventListener('click', () => {
+                copyToClipboard(valToCopy, true);
+                insertAtCursor(typingPad, valToCopy);
+            });
+            
+            return btn;
+        }
+
+        function populateSection(containerId, dataArray, isModifier = false) {
+            const container = document.getElementById(containerId);
+            dataArray.forEach(item => {
+                if (isModifier) {
+                    container.appendChild(createCharButton(item.display, item.value));
+                } else {
+                    container.appendChild(createCharButton(item));
+                }
+            });
+        }
+
+        // Initialize on load
+        window.addEventListener('DOMContentLoaded', () => {
+            populateSection('vowels-container', vowels);
+            populateSection('consonants-container', consonants);
+            populateSection('numbers-container', numbers);
+            populateSection('modifiers-container', modifiers, true);
+
+            // Setup typing pad buttons
+            document.getElementById('clear-btn').addEventListener('click', () => {
+                document.getElementById('typing-pad').value = '';
+                document.getElementById('typing-pad').focus();
+            });
+
+            document.getElementById('copy-all-btn').addEventListener('click', () => {
+                const text = document.getElementById('typing-pad').value;
+                if (text) {
+                    copyToClipboard(text, false);
+                } else {
+                    showToast("Text area is empty!");
+                }
+            });
+        });
+
+    </script>
+</body>
+</html>
